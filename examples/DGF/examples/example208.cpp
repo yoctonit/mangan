@@ -14,7 +14,7 @@ public:
 
     void initialize() override {
         std::string vsCode = R"(
-        #version 460 core
+        #version 430 core
         in vec3 position;
         uniform vec3 translation;
         void main()
@@ -25,7 +25,7 @@ public:
         )";
 
         std::string fsCode = R"(
-        #version 460 core
+        #version 430 core
         uniform vec3 baseColor;
         out vec4 fragColor;
         void main()

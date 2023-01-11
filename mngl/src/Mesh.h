@@ -2,8 +2,8 @@
 // Created by ivan on 7.1.2023..
 //
 
-#ifndef OPENGL_EXAMPLES_MESH_H
-#define OPENGL_EXAMPLES_MESH_H
+#ifndef INCLUDED_MN_MESH_H
+#define INCLUDED_MN_MESH_H
 
 #include "Object3D.h"
 #include "geometry/Geometry.h"
@@ -21,8 +21,10 @@ public:
     // vertex array object reference
     GLuint vaoRef{};
 
-    Mesh () = default;
-    Mesh(Geometry  g, Material  m) : geometry(std::move(g)), material(std::move(m)) {
+    bool isMesh() const override { return true; }
+
+//    Mesh () = default;
+    Mesh(Geometry g, Material m) : geometry(std::move(g)), material(std::move(m)) {
 //        geometry = g;
 //        material = m;
         visible = true;
@@ -33,10 +35,11 @@ public:
         glGenVertexArrays(1, &vaoRef);
         glBindVertexArray(vaoRef);
 
-        for (const auto& myPair: geometry.attributes) {
-            std::string variableName = myPair.first;
-            std::shared_ptr<Mn::Shader::Attribute> attribute = geometry.attributes[variableName];
-            attribute->associateVariable(material.programRef, variableName);
+        for (const auto &myPair: geometry.attributes) {
+//            std::string variableName = myPair.first;
+//            std::shared_ptr<Mn::Shader::Attribute> attribute = geometry.attributes[variableName];
+//            attribute->associateVariable(material.programRef, variableName);
+            myPair.second->associateVariable(material.programRef, myPair.first);
         }
 
         // unbind this vertex array object
@@ -44,4 +47,4 @@ public:
     }
 };
 
-#endif //OPENGL_EXAMPLES_MESH_H
+#endif //INCLUDED_MN_MESH_H

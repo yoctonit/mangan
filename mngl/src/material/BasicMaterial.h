@@ -2,8 +2,8 @@
 // Created by ivan on 8.1.2023..
 //
 
-#ifndef OPENGL_EXAMPLES_BASICMATERIAL_H
-#define OPENGL_EXAMPLES_BASICMATERIAL_H
+#ifndef INCLUDED_MN_BASIC_MATERIAL_H
+#define INCLUDED_MN_BASIC_MATERIAL_H
 
 #include <glm/glm.hpp>
 #include "Material.h"
@@ -12,12 +12,17 @@
 class BasicMaterial : public Material {
 public:
     BasicMaterial() : Material("shader/BasicMaterial.vert", "shader/BasicMaterial.frag") {
-        addUniform("baseColor", std::make_shared<Mn::Shader::Uniform>());
-        addUniform("useVertexColors", std::make_shared<Mn::Shader::Uniform>());
+        addUniform("baseColor", Mn::Shader::Uniform());
+        addUniform("useVertexColors", Mn::Shader::Uniform());
         // addUniform("vec3", "baseColor", 1.0f /*glm::vec3(1.0f, 1.0f, 1.0f)*/, true);
         // addUniform("bool", "useVertexColors", 0.0f, true);
         locateUniforms();
     }
+
+    void uploadUniforms() override {
+        Mn::Shader::UploadUniform(uniforms["baseColor"], glm::vec3(1.0f, 1.0f, 1.0f));
+        Mn::Shader::UploadUniform(uniforms["useVertexColors"], true);
+    }
 };
 
-#endif //OPENGL_EXAMPLES_BASICMATERIAL_H
+#endif //INCLUDED_MN_BASIC_MATERIAL_H

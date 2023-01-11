@@ -17,16 +17,18 @@ public:
     std::shared_ptr<Object3D> parent{};
     std::list<std::shared_ptr<Object3D>> children;
 
+    virtual bool isMesh() const { return false; }
+
     Object3D() {
         transform = glm::mat4(1.0f);
     }
 
-    void add(std::shared_ptr<Object3D> child) {
+    void add(const std::shared_ptr<Object3D>& child) {
         children.push_back(child);
-        child->parent = nullptr;
+        child->parent = std::make_shared<Object3D>(*this);
     }
 
-    void remove(std::shared_ptr<Object3D> child) {
+    void remove(const std::shared_ptr<Object3D>& child) {
         children.remove(child);
         child->parent = nullptr;
     }
@@ -47,7 +49,7 @@ public:
         // nodes to be added to descendant list,
         // and whose children will be added to this list
         std::list<std::shared_ptr<Object3D>> nodesToProcess;
-        nodesToProcess.push_back(std::make_shared<Object3D>(this));
+        nodesToProcess.push_back(std::make_shared<Object3D>(*this));
 
         // continue processing nodes while any are left
         while (!nodesToProcess.empty()) {
@@ -59,7 +61,7 @@ public:
             descendents.push_back(node);
 
             // children of this node must also be processed
-            for (std::shared_ptr<Object3D> child: node->children)
+            for (const std::shared_ptr<Object3D>& child: node->children)
                 nodesToProcess.push_back(child);
         }
         return descendents;
@@ -96,7 +98,7 @@ public:
 // get/set position components of transform
     glm::vec3 getPosition() {
         float *p = glm::value_ptr(transform);
-        return {p[3], p[7], p[11]};
+        return {p[12], p[13], p[14]};
 //        return new glm::vec3(
 //                transform.values[0][3],
 //                transform.values[1][3],
@@ -106,7 +108,7 @@ public:
     [[nodiscard]] glm::vec3 getWorldPosition() const {
         glm::mat4 worldTransform = getWorldMatrix();
         float *p = glm::value_ptr(worldTransform);
-        return {p[3], p[7], p[11]};
+        return {p[12], p[13], p[14]};
 //        return glm::vec3(
 //                worldTransform.values[0][3],
 //                worldTransform.values[1][3],
@@ -115,9 +117,9 @@ public:
 
     void setPosition(glm::vec3 position) {
         float *p = glm::value_ptr(transform);
-        p[3] = position.x;
-        p[7] = position.y;
-        p[11] = position.z;
+        p[12] = position.x;
+        p[13] = position.y;
+        p[14] = position.z;
 //        transform.values[0][3] = position.values[0];
 //        transform.values[1][3] = position.values[1];
 //        transform.values[2][3] = position.values[2];

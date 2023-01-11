@@ -2,8 +2,8 @@
 // Created by ivan on 8.1.2023..
 //
 
-#ifndef OPENGL_EXAMPLES_MATERIAL_H
-#define OPENGL_EXAMPLES_MATERIAL_H
+#ifndef INCLUDED_MN_MATERIAL_H
+#define INCLUDED_MN_MATERIAL_H
 
 #include <glm/glm.hpp>
 #include <string>
@@ -29,7 +29,7 @@ public:
     // Additional settings added by extending classes.
     std::map<std::string, RenderSetting> renderSettings;
 
-    Material() = default;
+//    Material() = default;
 
     Material(const std::string &vertexShaderFileName, const std::string &fragmentShaderFileName)
     {
@@ -57,11 +57,12 @@ public:
         for (const auto &myPair : uniforms)
         {
             std::string variableName = myPair.first;
-            Mn::Shader::Uniform uniform = uniforms[variableName];
-            uniform.init(programRef, variableName);
+            uniforms[variableName].init(programRef, variableName);
             //            uniform.locateVariable(programRef, variableName);
         }
     }
+
+    virtual void uploadUniforms() {}
 
     void addRenderSetting(const std::string &settingName, float fData, bool lData)
     {
@@ -69,4 +70,4 @@ public:
     }
 };
 
-#endif // OPENGL_EXAMPLES_MATERIAL_H
+#endif // INCLUDED_MN_MATERIAL_H

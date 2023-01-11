@@ -1,4 +1,4 @@
-#version 460
+#version 430
 
 #define NUM_STEPS 100
 

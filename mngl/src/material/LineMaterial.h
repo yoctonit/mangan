@@ -2,8 +2,8 @@
 // Created by ivan on 8.1.2023..
 //
 
-#ifndef OPENGL_EXAMPLES_LINEMATERIAL_H
-#define OPENGL_EXAMPLES_LINEMATERIAL_H
+#ifndef INCLUDED_MN_LINE_MATERIAL_H
+#define INCLUDED_MN_LINE_MATERIAL_H
 
 #include <glad/glad.h>
 #include <string>
@@ -12,12 +12,12 @@
 
 class LineMaterial : public BasicMaterial {
 public:
-    LineMaterial() {
+    LineMaterial() : BasicMaterial() {
         drawStyle = GL_LINES;
         addRenderSetting("lineWidth", 1.0f, true);
     }
 
-    LineMaterial(const std::string& lineStyle) {
+    LineMaterial(const std::string &lineStyle) : BasicMaterial() {
         if (lineStyle == "segments")
             drawStyle = GL_LINES;
         else if (lineStyle == "connected")
@@ -32,4 +32,4 @@ public:
     }
 };
 
-#endif //OPENGL_EXAMPLES_LINEMATERIAL_H
+#endif //INCLUDED_MN_LINE_MATERIAL_H

@@ -15,7 +15,7 @@ public:
     void initialize() override {
         // vertex shader code
         std::string vsCode = R"(
-        #version 460 core
+        #version 430 core
         in vec3 position;
         in vec3 vertexColor;
         out vec3 color;
@@ -28,7 +28,7 @@ public:
 
         // fragment shader code
         std::string fsCode = R"(
-        #version 460 core
+        #version 430 core
         in vec3 color;
         out vec4 fragColor;
         void main() {

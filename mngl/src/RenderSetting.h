@@ -2,8 +2,8 @@
 // Created by ivan on 8.1.2023..
 //
 
-#ifndef OPENGL_EXAMPLES_RENDERSETTING_H
-#define OPENGL_EXAMPLES_RENDERSETTING_H
+#ifndef INCLUDED_MN_RENDER_SETTING_H
+#define INCLUDED_MN_RENDER_SETTING_H
 
 #include <string>
 #include <iostream>
@@ -51,4 +51,4 @@ public:
     }
 };
 
-#endif //OPENGL_EXAMPLES_RENDERSETTING_H
+#endif //INCLUDED_MN_RENDER_SETTING_H

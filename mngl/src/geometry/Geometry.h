@@ -2,13 +2,12 @@
 // Created by ivan on 7.1.2023..
 //
 
-#ifndef OPENGL_EXAMPLES_GEOMETRY_H
-#define OPENGL_EXAMPLES_GEOMETRY_H
+#ifndef INCLUDED_MN_GEOMETRY_H
+#define INCLUDED_MN_GEOMETRY_H
 
 #include <string>
 #include <map>
 #include <utility>
-#include <vector>
 #include <memory>
 #include "Attribute.h"
 
@@ -21,11 +20,11 @@ public:
     std::map<std::string, std::shared_ptr<Mn::Shader::Attribute>> attributes;
     int vertexCount;
 
-    Geometry() : vertexCount{-1}   {}
+    Geometry() : vertexCount{-1} {}
 
-    void addAttribute(const std::string& variableName, std::shared_ptr<Mn::Shader::Attribute> attr) {
+    void addAttribute(const std::string &variableName, const std::shared_ptr<Mn::Shader::Attribute> &attr) {
         attributes[variableName] = attr;
     }
 };
 
-#endif //OPENGL_EXAMPLES_GEOMETRY_H
+#endif //INCLUDED_MN_GEOMETRY_H

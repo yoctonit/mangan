@@ -23,7 +23,7 @@ namespace Mn::Shader
             _location = glGetUniformLocation(shader, name.c_str());
         }
 
-        GLint location() const
+        [[nodiscard]] GLint location() const
         {
             return _location;
         }

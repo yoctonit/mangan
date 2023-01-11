@@ -2,8 +2,8 @@
 // Created by ivan on 8.1.2023..
 //
 
-#ifndef OPENGL_EXAMPLES_RENDERER_H
-#define OPENGL_EXAMPLES_RENDERER_H
+#ifndef INCLUDED_MN_RENDERER_H
+#define INCLUDED_MN_RENDERER_H
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -23,24 +23,24 @@ public:
         glEnable(GL_MULTISAMPLE);
     }
 
-    void setClearColor(glm::vec3 color) {
+    static void setClearColor(glm::vec3 color) {
         glClearColor(color.r, color.g, color.b, 1.0f);
     }
 
-    void render(Scene scene, Camera camera) const {
+    void render(Scene &scene, Camera &camera) {
         // clear color and depth buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
+
         // update camera view (calculate inverse)
         camera.updateViewMatrix();
-        
+
         // extract list of all Mesh objects in scene
         std::list<std::shared_ptr<Object3D>> descendentList = scene.getDescendentList();
         std::list<std::shared_ptr<Mesh>> meshList;
-        for (const std::shared_ptr<Object3D>& obj: descendentList)
-//            if (typeid(obj) == typeid(Mesh))
-//                meshList.push_back(std::static_pointer_cast<std::shared_ptr<Mesh>>(obj));
-            for (const std::shared_ptr<Mesh>& mesh: meshList) {
+        for (const std::shared_ptr<Object3D> &obj: descendentList)
+            if (obj->isMesh())
+                meshList.push_back(std::dynamic_pointer_cast<Mesh>(obj));
+        for (const std::shared_ptr<Mesh> &mesh: meshList) {
             // if this object is not visible,
             // continue to next object in list
             if (!mesh->visible)
@@ -60,14 +60,17 @@ public:
             // update uniforms stored in material
 //            for (Uniform uniform: mesh->material.uniforms.values())
 //                uniform->upload();
+            mesh->material.uploadUniforms();
 
             // update render settings
-//            for (RenderSetting setting: mesh.material.renderSettings.values())
-//                setting.apply();
+            for (const auto &myPair: mesh->material.renderSettings) {
+                std::string variableName = myPair.first;
+                myPair.second.apply();
+            }
 
             glDrawArrays(mesh->material.drawStyle, 0, mesh->geometry.vertexCount);
         }
     }
 };
 
-#endif //OPENGL_EXAMPLES_RENDERER_H
+#endif //INCLUDED_MN_RENDERER_H

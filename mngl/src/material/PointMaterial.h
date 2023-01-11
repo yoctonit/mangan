@@ -2,8 +2,8 @@
 // Created by ivan on 8.1.2023..
 //
 
-#ifndef OPENGL_EXAMPLES_POINTMATERIAL_H
-#define OPENGL_EXAMPLES_POINTMATERIAL_H
+#ifndef INCLUDED_MN_POINT_MATERIAL_H
+#define INCLUDED_MN_POINT_MATERIAL_H
 
 #include <glad/glad.h>
 #include <string>
@@ -12,11 +12,11 @@
 
 class PointMaterial : public BasicMaterial {
 public:
-    PointMaterial() {
+    PointMaterial() : BasicMaterial() {
         drawStyle = GL_POINTS;
         addRenderSetting("pointSize", 16.0f, true);
         addRenderSetting("roundedPoints", 1.0f, true);
     }
 };
 
-#endif //OPENGL_EXAMPLES_POINTMATERIAL_H
+#endif //INCLUDED_MN_POINT_MATERIAL_H

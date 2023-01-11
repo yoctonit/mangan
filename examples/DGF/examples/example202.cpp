@@ -13,7 +13,7 @@ public:
     void initialize() override {
         // vertex shader code
         std::string vsCode = R"(
-        #version 460 core
+        #version 430 core
         void main(void) {
             gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
         }
@@ -21,7 +21,7 @@ public:
 
         // fragment shader code
         std::string fsCode = R"(
-        #version 460 core
+        #version 430 core
         out vec4 fragColor;
         void main() {
             fragColor = vec4(1.0, 1.0, 0.0, 1.0);

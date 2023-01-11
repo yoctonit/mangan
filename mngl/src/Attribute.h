@@ -2,8 +2,8 @@
 // Created by ivan on 10.1.2023..
 //
 
-#ifndef INCLUDED_MN_UNIFORM_H
-#define INCLUDED_MN_UNIFORM_H
+#ifndef INCLUDED_MN_ATTRIBUTE_H
+#define INCLUDED_MN_ATTRIBUTE_H
 
 #include <glad/glad.h>
 #include <string>
@@ -11,14 +11,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-namespace Mn::Shader
-{
+namespace Mn::Shader {
 
-    class Attribute
-    {
+    class Attribute {
     public:
-        Attribute(std::vector<float> data) :  _data{data}
-        {
+        explicit Attribute() {
             // reference of available buffer from GPU
             glGenBuffers(1, &_bufferRef);
 
@@ -26,34 +23,49 @@ namespace Mn::Shader
             // upload();
         };
 
-        void upload(){
-                        // select buffer used by the following functions
-            glBindBuffer(GL_ARRAY_BUFFER, _bufferRef);
-
-            // store data in currently bound buffer
-            auto dataSizeInBytes = static_cast<GLsizeiptr>(_data.size() * sizeof(GLfloat));
-            glBufferData(GL_ARRAY_BUFFER, dataSizeInBytes, _data.data(), GL_STATIC_DRAW);
-
-            // deactivate buffer
-            // glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        };
+//        virtual void upload() = 0;
 
         virtual void associateVariable(GLuint programRef, const std::string &variableName) = 0;
 
+
     protected:
         GLuint _bufferRef{};
-        std::vector<float> _data;
     };
 
 
-    class AttributeVector3 : public Attribute
-    {
+    class AttributeVector3 : public Attribute {
     public:
+        explicit AttributeVector3(const std::vector<float> &data) : Attribute{} {
+            // reference of available buffer from GPU
+//            glGenBuffers(1, &_bufferRef);
 
+            // upload data immediately
+            // upload();
+            // select buffer used by the following functions
+            glBindBuffer(GL_ARRAY_BUFFER, _bufferRef);
+
+            // store data in currently bound buffer
+            auto dataSizeInBytes = static_cast<GLsizeiptr>(data.size() * sizeof(GLfloat));
+            glBufferData(GL_ARRAY_BUFFER, dataSizeInBytes, data.data(), GL_STATIC_DRAW);
+
+            // deactivate buffer
+            // glBindBuffer(GL_ARRAY_BUFFER, 0);
+        };
+
+//        void upload() {
+//            // select buffer used by the following functions
+//            glBindBuffer(GL_ARRAY_BUFFER, _bufferRef);
+//
+//            // store data in currently bound buffer
+//            auto dataSizeInBytes = static_cast<GLsizeiptr>(_data.size() * sizeof(GLfloat));
+//            glBufferData(GL_ARRAY_BUFFER, dataSizeInBytes, _data.data(), GL_STATIC_DRAW);
+//
+//            // deactivate buffer
+//            // glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//        };
         // associate variable in program with this buffer
-        void associateVariable(GLuint programRef, const std::string &variableName) override
-        {
+        void associateVariable(GLuint programRef, const std::string &variableName) override {
             // get reference for program variable with given name
             GLint variableRef = glGetAttribLocation(programRef, variableName.c_str());
 
@@ -68,8 +80,10 @@ namespace Mn::Shader
             // indicate that data will be streamed to this variable
             glEnableVertexAttribArray(variableRef);
         }
+//    private:
+//        std::vector<float> _data;
     };
 
 }
 
-#endif // INCLUDED_MN_UNIFORM_H
+#endif // INCLUDED_MN_ATTRIBUTE_H

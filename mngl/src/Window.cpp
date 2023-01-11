@@ -15,7 +15,7 @@ namespace Mn {
     Window::Window(int width, int height, std::string title) :
             _window(nullptr), _title(std::move(title)),
             _width(width), _height(height),
-            _gl_major(4), _gl_minor(6) {
+            _gl_major(4), _gl_minor(3) {
         std::cout << "Window(" << _width << ", " << _height << ", " << _title << ")\n";
     }
 

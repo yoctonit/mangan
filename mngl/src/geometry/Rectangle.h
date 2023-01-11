@@ -2,17 +2,17 @@
 // Created by ivan on 7.1.2023..
 //
 
-#ifndef OPENGL_EXAMPLES_GEOMETRYRECTANGLE_H
-#define OPENGL_EXAMPLES_GEOMETRYRECTANGLE_H
+#ifndef INCLUDED_MN_RECTANGLE_H
+#define INCLUDED_MN_RECTANGLE_H
 
 #include <glm/glm.hpp>
-#include <list>
-#include "Attribute.h"
+#include <vector>
 #include "Geometry.h"
+#include "Attribute.h"
 
 class Rectangle : public Geometry {
 public:
-    Rectangle() = default;
+//    Rectangle() = default;
 
     Rectangle(float width, float height) {
         glm::vec3 P0(-width / 2, -height / 2, 0.0f);
@@ -24,9 +24,7 @@ public:
         glm::vec3 C2(0.0f, 1.0f, 0.0f);
         glm::vec3 C3(0.0f, 0.0f, 1.0f);
 
-//        List positionList = Arrays.asList(P0, P1, P3, P0, P3, P2);
-//        float* positionData = glm::vec3.flattenList(positionList);
-        std::vector<GLfloat> positionData{
+        const std::vector<GLfloat> positionData{
                 P0.x, P0.y, P0.z,
                 P1.x, P1.y, P1.z,
                 P3.x, P3.y, P3.z,
@@ -35,9 +33,7 @@ public:
                 P2.x, P2.y, P2.z
         };
 
-//        List colorList = Arrays.asList(C0, C1, C3, C0, C3, C2);
-//        float*   colorData = glm::vec3.flattenList(colorList);
-        std::vector<GLfloat> colorData{
+        const std::vector<GLfloat> colorData{
                 C0.x, C0.y, C0.z,
                 C1.x, C1.y, C1.z,
                 C3.x, C3.y, C3.z,
@@ -54,4 +50,4 @@ public:
     }
 };
 
-#endif //OPENGL_EXAMPLES_GEOMETRYRECTANGLE_H
+#endif //INCLUDED_MN_RECTANGLE_H

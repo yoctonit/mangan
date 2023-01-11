@@ -1,4 +1,4 @@
-#version 460
+#version 430
 
 // Input vertex data in model space
 in vec2 a_position;
