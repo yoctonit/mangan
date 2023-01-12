@@ -11,13 +11,16 @@
 #include <list>
 #include <memory>
 
+class Camera;
+
 class Object3D {
 public:
     glm::mat4 transform{};
     std::shared_ptr<Object3D> parent{};
     std::list<std::shared_ptr<Object3D>> children;
 
-    virtual bool isMesh() const { return false; }
+//    virtual bool isMesh() const { return false; }
+    virtual void draw(const Camera & camera) const {}
 
     Object3D() {
         transform = glm::mat4(1.0f);

@@ -15,7 +15,7 @@ public:
     PointMaterial() : BasicMaterial() {
         drawStyle = GL_POINTS;
         addRenderSetting("pointSize", 16.0f, true);
-        addRenderSetting("roundedPoints", 1.0f, true);
+//        addRenderSetting("roundedPoints", 1.0f, true);
     }
 };
 

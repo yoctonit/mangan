@@ -12,6 +12,9 @@ add_library(mngl
         src/Camera.h
         src/geometry/Geometry.h
         src/geometry/Rectangle.h
+        src/geometry/Box.h
+        src/geometry/Polygon.h
+        src/geometry/Surface.h
         src/RenderSetting.h
         src/Renderer.h
         src/material/Material.h

@@ -7,6 +7,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 #include <utility>
 #include <memory>
 #include "Attribute.h"
@@ -19,11 +20,22 @@ class Geometry {
 public:
     std::map<std::string, std::shared_ptr<Mn::Shader::Attribute>> attributes;
     int vertexCount;
+    const float PI_F=3.14159265358979f;
 
     Geometry() : vertexCount{-1} {}
 
     void addAttribute(const std::string &variableName, const std::shared_ptr<Mn::Shader::Attribute> &attr) {
         attributes[variableName] = attr;
+    }
+
+    std::vector<GLfloat> toVector(const std::vector<glm::vec3> &data) {
+        std::vector<GLfloat> result;
+        for (const auto &v: data) {
+            result.push_back(v.x);
+            result.push_back(v.y);
+            result.push_back(v.z);
+        }
+        return result;
     }
 };
 

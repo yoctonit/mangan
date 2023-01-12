@@ -1,6 +1,6 @@
 #include "Run.h"
 #include "Input.h"
-#include "geometry/Rectangle.h"
+#include "geometry/Surface.h"
 #include "material/SurfaceMaterial.h"
 #include "Mesh.h"
 #include "Scene.h"
@@ -10,21 +10,13 @@
 
 class Scene3d {
 public:
-    std::shared_ptr<Renderer> renderer{};
-    Scene scene{};
-    Camera camera{};
-    std::shared_ptr<Mesh> mesh;
-
-//    Scene3d() = default;
-//
-//    ~Scene3d() = default;
-
     void initialize(int, int) {
         renderer = std::make_shared<Renderer>();
-        renderer->setClearColor(glm::vec3(1.0f, 0.5f, 0.5f));
-        camera.setPosition(glm::vec3(0.0f, 0.0f, 3.0f));
-        Rectangle geometry(2.0f, 4.0f);
-        SurfaceMaterial material;
+        renderer->setClearColor(glm::vec3(0.5f, 0.5f, 0.5f));
+        camera.setPosition(glm::vec3(0.0f, 0.0f, 5.0f));
+        geometry = std::make_shared<Ellipsoid>(1.0f, 1.0f, 1.0f, 4, 4);
+//        geometry = std::make_shared<Plane>(2.0f, 2.0f, 8, 8);
+        material = std::make_shared<SurfaceMaterial>();
         // to change value from default, for example:
         // material.renderSettings.get("pointSize").data = 32;
         // material.uniforms["useVertexColors"]._data = true;
@@ -37,16 +29,35 @@ public:
     }
 
     void update(const Mn::Input &input, double delta_time) {
-        mesh->rotateY(0.0123f, true);
-        mesh->rotateX(0.0237f, true);
+//        mesh->rotateY(0.0123f, true);
+//        mesh->rotateX(0.0237f, true);
+        if (input.is_clicked(Mn::key::up)) {
+            glm::vec3 p = camera.getPosition();
+            p.z -= 1.0f;
+            camera.setPosition(p);
+        }
+        if (input.is_clicked(Mn::key::down)) {
+            glm::vec3 p = camera.getPosition();
+            p.z += 1.0f;
+            camera.setPosition(p);
+        }
     }
 
     void cleanup() {}
+
+private:
+    std::shared_ptr<Renderer> renderer{};
+    Scene scene{};
+    Camera camera{};
+    std::shared_ptr<Ellipsoid> geometry;
+//    std::shared_ptr<Plane> geometry;
+    std::shared_ptr<Material> material;
+    std::shared_ptr<Mesh> mesh;
 };
 
 int main() {
     Mn::Window window(800, 800, "Scene3d");
-    Scene3d scene1;
-    Mn::Run<Scene3d>(scene1, window);
+    Scene3d scene;
+    Mn::Run<Scene3d>(scene, window);
     return 0;
 }
