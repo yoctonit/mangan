@@ -20,8 +20,8 @@ public:
     }
 
     void uploadUniforms() override {
-        Mn::Shader::UploadUniform(uniforms["baseColor"], glm::vec3(1.0f, 1.0f, 1.0f));
-        Mn::Shader::UploadUniform(uniforms["useVertexColors"], true);
+        Mn::Shader::UploadUniform(uniforms["baseColor"], _baseColor);
+        Mn::Shader::UploadUniform(uniforms["useVertexColors"], _useVertexColors);
     }
 };
 

@@ -24,6 +24,10 @@ public:
     ) {
 //        std::vector<std::vector<glm::vec2>> points[uResolution + 1][vResolution + 1];
         std::vector<std::vector<glm::vec2>> points(uResolution + 1);
+//        std::cout << "uStart: " << uStart << "\n";
+//        std::cout << "uEnd: " << uEnd << "\n";
+//        std::cout << "vStart: " << vStart << "\n";
+//        std::cout << "vEnd: " << vEnd << "\n";
 
         float deltaU = (uEnd - uStart) / (float) uResolution;
         float deltaV = (vEnd - vStart) / (float) vResolution;
@@ -36,10 +40,14 @@ public:
                 points[uIndex].emplace_back(f(u, v));
             }
         }
-//        std::cout << points.size() << "\n";
-//        std::cout << points[0].size() << "\n";
-//        std::cout << points[0][0].x << "" << points[0][0].x << "\n";
-//        std::cout << points[1][0].x << "" << points[1][0].x << "\n";
+
+        std::cout << points.size() << "\n";
+        std::cout << points[0].size() << "\n";
+//        for (int uIndex = 0; uIndex < uResolution + 1; uIndex++) {
+//            for (int vIndex = 0; vIndex < vResolution + 1; vIndex++) {
+//                std::cout << points[uIndex][vIndex].x << " " << points[uIndex][vIndex].y << "\n";
+//            }
+//        }
         return points;
     }
 
@@ -57,6 +65,11 @@ public:
                     float vEnd,
                     int vResolution
     ) {
+        std::cout << "uStart: " << uStart << "\n";
+        std::cout << "uEnd: " << uEnd << "\n";
+        std::cout << "vStart: " << vStart << "\n";
+        std::cout << "vEnd: " << vEnd << "\n";
+
         ParametricSurface surface(f_);
         std::vector<std::vector<glm::vec2>> positions = surface.getPoints(
                 uStart, uEnd, uResolution,
@@ -103,7 +116,7 @@ public:
 class ParametricPlane {
 public:
     glm::vec3 operator()(float u, float v) const {
-        return {u,v,0.0f};
+        return {u, v, 0.0f};
     }
 };
 
@@ -151,9 +164,15 @@ public:
     Ellipsoid(float width, float height, float depth, int radiusSegments, int heightSegments)
             : SurfaceGeometry(
             ParametricEllipsoid(width, height, depth),
-            0.0f, 2 * PI_F, radiusSegments,
-            -PI_F / 2, PI_F / 2, heightSegments
+            0.0f, 2.0f * M_PI, radiusSegments,
+            -M_PI / 2.0f, M_PI / 2.0f, heightSegments
     ) {}
+//    Ellipsoid(float width, float height, float depth, int radiusSegments, int heightSegments)
+//            : SurfaceGeometry(
+//            ParametricEllipsoid(width, height, depth),
+//            0.0f, 2.0f * M_PI, radiusSegments,
+//            -M_PI / 2.0f, M_PI / 2.0f, heightSegments
+//    ) {}
 //    Ellipsoid(float width, float height, float depth, int radiusSegments, int heightSegments)
 //            : SurfaceGeometry(
 //            [width, height, depth](float u, float v) {
@@ -162,8 +181,8 @@ public:
 //                        height / 2 * std::sin(v),
 //                        depth / 2 * std::cos(u) * std::cos(v));
 //            },
-//            0.0f, 2 * PI_F, radiusSegments,
-//            -PI_F / 2, PI_F / 2, heightSegments
+//            0.0f, 2 * M_PI, radiusSegments,
+//            -M_PI / 2, M_PI / 2, heightSegments
 //    ) {}
 
 //    Ellipsoid() {
@@ -212,7 +231,7 @@ public:
             bool closedTop, bool closedBottom) :
             SurfaceGeometry(
                     ParametricCylindrical(radiusTop, radiusBottom, height),
-                    0.0f, 2 * PI_F, radialSegments,
+                    0.0f, 2.0f * M_PI, radialSegments,
                     0.0f, 1.0f, heightSegments
             ) {
     }
@@ -227,7 +246,7 @@ public:
 //                                height * (v - 0.5),
 //                                (v * radiusTop + (1 - v) * radiusBottom) * std::cos(u));
 //                    },
-//                    0, 2 * PI_F, radialSegments,
+//                    0, 2 * M_PI, radialSegments,
 //                    0, 1, heightSegments
 //            ) {
 //    }
@@ -235,6 +254,47 @@ public:
 //public CylindricalGeometry()
 //{
 //    this(1.0f,1.0f,1.0f, 32, 4, true,true);
+//}
+};
+
+class CylinderGeometry : public CylindricalGeometry {
+public:
+    CylinderGeometry(float radius, float height, int radialSegments, int heightSegments, bool closed)
+            : CylindricalGeometry(radius, radius, height, radialSegments, heightSegments, closed, closed) {}
+
+//CylinderGeometry()
+//{
+//    this(1,1, 32,4, true);
+//}
+};
+
+class PrismGeometry : public CylindricalGeometry {
+public:
+    PrismGeometry(float radius, float height, int sides, int heightSegments, bool closed)
+            : CylindricalGeometry(radius, radius, height, sides, heightSegments, closed, closed) {}
+//public PrismGeometry()
+//{
+//    this(1,1, 6,4, true);
+//}
+};
+
+class ConeGeometry : public CylindricalGeometry {
+public:
+    ConeGeometry(float radius, float height, int radialSegments, int heightSegments, bool closed)
+            : CylindricalGeometry(radius, 0, height, radialSegments, heightSegments, false, closed) {}
+//public ConeGeometry()
+//{
+//    this(1,1, 32,4, true);
+//}
+};
+
+class PyramidGeometry : public CylindricalGeometry {
+public:
+    PyramidGeometry(float radius, float height, int sides, int heightSegments, bool closed)
+            : CylindricalGeometry(radius, 0, height, sides, heightSegments, false, closed) {}
+//public PyramidGeometry()
+//{
+//    this(1,1, 4,4, true);
 //}
 };
 

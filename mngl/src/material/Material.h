@@ -13,8 +13,7 @@
 #include "../Uniform.h"
 #include "../RenderSetting.h"
 
-class Material
-{
+class Material {
 public:
     GLuint programRef{};
 
@@ -31,8 +30,7 @@ public:
 
 //    Material() = default;
 
-    Material(const std::string &vertexShaderFileName, const std::string &fragmentShaderFileName)
-    {
+    Material(const std::string &vertexShaderFileName, const std::string &fragmentShaderFileName) {
         programRef = Mn::Shader::CreateFromFiles(vertexShaderFileName, fragmentShaderFileName);
 
         drawStyle = GL_TRIANGLES;
@@ -45,17 +43,14 @@ public:
         addUniform("projectionMatrix", Mn::Shader::Uniform());
     }
 
-    void addUniform(const std::string &variableName, Mn::Shader::Uniform uniform)
-    {
+    void addUniform(const std::string &variableName, Mn::Shader::Uniform uniform) {
         uniform.init(programRef, variableName);
         uniforms[variableName] = uniform;
     }
 
     // initialize all uniform variable references
-    void locateUniforms()
-    {
-        for (const auto &myPair : uniforms)
-        {
+    void locateUniforms() {
+        for (const auto &myPair: uniforms) {
             std::string variableName = myPair.first;
             uniforms[variableName].init(programRef, variableName);
             //            uniform.locateVariable(programRef, variableName);
@@ -64,10 +59,20 @@ public:
 
     virtual void uploadUniforms() {}
 
-    void addRenderSetting(const std::string &settingName, float fData, bool lData)
-    {
+    void baseColor(glm::vec3 bc) {
+        _baseColor = bc;
+    }
+
+    void useVertexColors(bool flag) {
+        _useVertexColors = flag;
+    }
+
+    void addRenderSetting(const std::string &settingName, float fData, bool lData) {
         renderSettings[settingName] = RenderSetting(settingName, fData, lData);
     }
+protected:
+    glm::vec3 _baseColor;
+    bool _useVertexColors;
 };
 
 #endif // INCLUDED_MN_MATERIAL_H

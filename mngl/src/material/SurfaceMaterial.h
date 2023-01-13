@@ -20,4 +20,4 @@ public:
     }
 };
 
-#endif // OPENGL_EXAMPLES_SURFACEMATERIAL_H
+#endif // INCLUDED_MN_SURFACE_MATERIAL_H

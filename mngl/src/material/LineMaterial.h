@@ -17,7 +17,7 @@ public:
         addRenderSetting("lineWidth", 1.0f, true);
     }
 
-    LineMaterial(const std::string &lineStyle) : BasicMaterial() {
+    explicit LineMaterial(const std::string &lineStyle) : BasicMaterial() {
         if (lineStyle == "segments")
             drawStyle = GL_LINES;
         else if (lineStyle == "connected")

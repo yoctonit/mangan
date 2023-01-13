@@ -9,6 +9,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <iostream>
 
 namespace Mn::Shader
 {
@@ -21,6 +22,9 @@ namespace Mn::Shader
         void init(GLuint shader, const std::string &name)
         {
             _location = glGetUniformLocation(shader, name.c_str());
+            if (_location == -1) {
+                std::cout << "Could not find uniform: " << name << "\n";
+            }
         }
 
         [[nodiscard]] GLint location() const
@@ -31,6 +35,11 @@ namespace Mn::Shader
     protected:
         GLint _location;
     };
+
+    void UploadUniform(const Uniform &uniform, float value)
+    {
+        glUniform1f(uniform.location(), value);
+    }
 
     void UploadUniform(const Uniform &uniform, glm::vec3 value)
     {

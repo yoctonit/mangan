@@ -15,7 +15,8 @@ class Polygon : public Geometry {
 public:
     Polygon(int sides, float radius) {
         if (sides < 3) sides = 3;
-        float A = 2 * PI_F / (float)sides;
+        const float PI_F=3.14159265358979f;
+        float A = 2.0f * PI_F / (float)sides;
 
         std::vector<glm::vec3> positionList;
         std::vector<glm::vec3> colorList;

@@ -7,13 +7,13 @@ target_link_libraries(scene3d PUBLIC mngl)
 add_custom_command(
         TARGET scene3d POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_SOURCE_DIR}/shader/BasicMaterial.vert
-        ${CMAKE_CURRENT_BINARY_DIR}/shader/BasicMaterial.vert)
+        ${CMAKE_CURRENT_SOURCE_DIR}/shader/BasicMaterial2.vert
+        ${CMAKE_CURRENT_BINARY_DIR}/shader/BasicMaterial2.vert)
 add_custom_command(
         TARGET scene3d POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_SOURCE_DIR}/shader/BasicMaterial.frag
-        ${CMAKE_CURRENT_BINARY_DIR}/shader/BasicMaterial.frag)
+        ${CMAKE_CURRENT_SOURCE_DIR}/shader/BasicMaterial2.frag
+        ${CMAKE_CURRENT_BINARY_DIR}/shader/BasicMaterial2.frag)
 
 #add_executable(temp main.cpp)
 #target_link_libraries(temp mangan1)

@@ -13,9 +13,8 @@ public:
     void initialize(int, int) {
         renderer = std::make_shared<Renderer>();
         camera.setPosition(glm::vec3(0.0f, 0.0f, 1.1f));
-        geometry = std::make_shared<Sphere>(1.0f, 128.0f, 64.0f);
-        material = std::make_shared<Material>("shader/BasicMaterial2.vert", "shader/BasicMaterial2.frag");
-        material->addUniform("time", Mn::Shader::Uniform());
+        geometry = std::make_shared<Sphere>(1.0f, 16.0f, 16.0f);
+        material = std::make_shared<Material>("shader/BasicMaterial1.vert", "shader/BasicMaterial1.frag");
         material->locateUniforms();
         mesh = std::make_shared<Mesh>(geometry, material);
         scene.add(mesh);
@@ -26,11 +25,8 @@ public:
     }
 
     void update(const Mn::Input &input, double delta_time) {
-        static double time = 0.0;
-        time += delta_time;
-//        mesh->rotateY(0.0123f, true);
-//        mesh->rotateX(0.0237f, true);
-        Mn::Shader::UploadUniform(material->uniforms["time"], float(time));
+        mesh->rotateY(0.0123f, true);
+        mesh->rotateX(0.0237f, true);
     }
 
     void cleanup() {}
