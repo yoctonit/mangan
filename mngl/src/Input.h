@@ -16,14 +16,24 @@ namespace Mn {
     enum class key {
         space = GLFW_KEY_SPACE,
 
+        q = GLFW_KEY_Q,
+        w = GLFW_KEY_W,
+        e = GLFW_KEY_E,
+        r = GLFW_KEY_R,
+        t = GLFW_KEY_T,
+
         a = GLFW_KEY_A,
         s = GLFW_KEY_S,
         d = GLFW_KEY_D,
-        w = GLFW_KEY_W,
+        f = GLFW_KEY_F,
+        g = GLFW_KEY_G,
+
         z = GLFW_KEY_Z,
         x = GLFW_KEY_X,
-        q = GLFW_KEY_Q,
-        e = GLFW_KEY_E,
+        c = GLFW_KEY_C,
+        v = GLFW_KEY_V,
+        b = GLFW_KEY_B,
+
         u = GLFW_KEY_U,
         o = GLFW_KEY_O,
 

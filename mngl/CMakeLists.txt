@@ -15,6 +15,8 @@ add_library(mngl
         src/geometry/Box.h
         src/geometry/Polygon.h
         src/geometry/Surface.h
+        src/geometry/Axes.h
+        src/geometry/MovementRig.h
         src/RenderSetting.h
         src/Renderer.h
         src/material/Material.h

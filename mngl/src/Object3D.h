@@ -42,6 +42,7 @@ public:
         if (parent == nullptr)
             return transform;
         else
+//            return transform * parent->getWorldMatrix();
             return parent->getWorldMatrix() * transform;
     }
 
