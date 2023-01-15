@@ -5,7 +5,7 @@
 #ifndef INCLUDED_MN_SURFACE_MATERIAL_H
 #define INCLUDED_MN_SURFACE_MATERIAL_H
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <string>
 #include "Material.h"
 #include "BasicMaterial.h"

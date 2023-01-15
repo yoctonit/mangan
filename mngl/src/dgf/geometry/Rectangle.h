@@ -5,7 +5,7 @@
 #ifndef INCLUDED_MN_RECTANGLE_H
 #define INCLUDED_MN_RECTANGLE_H
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include <vector>
 #include "Geometry.h"
 #include "Attribute.h"
@@ -42,10 +42,20 @@ public:
                 C2.x, C2.y, C2.z
         };
 
+        // texture coordinates
+        glm::vec2  T0(0.0f,0.0f);
+        glm::vec2  T1(1.0f,0.0f);
+        glm::vec2  T2(0.0f,1.0f);
+        glm::vec2  T3(1.0f,1.0f);
+        const std::vector<glm::vec2> uvList{T0,T1,T3, T0,T3,T2};
+//        float[] uvData = Vector.flattenList(uvList);
+//        addAttribute("vec2", "vertexUV", uvData);
+
         addAttribute("vertexPosition", std::make_shared<Mn::Shader::AttributeVector3>(positionData));
         // addAttribute(Attribute::Type::Vec3, "vertexPosition", positionData);
         addAttribute("vertexColor", std::make_shared<Mn::Shader::AttributeVector3>(colorData));
         // addAttribute(Attribute::Type::Vec3, "vertexColor", colorData);
+        addAttribute("vertexUV", std::make_shared<Mn::Shader::AttributeVector2>(toVector(uvList)));
         vertexCount = 6;
     }
 };

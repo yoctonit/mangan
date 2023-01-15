@@ -29,4 +29,4 @@ add_custom_command(
 #    ${CMAKE_CURRENT_SOURCE_DIR}/shader/basic.frag
 #    ${CMAKE_CURRENT_BINARY_DIR}/shader/basic.frag)
 add_executable(temp main.cpp)
-target_include_directories(temp PRIVATE "${CMAKE_SOURCE_DIR}/deps/glm.0.9.9.7")
+#target_include_directories(temp PRIVATE "${CMAKE_SOURCE_DIR}/deps/glm.0.9.9.7")

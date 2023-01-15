@@ -5,7 +5,7 @@
 #ifndef INCLUDED_MN_SURFACE_H
 #define INCLUDED_MN_SURFACE_H
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include <cmath>
 #include <functional>
 #include <utility>

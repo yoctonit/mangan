@@ -5,7 +5,7 @@
 #ifndef INCLUDED_MN_BASIC_MATERIAL_H
 #define INCLUDED_MN_BASIC_MATERIAL_H
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include "Material.h"
 #include "Uniform.h"
 

@@ -11,49 +11,76 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-namespace Mn::Shader
-{
+namespace Mn::Shader {
 
-    class Uniform
-    {
+    class Uniform {
     public:
         Uniform() : _location{-1} {};
 
-        void init(GLuint shader, const std::string &name)
-        {
+        Uniform(GLuint shader, const std::string &name)
+            : _location{ -1 } {
+            init(shader, name);
+        }
+
+        void init(GLuint shader, const std::string &name) {
             _location = glGetUniformLocation(shader, name.c_str());
             if (_location == -1) {
                 std::cout << "Could not find uniform: " << name << "\n";
             }
         }
 
-        [[nodiscard]] GLint location() const
-        {
+        [[nodiscard]] GLint location() const {
             return _location;
+        }
+
+        void upload(float value) {
+            glUniform1f(_location, value);
+        }
+
+        void upload(glm::vec3 value) {
+            glUniform3f(_location, value.x, value.y, value.z);
+        }
+
+        void upload(glm::mat4 value) {
+            glUniformMatrix4fv(_location, 1, GL_FALSE, glm::value_ptr(value));
+        }
+
+        void upload(bool value) {
+            glUniform1i(_location, value ? 1 : 0);
         }
 
     protected:
         GLint _location;
     };
 
-    void UploadUniform(const Uniform &uniform, float value)
-    {
+    void UploadUniform(const Uniform &uniform, float value) {
         glUniform1f(uniform.location(), value);
     }
 
-    void UploadUniform(const Uniform &uniform, glm::vec3 value)
-    {
+    void UploadUniform(const Uniform &uniform, glm::vec3 value) {
         glUniform3f(uniform.location(), value.x, value.y, value.z);
     }
 
-    void UploadUniform(const Uniform &uniform, glm::mat4 value)
-    {
+    void UploadUniform(const Uniform &uniform, glm::mat4 value) {
         glUniformMatrix4fv(uniform.location(), 1, GL_FALSE, glm::value_ptr(value));
     }
 
-    void UploadUniform(const Uniform &uniform, bool value)
-    {
+    void UploadUniform(const Uniform &uniform, bool value) {
         glUniform1i(uniform.location(), value ? 1 : 0);
+    }
+
+    void UploadUniformSampler(const Uniform &uniform, int textureObjectRef, int textureUnitRef) {
+//            Vector v = (Vector)data;
+//            int textureObjectRef = (int)v.values[0];
+//            int textureUnitRef = (int)v.values[1];
+        // activate texture unit
+        glActiveTexture(GL_TEXTURE0 + textureUnitRef);
+        // associate texture object reference
+        // to currently active texture unit
+        glBindTexture(GL_TEXTURE_2D, textureObjectRef);
+        // upload texture unit number (0...15)
+        // to uniform variable in shader
+        glUniform1i(uniform.location(), textureUnitRef);
     }
 
     // class UniformUploader

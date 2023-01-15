@@ -3,10 +3,10 @@
 #include "geometry/Geometry.h"
 #include "material/LineMaterial.h"
 #include "material/PointMaterial.h"
-#include "Mesh.h"
-#include "Scene.h"
-#include "Camera.h"
-#include "Renderer.h"
+#include "dgf/Mesh.h"
+#include "dgf/Scene.h"
+#include "dgf/Camera.h"
+#include "dgf/Renderer.h"
 #include <memory>
 
 class Scene3d {

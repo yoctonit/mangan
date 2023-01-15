@@ -1,4 +1,7 @@
 .vscode
+.vs
+CMakeSettings.json
+out
 .idea
 deps
 build

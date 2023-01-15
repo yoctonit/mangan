@@ -5,7 +5,7 @@
 #ifndef INCLUDED_MN_MOVEMENT_RIG_H
 #define INCLUDED_MN_MOVEMENT_RIG_H
 
-#include "Object3D.h"
+#include "dgf/Object3D.h"
 #include "Input.h"
 #include <map>
 #include <string>

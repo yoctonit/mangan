@@ -5,13 +5,13 @@
 #ifndef INCLUDED_MN_MATERIAL_H
 #define INCLUDED_MN_MATERIAL_H
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include <string>
 #include <map>
 #include <memory>
-#include "../Shader.h"
-#include "../Uniform.h"
-#include "../RenderSetting.h"
+#include "Shader.h"
+#include "Uniform.h"
+#include "dgf/RenderSetting.h"
 
 class Material {
 public:

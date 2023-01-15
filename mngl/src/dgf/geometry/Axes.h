@@ -5,11 +5,11 @@
 #ifndef INCLUDED_MN_AXES_H
 #define INCLUDED_MN_AXES_H
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include <vector>
-#include "../Mesh.h"
+#include "dgf/Mesh.h"
 #include "Geometry.h"
-#include "../material/LineMaterial.h"
+#include "dgf/material/LineMaterial.h"
 #include "Attribute.h"
 
 class Axes : public Geometry {

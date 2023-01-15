@@ -5,9 +5,9 @@
 #ifndef INCLUDED_MN_OBJECT3D_H
 #define INCLUDED_MN_OBJECT3D_H
 
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "glm/glm.hpp"
+#include "glm/gtx/transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include <list>
 #include <memory>
 

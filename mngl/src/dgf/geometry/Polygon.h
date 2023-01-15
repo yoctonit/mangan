@@ -5,7 +5,7 @@
 #ifndef INCLUDED_MN_POLYGON_H
 #define INCLUDED_MN_POLYGON_H
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include <vector>
 #include <cmath>
 #include "Geometry.h"

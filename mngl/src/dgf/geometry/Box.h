@@ -5,7 +5,7 @@
 #ifndef INCLUDED_MN_BOX_H
 #define INCLUDED_MN_BOX_H
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include <vector>
 #include "Geometry.h"
 #include "Attribute.h"

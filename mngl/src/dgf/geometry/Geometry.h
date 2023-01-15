@@ -36,6 +36,15 @@ public:
         }
         return result;
     }
+
+    static std::vector<GLfloat> toVector(const std::vector<glm::vec2> &data) {
+        std::vector<GLfloat> result;
+        for (const auto &v: data) {
+            result.push_back(v.x);
+            result.push_back(v.y);
+        }
+        return result;
+    }
 };
 
 #endif //INCLUDED_MN_GEOMETRY_H

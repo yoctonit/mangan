@@ -5,8 +5,8 @@
 #ifndef INCLUDED_MN_RENDERER_H
 #define INCLUDED_MN_RENDERER_H
 
-#include <glad/glad.h>
-#include <glm/glm.hpp>
+#include "glad/glad.h"
+#include "glm/glm.hpp"
 #include <list>
 #include <memory>
 #include "Scene.h"
@@ -20,6 +20,8 @@ public:
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_MULTISAMPLE); // required for antialiasing
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     static void setClearColor(glm::vec3 color) {

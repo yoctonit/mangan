@@ -8,7 +8,7 @@
 #include <string>
 #include <iostream>
 #include <utility>
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include "Object3D.h"
 
 class RenderSetting {

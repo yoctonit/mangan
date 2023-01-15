@@ -7,9 +7,9 @@
 
 #include "Object3D.h"
 #include "Camera.h"
-#include "geometry/Geometry.h"
-#include "material/Material.h"
-#include <glad/glad.h>
+#include "dgf/geometry/Geometry.h"
+#include "dgf/material/Material.h"
+#include "glad/glad.h"
 #include <string>
 #include <utility>
 
