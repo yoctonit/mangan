@@ -13,10 +13,16 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "Uniform.h"
+//#include "RenderTarget.h"
 
 class Renderer {
 public:
-    Renderer() {
+    // clear color and/or depth buffers
+    bool clearColorBuffer;
+    bool clearDepthBuffer;
+//  std::shared_ptr<RenderTarget> renderTarget;
+
+    Renderer() : clearColorBuffer(true), clearDepthBuffer(true) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_MULTISAMPLE); // required for antialiasing
@@ -28,8 +34,23 @@ public:
         glClearColor(color.r, color.g, color.b, 1.0f);
     }
 
-    void render(Scene &scene, Camera &camera) {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    void render(Scene &scene, Camera &camera) const {
+//        // activate render target
+//        if (renderTarget == nullptr) {
+//            // set render target to window
+//            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//            glViewport(0, 0, Base.windowWidth, Base.windowHeight);
+//        } else {
+//            // set render target properties
+//            glBindFramebuffer(GL_FRAMEBUFFER, renderTarget.framebufferRef);
+//            glViewport(0, 0, renderTarget.width, renderTarget.height);
+//        }
+
+//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        if (clearColorBuffer)
+            glClear(GL_COLOR_BUFFER_BIT);
+        if (clearDepthBuffer)
+            glClear(GL_DEPTH_BUFFER_BIT);
 
         camera.updateViewMatrix();
 

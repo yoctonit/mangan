@@ -12,7 +12,7 @@ namespace Mn::Shader
 {
     GLuint CreateFromFiles(const std::string &vertex_shader_file_name, const std::string &fragment_shader_file_name);
 
-    GLint Location(GLuint shader, const std::string &name);
+//    GLint Location(GLuint shader, const std::string &name);
 
     GLuint Compile(const std::string &shader_source, GLenum shader_type);
 

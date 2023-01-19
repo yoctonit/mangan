@@ -19,13 +19,13 @@ namespace Mn::Shader {
         return Link(vertex_shader_id, fragment_shader_id);
     }
 
-    GLint Location(GLuint shader, const std::string &name) {
-        GLint location = glGetAttribLocation(shader, name.c_str());
-//        if (location == -1) {
-//            location = glGetUniformLocation(shader, name.c_str());
-//        }
-        return location;
-    }
+//    GLint Location(GLuint shader, const std::string &name) {
+//        GLint location = glGetAttribLocation(shader, name.c_str());
+////        if (location == -1) {
+////            location = glGetUniformLocation(shader, name.c_str());
+////        }
+//        return location;
+//    }
 
     /*
      * Compile shader

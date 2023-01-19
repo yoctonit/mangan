@@ -34,6 +34,7 @@ public:
         programRef = Mn::Shader::CreateFromFiles(vertexShaderFileName, fragmentShaderFileName);
 
         drawStyle = GL_TRIANGLES;
+        _baseColor = glm::vec3(1.0f, 1.0f,1.0f);
 
         // Each shader typically contains these uniforms;
         // values set during render process from Mesh/Camera.

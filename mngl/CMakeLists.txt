@@ -24,9 +24,11 @@ add_library(mngl
         src/dgf/material/LineMaterial.h
         src/dgf/material/PointMaterial.h
         src/dgf/material/SurfaceMaterial.h
+        src/dgf/material/SpriteMaterial.h
         src/dgf/Mesh.h
         src/dgf/Texture.h
-        )
+        src/dgf/RenderTarget.h
+        src/dgf/material/TextureMaterial.h)
 #target_link_libraries(glwnd OpenGL::GL) # alternatively: add_dependencies(mangan OpenGL::GL)
 target_link_libraries(mngl PUBLIC glfw)
 target_link_libraries(mngl PUBLIC glad_4_3)

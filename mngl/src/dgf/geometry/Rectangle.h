@@ -12,13 +12,17 @@
 
 class Rectangle : public Geometry {
 public:
-//    Rectangle() = default;
+    Rectangle(float width, float height)
+            : _position(glm::vec2(0.0f, 0.0f)), _alignment(glm::vec2(0.5f, 0.5f)) {
+        float x = _position.x;
+        float y = _position.y;
+        float a = _alignment.x;
+        float b = _alignment.y;
 
-    Rectangle(float width, float height) {
-        glm::vec3 P0(-width / 2, -height / 2, 0.0f);
-        glm::vec3 P1(width / 2, -height / 2, 0.0f);
-        glm::vec3 P2(-width / 2, height / 2, 0.0f);
-        glm::vec3 P3(width / 2, height / 2, 0.0f);
+        glm::vec3 P0(x + (-a) * width, y + (-b) * height, 0.0f);
+        glm::vec3 P1(x + (1 - a) * width, y + (-b) * height, 0.0f);
+        glm::vec3 P2(x + (-a) * width, y + (1 - b) * height, 0.0f);
+        glm::vec3 P3(x + (1 - a) * width, y + (1 - b) * height, 0.0f);
         glm::vec3 C0(1.0f, 1.0f, 1.0f);
         glm::vec3 C1(1.0f, 0.0f, 0.0f);
         glm::vec3 C2(0.0f, 1.0f, 0.0f);
@@ -43,11 +47,11 @@ public:
         };
 
         // texture coordinates
-        glm::vec2  T0(0.0f,0.0f);
-        glm::vec2  T1(1.0f,0.0f);
-        glm::vec2  T2(0.0f,1.0f);
-        glm::vec2  T3(1.0f,1.0f);
-        const std::vector<glm::vec2> uvList{T0,T1,T3, T0,T3,T2};
+        glm::vec2 T0(0.0f, 0.0f);
+        glm::vec2 T1(1.0f, 0.0f);
+        glm::vec2 T2(0.0f, 1.0f);
+        glm::vec2 T3(1.0f, 1.0f);
+        const std::vector<glm::vec2> uvList{T0, T1, T3, T0, T3, T2};
 //        float[] uvData = Vector.flattenList(uvList);
 //        addAttribute("vec2", "vertexUV", uvData);
 
@@ -58,6 +62,14 @@ public:
         addAttribute("vertexUV", std::make_shared<Mn::Shader::AttributeVector2>(toVector(uvList)));
         vertexCount = 6;
     }
+
+    void position(glm::vec2 p) { _position = p; }
+
+    void alignment(glm::vec2 a) { _alignment = a; }
+
+private:
+    glm::vec2 _position;
+    glm::vec2 _alignment;
 };
 
 #endif //INCLUDED_MN_RECTANGLE_H

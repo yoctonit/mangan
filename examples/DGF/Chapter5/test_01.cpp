@@ -1,7 +1,8 @@
 #include "Run.h"
 #include "Input.h"
 #include "dgf/geometry/Rectangle.h"
-#include "dgf/material/SurfaceMaterial.h"
+#include "dgf/material/TextureMaterial.h"
+#include "dgf/Texture.h"
 #include "dgf/Mesh.h"
 #include "dgf/Scene.h"
 #include "dgf/Camera.h"
@@ -13,13 +14,9 @@ public:
     void initialize(int, int) {
         renderer = std::make_shared<Renderer>();
         renderer->setClearColor(glm::vec3(0.5f, 0.5f, 0.5f));
-        camera.setPosition(glm::vec3(0.0f, 0.0f, 3.0f));
-        geometry = std::make_shared<Rectangle>(2.0f, 4.0f);
-        material = std::make_shared<SurfaceMaterial>();
-        material->useVertexColors(true);
-        // to change value from default, for example:
-        // material.renderSettings.get("pointSize").data = 32;
-        // material.uniforms["useVertexColors"]._data = true;
+        camera.setPosition(glm::vec3(0.0f, 0.0f, 2.1f));
+        geometry = std::make_shared<Rectangle>(2.0f, 2.0f);
+        material = std::make_shared<TextureMaterial>("images/grid.png");
         mesh = std::make_shared<Mesh>(geometry, material);
         scene.add(mesh);
     }

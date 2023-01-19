@@ -128,6 +128,12 @@ public:
 //        transform.values[1][3] = position.values[1];
 //        transform.values[2][3] = position.values[2];
     }
+
+    void lookAt(glm::vec3 targetPosition)
+    {
+//        transform = Matrix.makeLookAt(getWorldPosition(), targetPosition );
+        transform = glm::lookAt(getWorldPosition(), targetPosition, glm::vec3(0.0f, 1.0f, 0.0f));
+    }
 };
 
 #endif //INCLUDED_MN_OBJECT3D_H

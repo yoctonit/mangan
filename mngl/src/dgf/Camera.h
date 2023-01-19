@@ -29,6 +29,27 @@ public:
     void updateViewMatrix() {
         viewMatrix = glm::inverse(getWorldMatrix());
     }
+
+    void setPerspective(float angleOfView, float aspectRatio, float near, float far) {
+        projectionMatrix = glm::perspective(angleOfView, aspectRatio, near, far);
+//        projectionMatrix = Matrix.makePerspective(angleOfView, aspectRatio, near, far);
+    }
+
+//    void setPerspective(glm::mat4 m) {
+//        projectionMatrix = m;
+////        projectionMatrix = Matrix.makePerspective();
+//    }
+
+    void setOrthographic(float left, float right, float bottom, float top, float near, float far) {
+        projectionMatrix = glm::ortho(left, right, bottom, top, near, far);
+//        projectionMatrix = Matrix.makeOrthographic(left, right,bottom, top, near, far);
+    }
+
+//    void setOrthographic(glm::mat4 m)
+//    {
+//        projectionMatrix = m;
+////        projectionMatrix = Matrix.makeOrthographic();
+//    }
 };
 
 #endif //OPENGL_EXAMPLES_CAMERA_H

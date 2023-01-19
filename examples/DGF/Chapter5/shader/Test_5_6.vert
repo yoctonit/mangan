@@ -1,15 +1,17 @@
 #version 430 core
 
-in vec3 vertexPosition;
-out vec3 position;
-
-uniform mat4 modelMatrix;
-uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 modelMatrix;
+
+in vec3 vertexPosition;
+in vec2 vertexUV;
+
+out vec2 UV;
 
 void main()
 {
     vec4 pos = vec4(vertexPosition, 1.0);
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * pos;
-    position = vertexPosition;
+    UV = vertexUV;
 }

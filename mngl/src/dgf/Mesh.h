@@ -54,9 +54,12 @@ public:
         // bind VAO
         glBindVertexArray(vaoRef);
         // update uniform values stored outside of material
-        Mn::Shader::UploadUniform(material->uniforms["modelMatrix"], getWorldMatrix());
-        Mn::Shader::UploadUniform(material->uniforms["viewMatrix"], camera.viewMatrix);
-        Mn::Shader::UploadUniform(material->uniforms["projectionMatrix"], camera.projectionMatrix);
+        material->uniforms["modelMatrix"].upload(getWorldMatrix());
+        material->uniforms["viewMatrix"].upload(camera.viewMatrix);
+        material->uniforms["projectionMatrix"].upload(camera.projectionMatrix);
+//        Mn::Shader::UploadUniform(material->uniforms["modelMatrix"], getWorldMatrix());
+//        Mn::Shader::UploadUniform(material->uniforms["viewMatrix"], camera.viewMatrix);
+//        Mn::Shader::UploadUniform(material->uniforms["projectionMatrix"], camera.projectionMatrix);
 
         // update uniforms stored in material
         //    for (Uniform uniform: mesh->material.uniforms.values())

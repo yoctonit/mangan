@@ -4,16 +4,32 @@ target_link_libraries(scene3d PUBLIC mngl)
 #target_link_libraries(scene3d PUBLIC dgf)
 # target_include_directories(scene3d PRIVATE "${CMAKE_SOURCE_DIR}/glm.0.9.9.7")
 
-add_custom_command(
-        TARGET scene3d POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_SOURCE_DIR}/shader/BasicMaterial2.vert
-        ${CMAKE_CURRENT_BINARY_DIR}/shader/BasicMaterial2.vert)
-add_custom_command(
-        TARGET scene3d POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_SOURCE_DIR}/shader/BasicMaterial2.frag
-        ${CMAKE_CURRENT_BINARY_DIR}/shader/BasicMaterial2.frag)
+#add_custom_command(
+#        TARGET scene3d POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy
+#        ${CMAKE_CURRENT_SOURCE_DIR}/shader/SpriteMaterial.vert
+#        ${CMAKE_CURRENT_BINARY_DIR}/shader/SpriteMaterial.vert)
+#add_custom_command(
+#        TARGET scene3d POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy
+#        ${CMAKE_CURRENT_SOURCE_DIR}/shader/SpriteMaterial.frag
+#        ${CMAKE_CURRENT_BINARY_DIR}/shader/SpriteMaterial.frag)
+#add_custom_command(
+#        TARGET scene3d POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy
+#        ${CMAKE_CURRENT_SOURCE_DIR}/images/rolling-ball.png
+#        ${CMAKE_CURRENT_BINARY_DIR}/images/rolling-ball.png)
+#add_custom_command(
+#        TARGET scene3d POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy
+#        ${CMAKE_CURRENT_SOURCE_DIR}/images/crate.png
+#        ${CMAKE_CURRENT_BINARY_DIR}/images/crate.png)
+#add_custom_command(
+#        TARGET scene3d POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy
+#        ${CMAKE_CURRENT_SOURCE_DIR}/images/noise.png
+#        ${CMAKE_CURRENT_BINARY_DIR}/images/noise.png)
+
 
 #add_executable(temp main.cpp)
 #target_link_libraries(temp mangan1)
