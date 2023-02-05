@@ -38,7 +38,6 @@ namespace Mn {
         double previous_time, curr_time, frameDuration;
         frameDuration = 1.0 / 60.0;
         previous_time = glfwGetTime(); // time in seconds
-        curr_time = previous_time;
         double elapsed_time = 0;
 
         while (!glfwWindowShouldClose(w)) {
@@ -54,7 +53,6 @@ namespace Mn {
                     scene.update(Window::input(), frameDuration);
                 }
                 scene.draw();
-
                 glfwSwapBuffers(w);
             }
 

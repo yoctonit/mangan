@@ -67,8 +67,60 @@ namespace Mn::Shader {
             glUniform1i(_location, textureUnitRef);
         }
 
+//        in uploadData():
+//        else if (dataType.equals("Light"))
+//        {
+//            Light L = (Light)data;
+//            glUniform1i( variableRefMap.get("lightType"),
+//                         (int)L.lightType );
+//            Vector col = L.color;
+//            glUniform3f( variableRefMap.get("color"),
+//                         (float)col.values[0], (float)col.values[1],
+//                         (float)col.values[2] );
+//            Vector dir = L.getDirection();
+//            glUniform3f( variableRefMap.get("direction"),
+//                         (float)dir.values[0], (float)dir.values[1],
+//                         (float)dir.values[2] );
+//            252 ◾ Developing Graphics Frameworks with Java and OpenGL
+//            Vector pos = L.getPosition();
+//            glUniform3f( variableRefMap.get("position"),
+//                         (float)pos.values[0], (float)pos.values[1],
+//                         (float)pos.values[2] );
+//            Vector att = L.attenuation;
+//            glUniform3f( variableRefMap.get("attenuation"),
+//                         (float)att.values[0], (float)att.values[1],
+//                         (float)att.values[2] );
+//        }
+
+        // get and store reference for program variable with given name
+//    public void locateVariable(int programRef, String variableName)
+//        {
+//            if (dataType.equals("Light"))
+//            {
+//                variableRefMap = new HashMap<String, Integer>();
+//                variableRefMap.put("lightType",
+//                                   glGetUniformLocation(programRef,
+//                                                        variableName + ".lightType") );
+//                variableRefMap.put("color",
+//                                   glGetUniformLocation(programRef,
+//                                                        variableName + ".color") );
+//                variableRefMap.put("direction",
+//                                   glGetUniformLocation(programRef,
+//                                                        variableName + ".direction") );
+//                variableRefMap.put("position",
+//                                   glGetUniformLocation(programRef,
+//                                                        variableName + ".position") );
+//                variableRefMap.put("attenuation",
+//                                   glGetUniformLocation(programRef,
+//                                                        variableName + ".attenuation") );
+//            }
+//            else
+//                variableRef = glGetUniformLocation(programRef,
+//                                                   variableName);
     protected:
         GLint _location;
+        // reference for multiple variable locations in program
+//    private HashMap<String, Integer> variableRefMap;
     };
 
     void UploadUniform(const Uniform &uniform, float value) {

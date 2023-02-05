@@ -55,11 +55,20 @@ public:
 //        float[] uvData = Vector.flattenList(uvList);
 //        addAttribute("vec2", "vertexUV", uvData);
 
+        // normal vector
+        glm::vec3 N0(0.0f, 0.0f, 1.0f);
+        const std::vector<glm::vec3> normalList{N0, N0, N0, N0, N0, N0};
+        // float[] normalData = Vector.flattenList(normalList);
+//        addAttribute("vec3", "vertexNormal", normalData);
+//        addAttribute("vec3", "faceNormal", normalData);
+
         addAttribute("vertexPosition", std::make_shared<Mn::Shader::AttributeVector3>(positionData));
         // addAttribute(Attribute::Type::Vec3, "vertexPosition", positionData);
         addAttribute("vertexColor", std::make_shared<Mn::Shader::AttributeVector3>(colorData));
         // addAttribute(Attribute::Type::Vec3, "vertexColor", colorData);
         addAttribute("vertexUV", std::make_shared<Mn::Shader::AttributeVector2>(toVector(uvList)));
+        addAttribute("vertexNormal", std::make_shared<Mn::Shader::AttributeVector3>(toVector(normalList)));
+        addAttribute("faceNormal", std::make_shared<Mn::Shader::AttributeVector3>(toVector(normalList)));
         vertexCount = 6;
     }
 

@@ -14,7 +14,7 @@ namespace Mn::Util {
      * @param [in] file_path - Path to the file
      * @param [out] - On successful read file contents, on failed read empty string;
      */
-    std::string Load(const std::string &file_path) {
+    std::string Load1(const std::string &file_path) {
         std::ifstream file_stream(file_path, std::ios::in);
         if (!file_stream.is_open()) {
             std::cout << "Could not open " << file_path << "\n";

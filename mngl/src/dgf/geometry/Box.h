@@ -14,14 +14,14 @@ class Box : public Geometry {
 public:
     Box(float width, float height, float depth) {
         // corners of a cube
-        glm::vec3 P0(-width/2, -height/2, -depth/2);
-        glm::vec3 P1( width/2, -height/2, -depth/2);
-        glm::vec3 P2(-width/2, height/2, -depth/2);
-        glm::vec3 P3( width/2, height/2, -depth/2);
-        glm::vec3 P4(-width/2, -height/2, depth/2);
-        glm::vec3 P5( width/2, -height/2, depth/2);
-        glm::vec3 P6(-width/2, height/2, depth/2);
-        glm::vec3 P7( width/2, height/2, depth/2);
+        glm::vec3 P0(-width / 2, -height / 2, -depth / 2);
+        glm::vec3 P1(width / 2, -height / 2, -depth / 2);
+        glm::vec3 P2(-width / 2, height / 2, -depth / 2);
+        glm::vec3 P3(width / 2, height / 2, -depth / 2);
+        glm::vec3 P4(-width / 2, -height / 2, depth / 2);
+        glm::vec3 P5(width / 2, -height / 2, depth / 2);
+        glm::vec3 P6(-width / 2, height / 2, depth / 2);
+        glm::vec3 P7(width / 2, height / 2, depth / 2);
 
         // colors for faces in order: x+, x-, y+, y-, z+, z-
         glm::vec3 C1(1.0f, 0.5f, 0.5f);
@@ -50,16 +50,49 @@ public:
 //        };
 
         const std::vector<glm::vec3> positionList{
-                P5,P1,P3,P5,P3,P7, P0,P4,P6,P0,P6,P2,
-                P6,P7,P3,P6,P3,P2, P0,P1,P5,P0,P5,P4,
-                P4,P5,P7,P4,P7,P6, P1,P0,P2,P1,P2,P3 };
-        const std::vector<glm::vec3> colorList {
-                C1,C1,C1,C1,C1,C1, C2,C2,C2,C2,C2,C2,
-                C3,C3,C3,C3,C3,C3, C4,C4,C4,C4,C4,C4,
-                C5,C5,C5,C5,C5,C5, C6,C6,C6,C6,C6,C6 };
+                P5, P1, P3, P5, P3, P7, P0, P4, P6, P0, P6, P2,
+                P6, P7, P3, P6, P3, P2, P0, P1, P5, P0, P5, P4,
+                P4, P5, P7, P4, P7, P6, P1, P0, P2, P1, P2, P3};
+        const std::vector<glm::vec3> colorList{
+                C1, C1, C1, C1, C1, C1, C2, C2, C2, C2, C2, C2,
+                C3, C3, C3, C3, C3, C3, C4, C4, C4, C4, C4, C4,
+                C5, C5, C5, C5, C5, C5, C6, C6, C6, C6, C6, C6};
+
+        // texture coordinates
+        glm::vec2 T0(0.0f, 0.0f);
+        glm::vec2 T1(1.0f, 0.0f);
+        glm::vec2 T2(0.0f, 1.0f);
+        glm::vec2 T3(1.0f, 1.0f);
+        const std::vector<glm::vec2> uvList{
+                T0, T1, T3, T0, T3, T2, T0, T1, T3, T0, T3, T2,
+                T0, T1, T3, T0, T3, T2, T0, T1, T3, T0, T3, T2,
+                T0, T1, T3, T0, T3, T2, T0, T1, T3, T0, T3, T2
+        };
+//        float[] uvData = Vector.flattenList(uvList);
+//        addAttribute("vec2", "vertexUV", uvData);
+
+// normal vectors for x+, x-, y+, y-, z+, z-
+        glm::vec3 N1(1.0f, 0.0f, 0.0f);
+        glm::vec3 N2(-1.0f, 0.0f, 0.0f);
+        glm::vec3 N3(0.0f, 1.0f, 0.0f);
+        glm::vec3 N4(0.0f, -1.0f, 0.0f);
+        glm::vec3 N5(0.0f, 0.0f, 1.0f);
+        glm::vec3 N6(0.0f, 0.0f, -1.0f);
+        const std::vector<glm::vec3> normalList{
+                N1, N1, N1, N1, N1, N1, N2, N2, N2, N2, N2, N2,
+                N3, N3, N3, N3, N3, N3, N4, N4, N4, N4, N4, N4,
+                N5, N5, N5, N5, N5, N5, N6, N6, N6, N6, N6, N6
+        };
+//        float[] normalData = Vector.flattenList(normalList);
+//        addAttribute("vec3", "vertexNormal", normalData);
+//        addAttribute("vec3", "faceNormal", normalData);
 
         addAttribute("vertexPosition", std::make_shared<Mn::Shader::AttributeVector3>(toVector(positionList)));
         addAttribute("vertexColor", std::make_shared<Mn::Shader::AttributeVector3>(toVector(colorList)));
+        addAttribute("vertexUV", std::make_shared<Mn::Shader::AttributeVector2>(toVector(uvList)));
+        addAttribute("vertexNormal", std::make_shared<Mn::Shader::AttributeVector3>(toVector(normalList)));
+        addAttribute("faceNormal", std::make_shared<Mn::Shader::AttributeVector3>(toVector(normalList)));
+
         vertexCount = 36;
     }
 };

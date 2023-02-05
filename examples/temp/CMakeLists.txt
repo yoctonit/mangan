@@ -1,48 +1,13 @@
-add_executable(scene3d e01_shape.cpp)
-#target_link_libraries(scene3d PUBLIC mnglwnd)
-target_link_libraries(scene3d PUBLIC mngl)
-#target_link_libraries(scene3d PUBLIC dgf)
-# target_include_directories(scene3d PRIVATE "${CMAKE_SOURCE_DIR}/glm.0.9.9.7")
+add_executable(main main.cpp)
+target_link_libraries(main PUBLIC mngl)
 
-#add_custom_command(
-#        TARGET scene3d POST_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E copy
-#        ${CMAKE_CURRENT_SOURCE_DIR}/shader/SpriteMaterial.vert
-#        ${CMAKE_CURRENT_BINARY_DIR}/shader/SpriteMaterial.vert)
-#add_custom_command(
-#        TARGET scene3d POST_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E copy
-#        ${CMAKE_CURRENT_SOURCE_DIR}/shader/SpriteMaterial.frag
-#        ${CMAKE_CURRENT_BINARY_DIR}/shader/SpriteMaterial.frag)
-#add_custom_command(
-#        TARGET scene3d POST_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E copy
-#        ${CMAKE_CURRENT_SOURCE_DIR}/images/rolling-ball.png
-#        ${CMAKE_CURRENT_BINARY_DIR}/images/rolling-ball.png)
-#add_custom_command(
-#        TARGET scene3d POST_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E copy
-#        ${CMAKE_CURRENT_SOURCE_DIR}/images/crate.png
-#        ${CMAKE_CURRENT_BINARY_DIR}/images/crate.png)
-#add_custom_command(
-#        TARGET scene3d POST_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E copy
-#        ${CMAKE_CURRENT_SOURCE_DIR}/images/noise.png
-#        ${CMAKE_CURRENT_BINARY_DIR}/images/noise.png)
-
-
-#add_executable(temp main.cpp)
-#target_link_libraries(temp mangan1)
-#
-#add_custom_command(
-#    TARGET temp POST_BUILD
-#    COMMAND ${CMAKE_COMMAND} -E copy
-#    ${CMAKE_CURRENT_SOURCE_DIR}/shader/basic.vert
-#    ${CMAKE_CURRENT_BINARY_DIR}/shader/basic.vert)
-#add_custom_command(
-#    TARGET temp POST_BUILD
-#    COMMAND ${CMAKE_COMMAND} -E copy
-#    ${CMAKE_CURRENT_SOURCE_DIR}/shader/basic.frag
-#    ${CMAKE_CURRENT_BINARY_DIR}/shader/basic.frag)
-add_executable(temp main.cpp)
-#target_include_directories(temp PRIVATE "${CMAKE_SOURCE_DIR}/deps/glm.0.9.9.7")
+add_custom_command(
+        TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/shader/basic.vs
+        ${CMAKE_CURRENT_BINARY_DIR}/shader/basic.vs)
+add_custom_command(
+        TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/shader/basic.fs
+        ${CMAKE_CURRENT_BINARY_DIR}/shader/basic.fs)

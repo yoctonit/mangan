@@ -18,6 +18,15 @@ namespace Mn::Shader
 
     GLuint Link(GLuint vertex_shader_id, GLuint fragment_shader_id);
 
+    class Program {
+    public:
+        Program(const std::string &vs_file, const std::string &fs_file);
+//        ~Program();
+        [[nodiscard]] unsigned int id() const { return _id; }
+    private:
+        unsigned int _id{};
+    };
+
 }
 
 #endif // INCLUDED_MN_SHADER_H

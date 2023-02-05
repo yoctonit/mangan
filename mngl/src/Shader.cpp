@@ -5,6 +5,7 @@
 #include "Util.h"
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 namespace Mn::Shader {
     GLuint CreateFromFiles(
@@ -115,6 +116,18 @@ namespace Mn::Shader {
         glDetachShader(program_id, vertex_shader_id);
         glDetachShader(program_id, fragment_shader_id);
 
+        glDeleteShader(vertex_shader_id);
+        glDeleteShader(fragment_shader_id);
+
         return program_id;
     }
+
+    Program::Program(const std::string &vs_file, const std::string &fs_file) {
+        _id = CreateFromFiles(vs_file, fs_file);
+        std::cout << "Created shader program with id " << _id << "\n";
+    }
+//    Program::~Program() {
+//        glDeleteProgram(program_id);
+//        std::cout << "Deleted shader program with id " << _id << "\n";
+//    }
 }

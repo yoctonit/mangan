@@ -9,7 +9,7 @@
 
 namespace Mn::Util {
 
-    std::string Load(const std::string &file_path);
+    std::string Load1(const std::string &file_path);
 //    class text_file_loader {
 //
 //public:

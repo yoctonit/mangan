@@ -134,6 +134,23 @@ public:
 //        transform = Matrix.makeLookAt(getWorldPosition(), targetPosition );
         transform = glm::lookAt(getWorldPosition(), targetPosition, glm::vec3(0.0f, 1.0f, 0.0f));
     }
+
+//    // returns 3x3 upper-left submatrix with rotation data
+// Matrix getRotationMatrix()
+//    {
+//        return transform.minor(3,3);
+//    }
+// Vector getDirection()
+//    {
+//        Vector forward = new Vector(0,0,-1);
+//        return getRotationMatrix().multiplyVector( forward );
+//    }
+// void setDirection(Vector direction)
+//    {
+//        Vector position = getPosition();
+//        Vector targetPosition = Vector.add(position, direction);
+//        lookAt( targetPosition );
+//    }
 };
 
 #endif //INCLUDED_MN_OBJECT3D_H
