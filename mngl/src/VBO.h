@@ -13,10 +13,10 @@ namespace Mn {
 
     class VBO {
     public:
-        explicit VBO(const std::vector<float> &data) {
+        explicit VBO(const std::vector<float> &data, GLenum type = GL_STATIC_DRAW) {
             glGenBuffers(1, &_id);
             glBindBuffer(GL_ARRAY_BUFFER, _id);
-            glBufferData(GL_ARRAY_BUFFER, (data.size()) * sizeof(float), data.data(), GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, (data.size()) * sizeof(float), data.data(), type);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             std::cout << "Created buffer with id " << _id << "\n";
         }
@@ -29,7 +29,13 @@ namespace Mn {
             glBindBuffer(GL_ARRAY_BUFFER, _id);
         }
 
+        void load(const std::vector<float> &data) const {
+            glBindBuffer(GL_ARRAY_BUFFER, _id);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, (data.size()) * sizeof(float), data.data());
+        }
+
         [[nodiscard]] unsigned int get() const { return _id; };
+
         [[nodiscard]] unsigned int id() const { return _id; };
 
     private:

@@ -1,17 +1,17 @@
-#ifndef OPENGL_EXAMPLES_TEXTURE_SHADER_H
-#define OPENGL_EXAMPLES_TEXTURE_SHADER_H
+#ifndef OPENGL_EXAMPLES_SPRITE_SHADER_H
+#define OPENGL_EXAMPLES_SPRITE_SHADER_H
 
 #include <string>
 #include <memory>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "SquareGeometryBuffer.h"
+#include "../SquareGeometryBuffer.h"
 #include "ShaderInterface.h"
-#include "../Shader.h"
+#include "../../Shader.h"
 
-class TextureShader : public ShaderInterface {
+class SpriteShader : public ShaderInterface {
 public:
-    TextureShader(const std::string &vs_file, const std::string &fs_file) {
+    SpriteShader(const std::string &vs_file, const std::string &fs_file) {
         mCompiledShader = Mn::Shader::CreateFromFiles(vs_file, fs_file);
         glGenVertexArrays(1, &VAO);
         mVertexPositionRef = glGetAttribLocation(mCompiledShader, "aVertexPosition");
@@ -20,6 +20,23 @@ public:
         mCameraMatrixRef = glGetUniformLocation(mCompiledShader, "uCameraXformMatrix");
         mTextureCoordinateRef = glGetAttribLocation(mCompiledShader, "aTextureCoordinate");
         mSamplerRef = glGetAttribLocation(mCompiledShader, "uSampler");
+
+        std::vector<float> initTexCoord = {
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                1.0f, 0.0f,
+                0.0f, 0.0f
+        };
+        mTexCoordBuffer = std::make_shared<Mn::VBO>(initTexCoord, GL_DYNAMIC_DRAW);
+
+    }
+
+//    _getTexCoordBuffer() {
+//        return this.mTexCoordBuffer;
+//    }
+//
+    void setTextureCoordinate(const std::vector<float> &texCoord) override {
+        mTexCoordBuffer->load(texCoord);
     }
 
     void activate(
@@ -35,7 +52,7 @@ public:
         glVertexAttribPointer(mVertexPositionRef, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
         glEnableVertexAttribArray(mVertexPositionRef);
 
-        sq->getTexCoordBuffer()->activate();
+        mTexCoordBuffer->activate();
         glVertexAttribPointer(mTextureCoordinateRef, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr);
         glEnableVertexAttribArray(mTextureCoordinateRef);
 
@@ -54,6 +71,7 @@ private:
     unsigned int VAO{};
     int mTextureCoordinateRef{};
     int mSamplerRef{};
+    std::shared_ptr<Mn::VBO> mTexCoordBuffer{};
 };
 
-#endif //OPENGL_EXAMPLES_TEXTURE_SHADER_H
+#endif //OPENGL_EXAMPLES_SPRITE_SHADER_H

@@ -15,21 +15,16 @@
 #include "Util.h"
 #include "Camera.h"
 #include "SquareGeometryBuffer.h"
-#include "Renderable.h"
-#include "TextureRenderable.h"
+#include "renderable/Renderable.h"
+#include "renderable/TextureRenderable.h"
 
 using json = nlohmann::json;
 
 class SceneFileParser {
 public:
     explicit SceneFileParser(const std::string &file_path) {
-//        std::ifstream file_stream(file_path, std::ios::in);
-//        if (!file_stream.is_open()) {
-//            std::cout << "SceneFileParser could not open " << file_path << "\n";
-//        }
         std::string sceneDefinition = Mn::Util::Load(file_path);
         data = json::parse(sceneDefinition);
-        // data = json::parse(file_stream);
     }
 
     std::shared_ptr<Camera> parseCamera() {
@@ -55,7 +50,7 @@ public:
     }
 
     std::vector<std::shared_ptr<Renderable>> parseSquares(
-            const std::shared_ptr<SimpleShader> &ss,
+            const std::shared_ptr<ShaderInterface> &ss,
             const std::shared_ptr<SquareGeometryBuffer> &geometry) {
         std::vector<std::shared_ptr<Renderable>> sqSet;
         auto squares = data["Square"];
@@ -82,7 +77,7 @@ public:
     }
 
     std::vector<std::shared_ptr<Renderable>> parseTextureSquares(
-            const std::shared_ptr<TextureShader> &ss,
+            const std::shared_ptr<ShaderInterface> &ss,
             const std::shared_ptr<SquareGeometryBuffer> &geometry) {
         std::vector<std::shared_ptr<Renderable>> sqSet;
         auto squares = data["TextureSquare"];

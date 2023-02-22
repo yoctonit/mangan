@@ -28,13 +28,13 @@ namespace Mn {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
             // load and generate the texture
-            int width, height, nrChannels;
+            int nrChannels;
             stbi_set_flip_vertically_on_load(true);
-            unsigned char *data = stbi_load(fileName.c_str(), &width, &height, &nrChannels, 0);
+            unsigned char *data = stbi_load(fileName.c_str(), &mWidth, &mHeight, &nrChannels, 0);
             if (data) {
-                glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-                // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr); empty texture
+                glTexImage2D(GL_TEXTURE_2D, 0, format, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, data);
+                // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mWidth, mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+                // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mWidth, mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr); empty texture
                 glGenerateMipmap(GL_TEXTURE_2D);
                 // glBindTexture(GL_TEXTURE_2D, 0);
             } else {
@@ -64,8 +64,14 @@ namespace Mn {
 //        void deactivate() {
 //            glBindTexture(GL_TEXTURE_2D, 0);
 //        }
+        [[nodiscard]] int width() const { return mWidth; }
+
+        [[nodiscard]] int height() const { return mHeight; }
+
     private:
         GLuint textureRef{};
+        int mWidth{};
+        int mHeight{};
     };
 }
 

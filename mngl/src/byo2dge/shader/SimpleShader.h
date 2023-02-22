@@ -4,9 +4,9 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "SquareGeometryBuffer.h"
+#include "../SquareGeometryBuffer.h"
 #include "ShaderInterface.h"
-#include "../Shader.h"
+#include "../../Shader.h"
 
 class SimpleShader : public ShaderInterface {
 public:

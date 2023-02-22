@@ -5,11 +5,17 @@ add_library(mngl
         src/Util.h src/Util.cpp
         src/Shader.h src/Shader.cpp
         src/Texture.h
-        src/byo2dge/ShaderInterface.h
-        src/byo2dge/SimpleShader.h
-        src/byo2dge/TextureShader.h
+        src/byo2dge/shader/ShaderInterface.h
+        src/byo2dge/shader/SimpleShader.h
+        src/byo2dge/shader/TextureShader.h
+        src/byo2dge/shader/SpriteShader.h
         src/byo2dge/SquareGeometryBuffer.h
-        src/byo2dge/Renderable.h src/byo2dge/TextureRenderable.h
+        src/byo2dge/CharacterInfo.h
+        src/byo2dge/renderable/Renderable.h
+        src/byo2dge/renderable/TextureRenderable.h
+        src/byo2dge/renderable/SpriteRenderable.h
+        src/byo2dge/renderable/SpriteAnimateRenderable.h
+        src/byo2dge/renderable/FontRenderable.h
         src/byo2dge/Transform.h src/byo2dge/Camera.h
         src/byo2dge/Engine.h src/byo2dge/SceneFileParser.h
         )

@@ -1,12 +1,6 @@
 #ifndef OPENGL_EXAMPLES_TEXTURE_RENDERABLE_H
 #define OPENGL_EXAMPLES_TEXTURE_RENDERABLE_H
 
-//#include <memory>
-//#include <glm/glm.hpp>
-//#include "SquareGeometryBuffer.h"
-//#include "ShaderInterface.h"
-//#include "Transform.h"
-//#include "Camera.h"
 #include "Renderable.h"
 #include "Texture.h"
 
@@ -30,9 +24,9 @@ public:
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
 
-//    getTexture() { return this.mTexture; }
-//    setTexture(newTexture) { this.mTexture = newTexture; }
-private:
+    std::shared_ptr<Mn::Texture> getTexture() { return mTexture; }
+    void setTexture(const std::shared_ptr<Mn::Texture>& newTexture) { mTexture = newTexture; }
+protected:
     std::shared_ptr<Mn::Texture> mTexture{};
 };
 

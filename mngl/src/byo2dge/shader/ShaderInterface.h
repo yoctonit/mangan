@@ -4,8 +4,8 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "SquareGeometryBuffer.h"
-#include "../Shader.h"
+#include "../SquareGeometryBuffer.h"
+#include "../../Shader.h"
 
 class ShaderInterface {
 public:
@@ -15,6 +15,8 @@ public:
             glm::mat4 trsMatrix,
             glm::mat4 cameraMatrix
     ) const = 0;
+
+    virtual void setTextureCoordinate(const std::vector<float> &texCoord) {}
 };
 
 #endif //OPENGL_EXAMPLES_SHADER_INTERFACE_H
