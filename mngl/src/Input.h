@@ -28,6 +28,11 @@ namespace Mn {
         f = GLFW_KEY_F,
         g = GLFW_KEY_G,
 
+        h = GLFW_KEY_H,
+        j = GLFW_KEY_J,
+        k = GLFW_KEY_K,
+        l = GLFW_KEY_L,
+
         z = GLFW_KEY_Z,
         x = GLFW_KEY_X,
         c = GLFW_KEY_C,

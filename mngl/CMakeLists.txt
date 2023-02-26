@@ -18,6 +18,9 @@ add_library(mngl
         src/byo2dge/renderable/FontRenderable.h
         src/byo2dge/Transform.h src/byo2dge/Camera.h
         src/byo2dge/Engine.h src/byo2dge/SceneFileParser.h
+        src/byo2dge/BoundingBox.h
+        src/byo2dge/game_objects/GameObject.h
+        src/byo2dge/game_objects/GameObjectSet.h
         )
 #target_link_libraries(glwnd OpenGL::GL) # alternatively: add_dependencies(mangan OpenGL::GL)
 target_link_libraries(mngl PUBLIC glfw)

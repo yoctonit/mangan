@@ -8,6 +8,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "BoundingBox.h"
 
 /*
  * Encapsulates the user define WC and Viewport functionality
@@ -110,6 +111,15 @@ public:
         return mCameraMatrix;
     }
     // #endregion
+
+    unsigned collideWCBound(const std::shared_ptr<Transform>& aXform, float zone) {
+        BoundingBox bbox(aXform->getPosition(), aXform->getWidth(), aXform->getHeight());
+        float w = zone * getWCWidth();
+        float h = zone * getWCHeight();
+        BoundingBox cameraBound(getWCCenter(), w, h);
+        return cameraBound.boundCollideStatus(bbox);
+    }
+
 private:
     glm::vec2 mWCCenter{};
     float mWCWidth{};

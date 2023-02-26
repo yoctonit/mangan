@@ -58,12 +58,29 @@ public:
     virtual void setAnimationSpeed(int tickInterval) {}
 
     virtual void updateAnimation() {}
+
     virtual void incAnimationSpeed(int deltaInterval) {}
+
     void setColor(glm::vec4 color) { mColor = color; }
 
     glm::vec4 getColor() { return mColor; }
 
     std::shared_ptr<Transform> getXform() { return mXform; }
+
+    virtual bool pixelTouches(const std::shared_ptr<Renderable> &other, glm::vec2 &wcTouchPos) {
+        return false;
+    }
+
+    virtual glm::ivec2 _wcPositionToIndex(glm::vec2 wcPos) { return {0, 0}; }
+
+    [[nodiscard]] virtual float _pixelAlphaValue(int x, int y) const { return 0.0f; }
+
+    [[nodiscard]] virtual int getElmWidthPixels() const {
+        return 0; }
+
+    [[nodiscard]] virtual int getElmHeightPixels() const { return 0; }
+
+    virtual void setColorArray() {}
 
 protected:
     std::shared_ptr<ShaderInterface> mShader{};   // the shader for shading this object

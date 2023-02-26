@@ -68,10 +68,54 @@ namespace Mn {
 
         [[nodiscard]] int height() const { return mHeight; }
 
+        [[nodiscard]] std::vector<unsigned char> getColorArray() const {
+            std::vector<unsigned char> pixels(mWidth * mHeight * 4);
+
+            // create a framebuffer bind it to the texture, and read the color content
+            // Hint from: http://stackoverflow.com/questions/13626606/read-pixels-from-a-webgl-texture
+            unsigned int fb;
+            glGenFramebuffers(1, &fb);
+            glBindFramebuffer(GL_FRAMEBUFFER, fb);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureRef, 0);
+            if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE) {
+                glReadPixels(0, 0, mWidth, mHeight, GL_RGBA, GL_UNSIGNED_BYTE, pixels.data());
+            } else {
+                std::cout << "WARNING: Engine.Textures.getColorArray() failed!\n";
+            }
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            glDeleteFramebuffers(1, &fb);
+
+            return pixels;
+        }
+//        std::vector<unsigned char> getColorArray(/* textureName */) {
+//            if (mColorArray.empty()) {
+//                // create a framebuffer bind it to the texture, and read the color content
+//                // Hint from: http://stackoverflow.com/questions/13626606/read-pixels-from-a-webgl-texture
+//                unsigned int fb;
+//                glGenFramebuffers(1, &fb);
+//                glBindFramebuffer(GL_FRAMEBUFFER, fb);
+//                glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureRef, 0);
+//                if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE) {
+//                    std::vector<unsigned char> pixels(mWidth * mHeight * 4);
+//                    glReadPixels(0, 0, mWidth, mHeight, GL_RGBA, GL_UNSIGNED_BYTE, pixels.data());
+//                    mColorArray = pixels;
+//                } else {
+//                    std::cout << "WARNING: Engine.Textures.getColorArray() failed!\n";
+//                    // throw new Error("WARNING: Engine.Textures.getColorArray() failed!");
+//                    // return null;
+//                }
+//                glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//                glDeleteFramebuffers(1, &fb);
+//            }
+//
+//            return mColorArray;
+//        }
+
     private:
         GLuint textureRef{};
         int mWidth{};
         int mHeight{};
+//        std::vector<unsigned char> mColorArray;
     };
 }
 
