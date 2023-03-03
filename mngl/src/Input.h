@@ -22,6 +22,11 @@ namespace Mn {
         r = GLFW_KEY_R,
         t = GLFW_KEY_T,
 
+        u = GLFW_KEY_U,
+        i = GLFW_KEY_I,
+        o = GLFW_KEY_O,
+        p = GLFW_KEY_P,
+
         a = GLFW_KEY_A,
         s = GLFW_KEY_S,
         d = GLFW_KEY_D,
@@ -39,8 +44,8 @@ namespace Mn {
         v = GLFW_KEY_V,
         b = GLFW_KEY_B,
 
-        u = GLFW_KEY_U,
-        o = GLFW_KEY_O,
+        n = GLFW_KEY_N,
+        m = GLFW_KEY_M,
 
         left = GLFW_KEY_LEFT,
         right = GLFW_KEY_RIGHT,
@@ -69,8 +74,10 @@ namespace Mn {
         [[nodiscard]] bool is_clicked(mouse::button button) const;
 
         [[nodiscard]] double get_mouse_x_position() const;
+        [[nodiscard]] double get_mouse_x_screen_position() const;
 
         [[nodiscard]] double get_mouse_y_position() const;
+        [[nodiscard]] double get_mouse_y_screen_position() const;
 
     private:
         Input();
@@ -105,6 +112,7 @@ namespace Mn {
         std::vector<bool> _button_pressed;
         std::vector<bool> _button_clicked;
         double _mouse_x, _mouse_y;
+        double _mouse_screen_x, _mouse_screen_y;
 
         int _screen_width;
         int _screen_height;

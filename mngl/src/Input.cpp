@@ -28,8 +28,10 @@ namespace Mn {
     }
 
     double Input::get_mouse_x_position() const { return _mouse_x; }
+    double Input::get_mouse_x_screen_position() const { return _mouse_screen_x; }
 
     double Input::get_mouse_y_position() const { return _mouse_y; }
+    double Input::get_mouse_y_screen_position() const { return _mouse_screen_y; }
 
     Input::Input() {
         LAST_KEY_CODE = GLFW_KEY_LAST;
@@ -38,7 +40,9 @@ namespace Mn {
         _screen_width = 0;
         _screen_height = 0;
         _mouse_x = 0;
+        _mouse_screen_x = 0;
         _mouse_y = 0;
+        _mouse_screen_y = 0;
 
         for (int i = 0; i < LAST_KEY_CODE; i += 1) {
             _key_previous_state.push_back(false);
@@ -95,6 +99,9 @@ namespace Mn {
 
         double screen_half_width = (double) _screen_width / 2;
         double screen_half_height = (double) _screen_height / 2;
+
+        _mouse_screen_x = x_pos;
+        _mouse_screen_y = y_pos;
 
         _mouse_x = (x_pos - screen_half_width) / screen_half_width;
         _mouse_y = (y_pos - screen_half_height) / screen_half_height;

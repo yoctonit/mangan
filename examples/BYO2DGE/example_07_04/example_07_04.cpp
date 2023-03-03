@@ -276,7 +276,7 @@ public:
                         engine->getSquareGeometryBuffer(),
                         fontSysTexture
                 ));
-        mMsg->setColor(glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+        mMsg->setColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
         mMsg->getXform()->setPosition(2.0f, 4.0f);
         mMsg->setTextHeight(3.0f);
 
@@ -293,7 +293,7 @@ public:
         drawCamera(mBrainCam);
     }
 
-    void drawCamera(const std::shared_ptr<Camera> &cam) const {
+    void drawCamera(const std::shared_ptr<Camera>& cam) const {
         cam->setViewAndCameraMatrix();
 
         mBg->draw(*cam);
@@ -386,35 +386,15 @@ public:
         mHeroCam->panTo(mHero->getXform()->getXPos(), mHero->getXform()->getYPos());
         mBrainCam->panTo(mBrain->getXform()->getXPos(), mBrain->getXform()->getYPos());
 
-        msg = "";
-        // testing the mouse input
-        if (input.is_pressed(Mn::mouse::button::left)) {
-            msg += "[L Down]";
-            if (mCamera->isMouseInViewport(input)) {
-                mPortal->getXform()->setXPos(mCamera->mouseWCX(input));
-                mPortal->getXform()->setYPos(mCamera->mouseWCY(input));
-            }
-        }
-
-        if (input.is_pressed(Mn::mouse::button::middle)) {
-            if (mHeroCam->isMouseInViewport(input)) {
-                mHero->getXform()->setXPos(mHeroCam->mouseWCX(input));
-                mHero->getXform()->setYPos(mHeroCam->mouseWCY(input));
-            }
-        }
-        if (input.is_clicked(Mn::mouse::button::right)) {
-            mPortal->setVisibility(false);
-        }
-
-        if (input.is_clicked(Mn::mouse::button::middle)) {
-            mPortal->setVisibility(true);
-        }
-
-        msg += " X=" + std::to_string(input.get_mouse_x_screen_position()) +
-               " Y=" + std::to_string(input.get_mouse_y_screen_position());
-        msg += " X=" + std::to_string(mCamera->mouseWCX(input)) +
-               " Y=" + std::to_string(mCamera->mouseWCY(input));
-        mMsg->setText(msg);
+        // Move the hero cam viewport just to show it is possible
+//        glm::ivec4 v = mHeroCam->getViewport();
+//        v[0] += 1;
+//        if (v[0] > 500) {
+//            v[0] = 0;
+//        }
+//        mHeroCam->setViewport(v, 0);
+        
+        mMsg->setText(msg + mChoice);
     }
 
     void cleanup() {}

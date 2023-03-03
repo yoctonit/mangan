@@ -202,23 +202,6 @@ public:
         );
         mCamera->setBackgroundColor(glm::vec4(0.8f, 0.8f, 0.8f, 1.0f));
 
-        mHeroCam = std::make_shared<Camera>(
-                glm::vec2(50.0f, 30.0f), // update each cycle to point to hero
-                20.0f,
-                glm::ivec4(490, 330, 150, 150),
-                2
-        );
-        mHeroCam->setBackgroundColor(glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
-
-        mBrainCam = std::make_shared<Camera>(
-                glm::vec2(50.0f, 30.0f), // update each cycle to point to hero
-                10.0f,
-                glm::ivec4(0, 330, 150, 150),
-                2
-        );
-        mBrainCam->setBackgroundColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-        mBrainCam->configLerp(0.7f, 10);
-
         mChoice = 'D';
 
         // auto bgTexture = std::make_shared<Mn::Texture>("assets/bg.png", GL_RGB);
@@ -276,7 +259,7 @@ public:
                         engine->getSquareGeometryBuffer(),
                         fontSysTexture
                 ));
-        mMsg->setColor(glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+        mMsg->setColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
         mMsg->getXform()->setPosition(2.0f, 4.0f);
         mMsg->setTextHeight(3.0f);
 
@@ -287,21 +270,15 @@ public:
     void draw() const override {
         Engine::clearCanvas(0.0f, 1.0f, 0.0f, 1.0f);
 
-        drawCamera(mCamera);
+        mCamera->setViewAndCameraMatrix();
+
+        mBg->draw(*mCamera);
+        mHero->draw(*mCamera);
+        mBrain->draw(*mCamera);
+        mPortal->draw(*mCamera);
+        mLMinion->draw(*mCamera);
+        mRMinion->draw(*mCamera);
         mMsg->draw(*mCamera);
-        drawCamera(mHeroCam);
-        drawCamera(mBrainCam);
-    }
-
-    void drawCamera(const std::shared_ptr<Camera> &cam) const {
-        cam->setViewAndCameraMatrix();
-
-        mBg->draw(*cam);
-        mHero->draw(*cam);
-        mBrain->draw(*cam);
-        mPortal->draw(*cam);
-        mLMinion->draw(*cam);
-        mRMinion->draw(*cam);
     }
 
     void update(const Mn::Input &input, double) override {
@@ -309,8 +286,6 @@ public:
         std::string msg = "L/R: Left or Right Minion; H: Dye; P: Portal]: ";
 
         mCamera->update();  // for sprite animation
-        mHeroCam->update();
-        mBrainCam->update();
 
         mLMinion->update(input);  // for sprite animation
         mRMinion->update(input);
@@ -382,47 +357,13 @@ public:
             mHero->getXform()->incXPosBy(d);
         }
 
-        // set the hero and brain cams    
-        mHeroCam->panTo(mHero->getXform()->getXPos(), mHero->getXform()->getYPos());
-        mBrainCam->panTo(mBrain->getXform()->getXPos(), mBrain->getXform()->getYPos());
-
-        msg = "";
-        // testing the mouse input
-        if (input.is_pressed(Mn::mouse::button::left)) {
-            msg += "[L Down]";
-            if (mCamera->isMouseInViewport(input)) {
-                mPortal->getXform()->setXPos(mCamera->mouseWCX(input));
-                mPortal->getXform()->setYPos(mCamera->mouseWCY(input));
-            }
-        }
-
-        if (input.is_pressed(Mn::mouse::button::middle)) {
-            if (mHeroCam->isMouseInViewport(input)) {
-                mHero->getXform()->setXPos(mHeroCam->mouseWCX(input));
-                mHero->getXform()->setYPos(mHeroCam->mouseWCY(input));
-            }
-        }
-        if (input.is_clicked(Mn::mouse::button::right)) {
-            mPortal->setVisibility(false);
-        }
-
-        if (input.is_clicked(Mn::mouse::button::middle)) {
-            mPortal->setVisibility(true);
-        }
-
-        msg += " X=" + std::to_string(input.get_mouse_x_screen_position()) +
-               " Y=" + std::to_string(input.get_mouse_y_screen_position());
-        msg += " X=" + std::to_string(mCamera->mouseWCX(input)) +
-               " Y=" + std::to_string(mCamera->mouseWCY(input));
-        mMsg->setText(msg);
+        mMsg->setText(msg + mChoice);
     }
 
     void cleanup() {}
 
 private:
     std::shared_ptr<Camera> mCamera;
-    std::shared_ptr<Camera> mHeroCam;
-    std::shared_ptr<Camera> mBrainCam;
 
     std::shared_ptr<Hero> mHero;
     std::shared_ptr<Brain> mBrain;

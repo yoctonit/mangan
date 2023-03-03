@@ -21,6 +21,8 @@ add_library(mngl
         src/byo2dge/BoundingBox.h
         src/byo2dge/game_objects/GameObject.h
         src/byo2dge/game_objects/GameObjectSet.h
+        src/byo2dge/Lerp.h
+        src/byo2dge/Oscilate.h
         )
 #target_link_libraries(glwnd OpenGL::GL) # alternatively: add_dependencies(mangan OpenGL::GL)
 target_link_libraries(mngl PUBLIC glfw)
