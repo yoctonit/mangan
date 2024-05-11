@@ -32,6 +32,38 @@ target_include_directories(mngl PUBLIC "${CMAKE_SOURCE_DIR}/deps/glm.0.9.9.7")
 target_include_directories(mngl PUBLIC "${CMAKE_SOURCE_DIR}/deps/stb")
 target_include_directories(mngl PUBLIC "${CMAKE_SOURCE_DIR}/deps/nlohmann")
 
+add_library(mngl-v2
+        src/wnd/Window.h src/wnd/Window.cpp
+        src/wnd/Input.h src/wnd/Input.cpp
+        src/wnd/Run.h
+        src/core/Shader.h
+        src/core/VBO.h
+        src/core/VAO.h
+        src/core/Texture.h
+        src/shader/SolidColor.h
+        src/shader/Texture.h
+        src/connection/SolidColor.h
+        src/connection/Textured.h
+        src/connection/Sprite.h
+        src/geometry/Triangle.h
+        src/geometry/Square.h
+        src/geometry/Axes2D.h
+        src/renderable/Transform.h
+        src/renderable/SolidColor.h
+        src/renderable/Textured.h
+        src/renderable/Sprite.h
+        src/renderable/AnimatedSprite.h
+        src/renderable/Axes2D.h
+        src/builder/RenderableBuilder.h
+        src/builder/SpriteBuilder.h
+        src/camera/Camera2D.h
+        )
+target_link_libraries(mngl-v2 PUBLIC glfw)
+target_link_libraries(mngl-v2 PUBLIC glad_4_3)
+target_include_directories(mngl-v2 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_include_directories(mngl-v2 PUBLIC "${CMAKE_SOURCE_DIR}/deps/glm.0.9.9.7")
+target_include_directories(mngl-v2 PUBLIC "${CMAKE_SOURCE_DIR}/deps/stb")
+
 #add_library(mngl
 #        src/Window.h src/Window.cpp
 #        src/Input.h src/Input.cpp

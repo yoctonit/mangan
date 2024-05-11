@@ -1,0 +1,25 @@
+#add_subdirectory(Chip8Emulator)
+
+### Example01 ###
+add_executable(example01 Example01/main.cpp)
+target_link_libraries(example01 PRIVATE Mn::Engine)
+
+#add_subdirectory(Example02)
+#add_subdirectory(Example03)
+#add_subdirectory(Example04-Points)
+
+#add_subdirectory(triangle)
+#add_subdirectory(mandelbrot)
+#add_subdirectory(gasket)
+#add_subdirectory(colored_square)
+#add_subdirectory(scratchpad)
+#add_subdirectory(show_model)
+#add_subdirectory(ads_model)
+#add_subdirectory(random_walk)
+#add_subdirectory(freetype_test)
+#add_subdirectory(tetris)
+#add_subdirectory(moving_in_plane)
+#add_subdirectory(moving_on_sphere)
+#add_subdirectory(temp)
+#add_subdirectory(temp-v2)
+#add_subdirectory(DGF)

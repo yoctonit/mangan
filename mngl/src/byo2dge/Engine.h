@@ -4,6 +4,7 @@
 #include <memory>
 #include "SquareGeometryBuffer.h"
 #include "shader/SimpleShader.h"
+#include "shader/SimpleLightShader.h"
 #include "shader/TextureShader.h"
 #include "shader/SpriteShader.h"
 
@@ -21,6 +22,11 @@ public:
         mSpriteShader = std::make_shared<SpriteShader>(
                 "shader/texture.vs",
                 "shader/texture.fs");
+        mSimpleLightShader = std::make_shared<SimpleLightShader>(
+                "shader/simple_light.vs",
+                "shader/simple.fs");
+        mGlobalAmbientColor = glm::vec4(0.3f, 0.3f, 0.3f, 1.0f);
+        mGlobalAmbientIntensity = 1.0f;
     }
 
     static void clearCanvas(float r, float g, float b, float a) {
@@ -32,18 +38,31 @@ public:
         glEnable(GL_BLEND);
     }
 
-    [[nodiscard]] std::shared_ptr<SquareGeometryBuffer> getSquareGeometryBuffer() const { return mSquareGeometryBuffer; }
+    [[nodiscard]] std::shared_ptr<SquareGeometryBuffer>
+    getSquareGeometryBuffer() const { return mSquareGeometryBuffer; }
 
     [[nodiscard]] std::shared_ptr<SimpleShader> getConstColorShader() const { return mConstColorShader; }
 
     [[nodiscard]] std::shared_ptr<TextureShader> getTextureShader() const { return mTextureShader; }
+
     [[nodiscard]] std::shared_ptr<SpriteShader> getSpriteShader() const { return mSpriteShader; }
+
+    [[nodiscard]] float getGlobalAmbientIntensity() const { return mGlobalAmbientIntensity; }
+
+    void setGlobalAmbientIntensity(float v) { mGlobalAmbientIntensity = v; }
+
+    [[nodiscard]] glm::vec4 getGlobalAmbientColor() const { return mGlobalAmbientColor; }
+
+    void setGlobalAmbientColor(glm::vec4 v) { mGlobalAmbientColor = v; }
 
 private:
     std::shared_ptr<SquareGeometryBuffer> mSquareGeometryBuffer;
     std::shared_ptr<SimpleShader> mConstColorShader{};
     std::shared_ptr<TextureShader> mTextureShader{};
     std::shared_ptr<SpriteShader> mSpriteShader{};
+    std::shared_ptr<SimpleLightShader> mSimpleLightShader{};
+    glm::vec4 mGlobalAmbientColor{};
+    float mGlobalAmbientIntensity{};
 };
 
 class Level {

@@ -26,7 +26,9 @@ public:
             const std::shared_ptr<SquareGeometryBuffer> &sq,
             glm::vec4 pixelColor,
             glm::mat4 trsMatrix,
-            glm::mat4 cameraMatrix
+            glm::mat4 cameraMatrix,
+            glm::vec4 ambientColor,
+            float ambientIntensity
     ) const override {
         glUseProgram(mCompiledShader);
         glBindVertexArray(VAO);
