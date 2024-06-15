@@ -15,6 +15,9 @@ target_link_libraries(dgf_02_02_point PRIVATE Mn::Engine)
 add_executable(dgf_test_2_02 test_2_02.cpp)
 target_link_libraries(dgf_test_2_02 PRIVATE Mn::DGF)
 
+# Example 03
+add_executable(dgf_test_2_03 test_2_03.cpp)
+target_link_libraries(dgf_test_2_03 PRIVATE Mn::DGF)
 
 #add_executable(shape e03_shape.cpp)
 #target_link_libraries(shape mangan1)
@@ -42,3 +45,10 @@ target_link_libraries(dgf_test_2_02 PRIVATE Mn::DGF)
 #    COMMAND ${CMAKE_COMMAND} -E copy
 #    ${CMAKE_CURRENT_SOURCE_DIR}/shader/point.vert
 #    ${CMAKE_CURRENT_BINARY_DIR}/shader/point.vert)
+#add_custom_command(
+#        TARGET ${PROJECT_NAME}
+#        POST_BUILD
+#        COMMAND ${CMAKE_COMMAND}
+#        ARGS -E copy_directory_if_different "${PROJECT_SOURCE_DIR}/../folderA" "${PROJECT_SOURCE_DIR}/release/Debug/${PROJECT_NAME}.app/Contents/"
+#        COMMENT "Copying Bundle Stuff"
+#)

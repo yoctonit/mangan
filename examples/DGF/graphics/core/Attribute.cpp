@@ -1,20 +1,17 @@
-//
-// Created by ivan on 26.9.2021..
-//
-#include <stdexcept>
 #include <utility>
-#include "attribute.h"
+#include <iostream>
+#include "Attribute.h"
+
+Attribute::Attribute() = default;
 
 Attribute::Attribute(Type dataType, std::vector<GLfloat> data) {
-    // type of elements in data array:
-    // int | float | vec2 | vec3 | vec4
-    _dataType = dataType;
+    m_dataType = dataType;
 
     // array of data to be stored in buffer
-    _data = std::move(data);
+    m_data = std::move(data);
 
-    // reference of available buffer from GPU
-    glGenBuffers(1, &_bufferRef);
+    // returns a single buffer reference
+    glGenBuffers(1, &m_bufferRef);
 
     // upload data immediately
     uploadData();
@@ -22,33 +19,32 @@ Attribute::Attribute(Type dataType, std::vector<GLfloat> data) {
 
 void Attribute::uploadData() {
     // select buffer used by the following functions
-    glBindBuffer(GL_ARRAY_BUFFER, _bufferRef);
+    glBindBuffer(GL_ARRAY_BUFFER, m_bufferRef);
 
     // store data in currently bound buffer
-    auto dataSizeInBytes = static_cast<GLsizeiptr>(_data.size() * sizeof(GLfloat));
-    glBufferData(GL_ARRAY_BUFFER, dataSizeInBytes, _data.data(), GL_STATIC_DRAW);
-
-    // deactivate buffer
-    // glBindBuffer(GL_ARRAY_BUFFER, 0);
+    auto dataSizeBytes = static_cast<GLsizeiptr>(m_data.size() * sizeof(GLfloat));
+    glBufferData(GL_ARRAY_BUFFER, dataSizeBytes, m_data.data(), GL_STATIC_DRAW);
 }
 
 // associate variable in program with this buffer
-void Attribute::associateVariable(GLuint programRef, const std::string &variableName) {
+void Attribute::associateVariable(GLuint programRef, const std::string &variableName) const {
     // get reference for program variable with given name
     GLint variableRef = glGetAttribLocation(programRef, variableName.c_str());
 
     // if the program does not reference the variable, then exit
-    if (variableRef == -1) return;
+    if (variableRef == -1) {
+        std::cerr << "Variable " << variableName << " does not exist in shader " << programRef << "\n.";
+        return;
+    }
 
     // select buffer used by the following functions
-    glBindBuffer(GL_ARRAY_BUFFER, _bufferRef);
+    glBindBuffer(GL_ARRAY_BUFFER, m_bufferRef);
 
-    // specify how data will be read from the currently bound buffer
-    // into the specified variable
-    switch (_dataType) {
-//        case Type::Int:
-//            glVertexAttribPointer(variableRef, 1, GL_INT, GL_FALSE, 0, nullptr);
-//            break;
+    // specify how data will be read from the currently bound buffer into the specified variable
+    switch (m_dataType) {
+        case Type::Int:
+            glVertexAttribPointer(variableRef, 1, GL_INT, GL_FALSE, 0, nullptr);
+            break;
         case Type::Float:
             glVertexAttribPointer(variableRef, 1, GL_FLOAT, GL_FALSE, 0, nullptr);
             break;
@@ -62,9 +58,10 @@ void Attribute::associateVariable(GLuint programRef, const std::string &variable
             glVertexAttribPointer(variableRef, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
             break;
         default:
-            throw std::runtime_error("Attribute " + variableName + " has unknown type\n");
+            std::cerr << "Attribute " << variableName << " has unknown type\n";
+            return;
     }
 
-    // indicate that data will be streamed to this variable
+    // indicate that data will be streamed to this variable from a buffer
     glEnableVertexAttribArray(variableRef);
 }

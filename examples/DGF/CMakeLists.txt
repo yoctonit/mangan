@@ -1,7 +1,8 @@
 add_library(dgf_lib
         graphics/core/Base.cpp
         graphics/core/Input.cpp
-        graphics/core/Shader.cpp)
+        graphics/core/Shader.cpp
+        graphics/core/Attribute.cpp)
 target_link_libraries(dgf_lib PRIVATE glfw)
 target_link_libraries(dgf_lib PUBLIC glad_4_3)
 
