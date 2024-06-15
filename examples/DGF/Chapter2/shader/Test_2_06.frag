@@ -1,6 +1,7 @@
-#version 430 core
+#version 430
 
 uniform vec3 baseColor;
+
 out vec4 fragColor;
 
 void main()

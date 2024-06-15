@@ -13,6 +13,8 @@ file(COPY
         shader/Test_2_03.frag
         shader/Test_2_05.vert
         shader/Test_2_05.frag
+        shader/Test_2_06.vert
+        shader/Test_2_06.frag
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 # Example 02
@@ -33,6 +35,10 @@ target_link_libraries(dgf_test_2_04 PRIVATE Mn::DGF)
 # Example 05
 add_executable(dgf_test_2_05 test_2_05.cpp)
 target_link_libraries(dgf_test_2_05 PRIVATE Mn::DGF)
+
+# Example 06
+add_executable(dgf_test_2_06 test_2_06.cpp)
+target_link_libraries(dgf_test_2_06 PRIVATE Mn::DGF)
 
 #add_executable(shape e03_shape.cpp)
 #target_link_libraries(shape mangan1)
