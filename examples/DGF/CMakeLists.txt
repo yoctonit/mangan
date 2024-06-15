@@ -1,3 +1,14 @@
+add_library(dgf_lib
+        graphics/core/Base.cpp
+        graphics/core/Input.cpp
+        graphics/core/Shader.cpp)
+target_link_libraries(dgf_lib PRIVATE glfw)
+target_link_libraries(dgf_lib PUBLIC glad_4_3)
+
+target_include_directories(dgf_lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/graphics")
+
+add_library(Mn::DGF ALIAS dgf_lib)
+
 # add_library(dfgbook
 #     core/openGLUtils.h core/openGLUtils.cpp
 #     core/Object3D.h
@@ -18,6 +29,6 @@
 #target_link_libraries(dfg glad_4_6)
 
 
-# add_subdirectory(Chapter2)
+add_subdirectory(Chapter2)
 # add_subdirectory(Chapter3)
-add_subdirectory(Chapter4)
+#add_subdirectory(Chapter4)

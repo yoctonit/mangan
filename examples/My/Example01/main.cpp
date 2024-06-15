@@ -3,6 +3,7 @@
 
 #include "Run.h"
 
+/*
 class Example01 {
 public:
     Example01() : r(.5f), g(.3f), b(.5f), a(1.0f) {
@@ -31,34 +32,7 @@ int main() {
     Mn::ShowStaticScene<Example01>(wnd);
     return 0;
 }
-
-/*
-class Example01 {
-public:
-    Example01() : r(.5f), g(.3f), b(.5f), a(1.0f) {
-        std::cout << "Construct Example01 scene.\n";
-        glClearColor(r, g, b, a);
-    }
-
-    void Render() const {
-        static bool shouldRender = true;
-
-        if (shouldRender) {
-            std::cout << "Draw scene: " << r << "\n";
-            std::cout << "Initialize scene.\n";
-            std::cout << "Vendor: " << glGetString(GL_VENDOR) << "\n";
-            std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
-            std::cout << "OpenGL version supported: " << glGetString(GL_VERSION) << "\n";
-
-            shouldRender = false;
-        }
-        glClearColor(r, g, b, a);
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
-
-private:
-    float r, g, b, a;
-};
+*/
 
 class Example02 {
 public:
@@ -113,6 +87,13 @@ private:
     bool running = true;
 };
 
+int main() {
+    Mn::Window wnd(640, 320, "Example01");
+    Mn::ShowScene<Example02>(wnd);
+    return 0;
+}
+
+/*
 class Example03 : public Mn::Scene {
 public:
     Example03() : Mn::Scene(), r(.5f), g(.3f), b(.5f), a(1.0f) {

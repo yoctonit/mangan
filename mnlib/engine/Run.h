@@ -1,6 +1,7 @@
 #ifndef INCLUDED_MN_ENGINE_RUN_H
 #define INCLUDED_MN_ENGINE_RUN_H
 
+#include <glad/glad.h>
 #include "Input.h"
 #include "Window.h"
 

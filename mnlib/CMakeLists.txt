@@ -1,9 +1,12 @@
-add_library(engine engine/Input.cpp engine/Window.cpp engine/Run.h)
+add_library(engine
+        engine/Input.cpp engine/Window.cpp engine/Run.h
+        graphics/Shader.cpp
+)
 
 target_link_libraries(engine PRIVATE glfw)
 target_link_libraries(engine PUBLIC glad_4_3)
 
-target_include_directories(engine PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/engine")
+target_include_directories(engine PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_library(Mn::Engine ALIAS engine)
 

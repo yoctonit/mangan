@@ -46,7 +46,6 @@ FetchContent_MakeAvailable(glm)
 # mangan gl library
 ######################
 add_subdirectory(mnlib)
-#add_subdirectory(window)
 #add_subdirectory(core)
 
 # add examples
