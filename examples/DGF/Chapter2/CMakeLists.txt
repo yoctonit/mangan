@@ -6,7 +6,14 @@ add_executable(dgf_test_2_01 test_2_01.cpp)
 target_link_libraries(dgf_test_2_01 PRIVATE Mn::DGF)
 
 # prepare shader files for chapter examples
-file(COPY shader DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY
+        shader/Test_2_02.vert
+        shader/Test_2_03.frag
+        shader/Test_2_03.vert
+        shader/Test_2_03.frag
+        shader/Test_2_05.vert
+        shader/Test_2_05.frag
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 # Example 02
 add_executable(dgf_02_02_point e02_point.cpp)
@@ -18,6 +25,14 @@ target_link_libraries(dgf_test_2_02 PRIVATE Mn::DGF)
 # Example 03
 add_executable(dgf_test_2_03 test_2_03.cpp)
 target_link_libraries(dgf_test_2_03 PRIVATE Mn::DGF)
+
+# Example 04
+add_executable(dgf_test_2_04 test_2_04.cpp)
+target_link_libraries(dgf_test_2_04 PRIVATE Mn::DGF)
+
+# Example 05
+add_executable(dgf_test_2_05 test_2_05.cpp)
+target_link_libraries(dgf_test_2_05 PRIVATE Mn::DGF)
 
 #add_executable(shape e03_shape.cpp)
 #target_link_libraries(shape mangan1)

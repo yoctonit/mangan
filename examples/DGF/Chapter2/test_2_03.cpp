@@ -3,7 +3,7 @@
 #include "core/Attribute.h"
 
 
-class Test_2_02 : public Base {
+class Test_2_03 : public Base {
 public:
     void initialize() override {
         // load code, send to GPU, and compile; store program reference
@@ -44,6 +44,6 @@ private:
 };
 
 int main() {
-    Test_2_02().run();
+    Test_2_03().run();
     return 0;
 }
