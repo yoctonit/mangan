@@ -16,6 +16,8 @@ public:
 
     void upload(GLint variableRef);
 
+    T &data();
+
 private:
     T m_data;
 };
@@ -34,6 +36,11 @@ void UniformVec3<T>::upload(GLint variableRef) {
     if (variableRef == -1) return;
 
     glUniform3f(variableRef, m_data[0], m_data[1], m_data[2]);
+}
+
+template<typename T>
+T &UniformVec3<T>::data() {
+    return m_data;
 }
 
 #endif //DGF_GRAPHICS_CORE_UNIFORM_VEC3_H
