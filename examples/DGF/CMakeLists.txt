@@ -6,6 +6,7 @@ add_library(dgf_lib
         graphics/core/Uniform.cpp)
 target_link_libraries(dgf_lib PRIVATE glfw)
 target_link_libraries(dgf_lib PUBLIC glad_4_3)
+target_link_libraries(dgf_lib PUBLIC glm::glm)
 
 target_include_directories(dgf_lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/graphics")
 
@@ -32,5 +33,5 @@ add_library(Mn::DGF ALIAS dgf_lib)
 
 
 add_subdirectory(Chapter2)
-# add_subdirectory(Chapter3)
+add_subdirectory(Chapter3)
 #add_subdirectory(Chapter4)

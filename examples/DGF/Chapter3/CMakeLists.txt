@@ -1,14 +1,12 @@
-add_executable(triangle3d e01_triangle.cpp)
-target_link_libraries(triangle3d mangan1)
-target_include_directories(triangle3d PRIVATE "${CMAKE_SOURCE_DIR}/glm.0.9.9.7")
+# Example 01 is test for custom Vector and Matrix classes from the book,
+# but here I use glm library instead, so I skip this example
 
-add_custom_command(
-    TARGET triangle3d POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_CURRENT_SOURCE_DIR}/shader/shape3d.vert
-    ${CMAKE_CURRENT_BINARY_DIR}/shader/shape3d.vert)
-add_custom_command(
-    TARGET triangle3d POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_CURRENT_SOURCE_DIR}/shader/shape3d.frag
-    ${CMAKE_CURRENT_BINARY_DIR}/shader/shape3d.frag)
+# prepare shader files for chapter examples
+file(COPY
+        shader/Test_3_02.vert
+        shader/Test_3_02.frag
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
+
+# Example 02
+add_executable(dgf_test_3_02 test_3_02.cpp)
+target_link_libraries(dgf_test_3_02 PRIVATE Mn::DGF)

@@ -5,11 +5,54 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "UniformVec3.h"
+//#include "UniformVec3.h"
+#include <glm/mat4x4.hpp>
+
 
 class Uniform {
 public:
+    Uniform();
+
+    Uniform(GLuint programRef, const std::string &variableName);
+
     static GLint locate(GLuint programRef, const std::string &variableName);
+
+    virtual void upload() = 0;
+
+protected:
+    GLint m_variableRef{-1};
+};
+
+class UniformVec3 : public Uniform {
+public:
+    UniformVec3();
+
+    explicit UniformVec3(std::vector<float> data);
+
+    UniformVec3(GLuint programRef, const std::string &variableName, std::vector<float> data);
+
+    void upload() override;
+
+    std::vector<float> &data();
+
+private:
+    std::vector<float> m_data;
+};
+
+class UniformMat4x4 : public Uniform {
+public:
+    UniformMat4x4();
+
+    explicit UniformMat4x4(glm::mat4 data);
+
+    UniformMat4x4(GLuint programRef, const std::string &variableName, glm::mat4 data);
+
+    void upload() override;
+
+    glm::mat4 &data();
+
+private:
+    glm::mat4 m_data{};
 };
 
 /*

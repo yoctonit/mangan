@@ -8,7 +8,7 @@ target_link_libraries(dgf_test_2_01 PRIVATE Mn::DGF)
 # prepare shader files for chapter examples
 file(COPY
         shader/Test_2_02.vert
-        shader/Test_2_03.frag
+        shader/Test_2_02.frag
         shader/Test_2_03.vert
         shader/Test_2_03.frag
         shader/Test_2_05.vert
