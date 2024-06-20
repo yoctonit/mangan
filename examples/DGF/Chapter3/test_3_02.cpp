@@ -27,10 +27,10 @@ public:
         positionAttribute.associateVariable(m_programRef, "position");
 
         // set up uniforms
-        m_uniformModel = UniformMat4x4(m_programRef, "modelMatrix",
-                                       glm::translate(glm::vec3(0.0f, 0.0f, -1.0f)));
-        m_uniformProjection = UniformMat4x4(m_programRef, "projectionMatrix",
-                                            glm::perspective(glm::radians(60.f), 1.0f, 0.1f, 100.0f));
+        m_uniformModel = Uniform(m_programRef, "modelMatrix",
+                                 glm::translate(glm::vec3(0.0f, 0.0f, -1.0f)));
+        m_uniformProjection = Uniform(m_programRef, "projectionMatrix",
+                                      glm::perspective(glm::radians(60.f), 1.0f, 0.1f, 100.0f));
 
         // movement speed, units per second
         moveSpeed = 0.5f;
@@ -44,50 +44,58 @@ public:
 
         // global
         if (m_input.isPressedKey(MN_KEY_W)) {
-            m_uniformModel.data() = glm::translate(glm::vec3(0.0f, moveAmount, 0.0f)) * m_uniformModel.data();
+            m_uniformModel.data().m_dataMat4x4 =
+                    glm::translate(glm::vec3(0.0f, moveAmount, 0.0f)) * m_uniformModel.data().m_dataMat4x4;
         }
         if (m_input.isPressedKey(MN_KEY_S)) {
-            m_uniformModel.data() = glm::translate(glm::vec3(0.0f, -moveAmount, 0.0f)) * m_uniformModel.data();
+            m_uniformModel.data().m_dataMat4x4 =
+                    glm::translate(glm::vec3(0.0f, -moveAmount, 0.0f)) * m_uniformModel.data().m_dataMat4x4;
         }
         if (m_input.isPressedKey(MN_KEY_A)) {
-            m_uniformModel.data() = glm::translate(glm::vec3(-moveAmount, 0.0f, 0.0f)) * m_uniformModel.data();
+            m_uniformModel.data().m_dataMat4x4 =
+                    glm::translate(glm::vec3(-moveAmount, 0.0f, 0.0f)) * m_uniformModel.data().m_dataMat4x4;
         }
         if (m_input.isPressedKey(MN_KEY_D)) {
-            m_uniformModel.data() = glm::translate(glm::vec3(moveAmount, 0.0f, 0.0f)) * m_uniformModel.data();
+            m_uniformModel.data().m_dataMat4x4 =
+                    glm::translate(glm::vec3(moveAmount, 0.0f, 0.0f)) * m_uniformModel.data().m_dataMat4x4;
         }
         if (m_input.isPressedKey(MN_KEY_Z)) {
-            m_uniformModel.data() = glm::translate(glm::vec3(0.0f, 0.0f, moveAmount)) * m_uniformModel.data();
+            m_uniformModel.data().m_dataMat4x4 =
+                    glm::translate(glm::vec3(0.0f, 0.0f, moveAmount)) * m_uniformModel.data().m_dataMat4x4;
         }
         if (m_input.isPressedKey(MN_KEY_X)) {
-            m_uniformModel.data() = glm::translate(glm::vec3(0.0f, 0.0f, -moveAmount)) * m_uniformModel.data();
+            m_uniformModel.data().m_dataMat4x4 =
+                    glm::translate(glm::vec3(0.0f, 0.0f, -moveAmount)) * m_uniformModel.data().m_dataMat4x4;
         }
 
         if (m_input.isPressedKey(MN_KEY_Q)) {
-            m_uniformModel.data() = glm::rotate(turnAmount, glm::vec3(0.0f, 0.0f, 1.0f)) * m_uniformModel.data();
+            m_uniformModel.data().m_dataMat4x4 =
+                    glm::rotate(turnAmount, glm::vec3(0.0f, 0.0f, 1.0f)) * m_uniformModel.data().m_dataMat4x4;
         }
         if (m_input.isPressedKey(MN_KEY_E)) {
-            m_uniformModel.data() = glm::rotate(-turnAmount, glm::vec3(0.0f, 0.0f, 1.0f)) * m_uniformModel.data();
+            m_uniformModel.data().m_dataMat4x4 =
+                    glm::rotate(-turnAmount, glm::vec3(0.0f, 0.0f, 1.0f)) * m_uniformModel.data().m_dataMat4x4;
         }
 
         // local
         if (m_input.isPressedKey(MN_KEY_I)) {
-            m_uniformModel.data() *= glm::translate(glm::vec3(0.0f, moveAmount, 0.0f));
+            m_uniformModel.data().m_dataMat4x4 *= glm::translate(glm::vec3(0.0f, moveAmount, 0.0f));
         }
         if (m_input.isPressedKey(MN_KEY_K)) {
-            m_uniformModel.data() *= glm::translate(glm::vec3(0.0f, -moveAmount, 0.0f));
+            m_uniformModel.data().m_dataMat4x4 *= glm::translate(glm::vec3(0.0f, -moveAmount, 0.0f));
         }
         if (m_input.isPressedKey(MN_KEY_J)) {
-            m_uniformModel.data() *= glm::translate(glm::vec3(-moveAmount, 0.0f, 0.0f));
+            m_uniformModel.data().m_dataMat4x4 *= glm::translate(glm::vec3(-moveAmount, 0.0f, 0.0f));
         }
         if (m_input.isPressedKey(MN_KEY_L)) {
-            m_uniformModel.data() *= glm::translate(glm::vec3(moveAmount, 0.0f, 0.0f));
+            m_uniformModel.data().m_dataMat4x4 *= glm::translate(glm::vec3(moveAmount, 0.0f, 0.0f));
         }
 
         if (m_input.isPressedKey(MN_KEY_U)) {
-            m_uniformModel.data() *= glm::rotate(turnAmount, glm::vec3(0.0f, 0.0f, 1.0f));
+            m_uniformModel.data().m_dataMat4x4 *= glm::rotate(turnAmount, glm::vec3(0.0f, 0.0f, 1.0f));
         }
         if (m_input.isPressedKey(MN_KEY_O)) {
-            m_uniformModel.data() *= glm::rotate(-turnAmount, glm::vec3(0.0f, 0.0f, 1.0f));
+            m_uniformModel.data().m_dataMat4x4 *= glm::rotate(-turnAmount, glm::vec3(0.0f, 0.0f, 1.0f));
         }
 
         // render scene
@@ -109,8 +117,8 @@ private:
 
     GLuint m_programRef{};
     GLuint m_vaoRef{};
-    UniformMat4x4 m_uniformModel{};
-    UniformMat4x4 m_uniformProjection{};
+    Uniform m_uniformModel{};
+    Uniform m_uniformProjection{};
 };
 
 int main() {

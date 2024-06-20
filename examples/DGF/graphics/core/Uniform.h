@@ -5,24 +5,52 @@
 #include <iostream>
 #include <string>
 #include <vector>
-//#include "UniformVec3.h"
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
 
 
 class Uniform {
 public:
+    enum class Type {
+        None, Int, Bool, Float, Vec2, Vec3, Vec4, Mat4x4
+    };
+
+    union Data {
+        int m_dataInt;
+        float m_dataFloat;
+        glm::vec2 m_dataVec2;
+        glm::vec3 m_dataVec3;
+        glm::vec4 m_dataVec4;
+        glm::mat4x4 m_dataMat4x4;
+        bool m_dataBool;
+    };
+
     Uniform();
 
     Uniform(GLuint programRef, const std::string &variableName);
 
+    Uniform(GLuint programRef, const std::string &variableName, glm::vec3 data);
+
+    Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4 data);
+
     static GLint locate(GLuint programRef, const std::string &variableName);
 
-    virtual void upload() = 0;
+    void upload();
+    // virtual void upload() = 0;
+
+    Data &data();
 
 protected:
     GLint m_variableRef{-1};
+
+    Type m_dataType{Type::None};
+
+    Data m_data{};
 };
 
+/*
 class UniformVec3 : public Uniform {
 public:
     UniformVec3();
@@ -38,7 +66,8 @@ public:
 private:
     std::vector<float> m_data;
 };
-
+*/
+/*
 class UniformMat4x4 : public Uniform {
 public:
     UniformMat4x4();
@@ -54,7 +83,7 @@ public:
 private:
     glm::mat4 m_data{};
 };
-
+*/
 /*
 template<typename T>
 class Uniform {

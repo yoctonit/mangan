@@ -8,6 +8,18 @@ Uniform::Uniform(GLuint programRef, const std::string &variableName) {
     m_variableRef = locate(programRef, variableName);
 }
 
+Uniform::Uniform(GLuint programRef, const std::string &variableName, glm::vec3 data) {
+    m_variableRef = locate(programRef, variableName);
+    m_dataType = Type::Vec3;
+    m_data.m_dataVec3 = data;
+}
+
+Uniform::Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4 data) {
+    m_variableRef = locate(programRef, variableName);
+    m_dataType = Type::Mat4x4;
+    m_data.m_dataMat4x4 = data;
+}
+
 // get and store reference for program variable with given name
 GLint Uniform::locate(GLuint programRef, const std::string &variableName) {
     GLint variableRef = glGetUniformLocation(programRef, variableName.c_str());
@@ -17,6 +29,40 @@ GLint Uniform::locate(GLuint programRef, const std::string &variableName) {
     return variableRef;
 }
 
+void Uniform::upload() {
+    // if the program does not reference the variable, then exit
+    if (m_variableRef == -1) return;
+
+    switch (m_dataType) {
+        case Type::Int:
+        case Type::Bool:
+            glUniform1i(m_variableRef, m_data.m_dataInt);
+            break;
+        case Type::Float:
+            glUniform1f(m_variableRef, m_data.m_dataFloat);
+            break;
+        case Type::Vec2:
+            glUniform2fv(m_variableRef, 1, glm::value_ptr(m_data.m_dataVec2));
+            break;
+        case Type::Vec3:
+            glUniform3fv(m_variableRef, 1, glm::value_ptr(m_data.m_dataVec3));
+            break;
+        case Type::Vec4:
+            glUniform4fv(m_variableRef, 1, glm::value_ptr(m_data.m_dataVec4));
+            break;
+        case Type::Mat4x4:
+            glUniformMatrix4fv(m_variableRef, 1, GL_FALSE, glm::value_ptr(m_data.m_dataMat4x4));
+            break;
+        default:
+            std::cerr << "Unknown uniform data type\n";
+    }
+}
+
+Uniform::Data &Uniform::data() {
+    return m_data;
+}
+
+/*
 UniformVec3::UniformVec3() = default;
 
 UniformVec3::UniformVec3(std::vector<float> data) {
@@ -60,3 +106,4 @@ void UniformMat4x4::upload() {
 glm::mat4 &UniformMat4x4::data() {
     return m_data;
 }
+*/
