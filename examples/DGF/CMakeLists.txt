@@ -3,7 +3,18 @@ add_library(dgf_lib
         graphics/core/Input.cpp
         graphics/core/Shader.cpp
         graphics/core/Attribute.cpp
-        graphics/core/Uniform.cpp)
+        graphics/core/Uniform.cpp
+        graphics/core/Object3D.cpp
+        graphics/core/Group.h
+        graphics/core/Scene.h
+        graphics/core/RenderSetting.cpp
+        graphics/geometry/Geometry.cpp
+        graphics/geometry/BoxGeometry.cpp
+        graphics/material/Material.cpp
+        graphics/material/BasicMaterial.cpp
+        graphics/material/LineMaterial.cpp
+        graphics/material/PointMaterial.cpp
+        graphics/material/SurfaceMaterial.cpp)
 target_link_libraries(dgf_lib PRIVATE glfw)
 target_link_libraries(dgf_lib PUBLIC glad_4_3)
 target_link_libraries(dgf_lib PUBLIC glm::glm)

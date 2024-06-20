@@ -9,7 +9,10 @@ out vec4 fragColor;
 void main()
 {
     vec4 tempColor = vec4(baseColor, 1.0);
-    if (useVertexColors)
+
+    if (useVertexColors) {
         tempColor *= vec4(color, 1.0);
+    }
+
     fragColor = tempColor;
 }

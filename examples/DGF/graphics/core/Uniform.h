@@ -29,13 +29,15 @@ public:
 
     Uniform();
 
+    explicit Uniform(Type dataType);
+
     Uniform(GLuint programRef, const std::string &variableName);
+
+    Uniform(GLuint programRef, const std::string &variableName, bool data);
 
     Uniform(GLuint programRef, const std::string &variableName, glm::vec3 data);
 
     Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4 data);
-
-    static GLint locate(GLuint programRef, const std::string &variableName);
 
     void upload();
     // virtual void upload() = 0;
@@ -48,6 +50,8 @@ protected:
     Type m_dataType{Type::None};
 
     Data m_data{};
+private:
+    GLint locate(GLuint programRef, const std::string &variableName);
 };
 
 /*

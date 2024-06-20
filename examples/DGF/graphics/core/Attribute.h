@@ -17,6 +17,8 @@ public:
 
     void uploadData();
 
+    std::vector<GLfloat> &getData();
+
     void associateVariable(GLuint programRef, const std::string &variableName) const;
 
 private:

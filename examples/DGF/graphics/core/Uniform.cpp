@@ -4,8 +4,18 @@
 
 Uniform::Uniform() = default;
 
+Uniform::Uniform(Type dataType) {
+    m_dataType = dataType;
+}
+
 Uniform::Uniform(GLuint programRef, const std::string &variableName) {
     m_variableRef = locate(programRef, variableName);
+}
+
+Uniform::Uniform(GLuint programRef, const std::string &variableName, bool data) {
+    m_variableRef = locate(programRef, variableName);
+    m_dataType = Type::Bool;
+    m_data.m_dataBool = data;
 }
 
 Uniform::Uniform(GLuint programRef, const std::string &variableName, glm::vec3 data) {
@@ -22,11 +32,11 @@ Uniform::Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4
 
 // get and store reference for program variable with given name
 GLint Uniform::locate(GLuint programRef, const std::string &variableName) {
-    GLint variableRef = glGetUniformLocation(programRef, variableName.c_str());
-    if (variableRef == -1) {
+    m_variableRef = glGetUniformLocation(programRef, variableName.c_str());
+    if (m_variableRef == -1) {
         std::cerr << "Uniform variable " << variableName << " not found.\n";
     }
-    return variableRef;
+    return m_variableRef;
 }
 
 void Uniform::upload() {
@@ -34,8 +44,10 @@ void Uniform::upload() {
     if (m_variableRef == -1) return;
 
     switch (m_dataType) {
-        case Type::Int:
         case Type::Bool:
+            glUniform1i(m_variableRef, m_data.m_dataBool);
+            break;
+        case Type::Int:
             glUniform1i(m_variableRef, m_data.m_dataInt);
             break;
         case Type::Float:

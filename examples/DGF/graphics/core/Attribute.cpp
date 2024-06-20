@@ -26,6 +26,10 @@ void Attribute::uploadData() {
     glBufferData(GL_ARRAY_BUFFER, dataSizeBytes, m_data.data(), GL_STATIC_DRAW);
 }
 
+std::vector<GLfloat> &Attribute::getData() {
+    return m_data;
+}
+
 // associate variable in program with this buffer
 void Attribute::associateVariable(GLuint programRef, const std::string &variableName) const {
     // get reference for program variable with given name
