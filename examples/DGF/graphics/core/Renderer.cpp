@@ -19,14 +19,12 @@ void Renderer::setClearColor(float r, float g, float b, float a) {
     glClearColor(r, g, b, a);
 }
 
-void Renderer::render(const std::shared_ptr<Scene> &scene, const std::shared_ptr<Camera> &camera) {
-    // clear color and depth buffers
+void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_ptr<Camera> &camera) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // update camera view (calculate inverse)
     camera->updateViewMatrix();
 
-    // extract list of all Mesh objects in scene
+    // extract list of all objects in scene
     std::vector<std::shared_ptr<Object3D>> descendentList = scene->getDescendentList();
 
     for (const auto &object: descendentList) {
@@ -52,9 +50,7 @@ void Renderer::render(const std::shared_ptr<Scene> &scene, const std::shared_ptr
         }
 
         // update render settings
-        for (auto &setting: object->material()->renderSettings()) {
-            setting->apply();
-        }
+        object->material()->renderSettings().apply();
 
         glDrawArrays(object->material()->drawStyle(), 0, object->geometry()->vertexCount());
     }

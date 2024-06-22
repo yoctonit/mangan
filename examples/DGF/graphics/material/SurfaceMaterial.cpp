@@ -2,7 +2,12 @@
 
 SurfaceMaterial::SurfaceMaterial() : BasicMaterial() {
     m_drawStyle = GL_TRIANGLES;
-    addRenderSetting(std::make_shared<RenderSettingDoubleSide>(true));
-    addRenderSetting(std::make_shared<RenderSettingWireframe>(false));
-    addRenderSetting(std::make_shared<RenderSettingLineWidth>(1));
+
+    m_renderSettings.Activate(RenderSettings::Type::DoubleSide);
+    m_renderSettings.set(RenderSettings::Type::DoubleSide, true);
+
+    m_renderSettings.Activate(RenderSettings::Type::Wireframe);
+    m_renderSettings.set(RenderSettings::Type::Wireframe, false);
+
+    m_renderSettings.Activate(RenderSettings::Type::LineWidth);
 }

@@ -6,16 +6,12 @@
 #include <memory>
 #include <vector>
 #include <glm/mat4x4.hpp>
-#include "../core/Shader.h"
 #include "../core/Uniform.h"
-#include "../core/RenderSetting.h"
+#include "../core/RenderSettings.h"
 
 class Material {
 public:
-
     Material(const std::string &vertexShaderFileName, const std::string &fragmentShaderFileName);
-
-    // void addUniform(Uniform::Type dataType, const std::string &variableName);
 
     void addUniform(const std::string &variableName, bool data);
 
@@ -23,18 +19,13 @@ public:
 
     void addUniform(const std::string &variableName, glm::mat4x4 data);
 
-    // initialize all uniform variable references
-    // void locateUniforms();
-
-    void addRenderSetting(const std::shared_ptr<RenderSetting> &setting);
-
     [[nodiscard]] GLuint programRef() const;
 
     [[nodiscard]] GLint drawStyle() const;
 
     [[nodiscard]] std::map<std::string, Uniform> &uniforms();
 
-    [[nodiscard]] std::vector<std::shared_ptr<RenderSetting>> &renderSettings();
+    [[nodiscard]] RenderSettings &renderSettings();
 
 protected:
     GLuint m_programRef{};
@@ -44,10 +35,8 @@ protected:
     // Store Uniform objects, indexed by name of associated variable in shader.
     std::map<std::string, Uniform> m_uniforms;
 
-    // Store OpenGL render settings, indexed by variable name.
-    // Additional settings added by extending classes.
-    std::vector<std::shared_ptr<RenderSetting>> m_renderSettings;
-
+    // Store OpenGL render settings
+    RenderSettings m_renderSettings{};
 };
 
 #endif //DGF_GRAPHICS_MATERIAL_MATERIAL_H

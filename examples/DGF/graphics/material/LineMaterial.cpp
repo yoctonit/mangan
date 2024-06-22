@@ -2,10 +2,10 @@
 
 LineMaterial::LineMaterial() : BasicMaterial() {
     m_drawStyle = GL_LINES;
-    addRenderSetting(std::make_shared<RenderSettingLineWidth>(1));
+    m_renderSettings.Activate(RenderSettings::Type::LineWidth);
 }
 
-LineMaterial::LineMaterial(LineStyle lineStyle) {
+LineMaterial::LineMaterial(LineStyle lineStyle) : BasicMaterial() {
     if (lineStyle == LineStyle::Segments) {
         m_drawStyle = GL_LINES;
     } else if (lineStyle == LineStyle::Connected) {
@@ -13,6 +13,5 @@ LineMaterial::LineMaterial(LineStyle lineStyle) {
     } else if (lineStyle == LineStyle::Loop) {
         m_drawStyle = GL_LINE_LOOP;
     }
-
-    addRenderSetting(std::make_shared<RenderSettingLineWidth>(1));
+    m_renderSettings.Activate(RenderSettings::Type::LineWidth);
 }

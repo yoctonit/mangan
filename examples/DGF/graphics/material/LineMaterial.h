@@ -11,7 +11,7 @@ public:
 
     LineMaterial();
 
-    LineMaterial(LineStyle style);
+    explicit LineMaterial(LineStyle style);
 };
 
 #endif //DGF_GRAPHICS_MATERIAL_LINE_MATERIAL_H

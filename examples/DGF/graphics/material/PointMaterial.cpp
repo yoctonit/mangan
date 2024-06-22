@@ -2,6 +2,6 @@
 
 PointMaterial::PointMaterial() : BasicMaterial() {
     m_drawStyle = GL_POINTS;
-    addRenderSetting(std::make_shared<RenderSettingPointSize>(16));
-    // addRenderSetting(std::make_shared<RenderSettingRoundedPoints>(true));
+    m_renderSettings.Activate(RenderSettings::Type::PointSize);
+    m_renderSettings.set(RenderSettings::Type::PointSize, 16.0f);
 }
