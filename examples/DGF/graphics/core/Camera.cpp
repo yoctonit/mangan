@@ -12,7 +12,7 @@ Camera::Camera() {
     m_up = glm::vec3(0.0f, 1.0f, 0.0f);
 
     m_viewMatrix = glm::lookAt(m_position, m_center, m_up);
-    m_projectionMatrix = glm::perspective(60.0f, 1.0f, 0.1f, 1000.0f);
+    m_projectionMatrix = glm::perspective(glm::radians(60.0f), 1.0f, 0.1f, 1000.0f);
 
     m_shouldUpdate = false;
 }

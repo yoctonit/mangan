@@ -15,6 +15,10 @@ int Geometry::vertexCount() const {
     return m_vertexCount;
 };
 
+void Geometry::vertexCount(int count) {
+    m_vertexCount = count;
+}
+
 // transform vertex position data using a matrix
 /*
 void Geometry::applyMatrix(glm::mat4x4 matrix) {

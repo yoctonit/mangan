@@ -17,6 +17,8 @@ public:
 
     [[nodiscard]] int vertexCount() const;
 
+    void vertexCount(int count);
+
     // transform vertex position data using a matrix
     // void applyMatrix(glm::mat4x4 matrix);
 

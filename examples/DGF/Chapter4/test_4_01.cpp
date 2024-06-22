@@ -1,8 +1,4 @@
 #include "core/Base.h"
-//#include "core/Shader.h"
-//#include "core/Attribute.h"
-//#include "core/Uniform.h"
-//#include "core/Scene.h"
 #include "core/Object3D.h"
 #include "core/Camera.h"
 #include "core/Renderer.h"

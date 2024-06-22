@@ -8,6 +8,10 @@ file(COPY
 add_executable(dgf_test_4_01 test_4_01.cpp)
 target_link_libraries(dgf_test_4_01 PRIVATE Mn::DGF)
 
+# Example 02
+add_executable(dgf_test_4_02 test_4_02.cpp)
+target_link_libraries(dgf_test_4_02 PRIVATE Mn::DGF)
+
 #add_executable(scene3d e01_shape.cpp)
 #target_link_libraries(scene3d PUBLIC dgf)
 #target_link_libraries(scene3d PUBLIC mnglwnd)

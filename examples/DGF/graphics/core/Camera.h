@@ -8,6 +8,7 @@ class Camera {
 public:
     Camera();
 
+    // angleOfView in RADIANS!!!
     Camera(float angleOfView, float aspectRatio, float near, float far);
 
     [[nodiscard]] glm::mat4 viewMatrix() const;
