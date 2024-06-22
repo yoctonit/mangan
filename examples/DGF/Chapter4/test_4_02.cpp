@@ -3,7 +3,6 @@
 #include "core/Camera.h"
 #include "core/Renderer.h"
 #include "core/Mesh.h"
-#include "geometry/BoxGeometry.h"
 #include "material/SurfaceMaterial.h"
 
 

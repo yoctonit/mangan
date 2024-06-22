@@ -19,6 +19,16 @@ void Geometry::vertexCount(int count) {
     m_vertexCount = count;
 }
 
+std::vector<float> Geometry::flatten(const std::vector<glm::vec3> &attributeList) {
+    std::vector<float> data;
+    for (auto &p: attributeList) {
+        data.push_back(p.x);
+        data.push_back(p.y);
+        data.push_back(p.z);
+    }
+    return data;
+}
+
 // transform vertex position data using a matrix
 /*
 void Geometry::applyMatrix(glm::mat4x4 matrix) {

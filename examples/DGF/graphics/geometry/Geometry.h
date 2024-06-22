@@ -19,6 +19,8 @@ public:
 
     void vertexCount(int count);
 
+    static std::vector<float> flatten(const std::vector<glm::vec3>& attributeList);
+
     // transform vertex position data using a matrix
     // void applyMatrix(glm::mat4x4 matrix);
 
