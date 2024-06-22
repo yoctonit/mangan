@@ -4,9 +4,16 @@
 Geometry::Geometry() = default;
 
 void Geometry::addAttribute(const std::string &variableName, Attribute::Type dataType, std::vector<float> dataArray) {
-    // attributes.put(variableName, new Attribute(dataType, dataArray));
     m_attributes[variableName] = Attribute(dataType, std::move(dataArray));
 }
+
+std::map<std::string, Attribute> &Geometry::attributes() {
+    return m_attributes;
+}
+
+int Geometry::vertexCount() const {
+    return m_vertexCount;
+};
 
 // transform vertex position data using a matrix
 /*

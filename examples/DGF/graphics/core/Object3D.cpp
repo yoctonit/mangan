@@ -7,19 +7,23 @@
 
 #include "Object3D.h"
 
-Object3D::Object3D() {
+Object3D::Object3D(const std::string &name) {
+    m_name = name;
     m_transform = glm::mat4(1.0f);
     m_parent = nullptr;
 }
 
-void Object3D::add(Object3D *child) {
-    m_children.push_back(child);
-    child->m_parent = this;
+void Object3D::add(const std::shared_ptr<Object3D> &child) {
+    m_children[child->name()] = child;
+    child->parent(this);
 }
 
-void Object3D::remove(Object3D *child) {
-    m_children.remove(child);
-    child->m_parent = nullptr;
+void Object3D::remove(const std::string &name) {
+    if (m_children.find(name) == m_children.end()) {
+        std::cerr << "Object3D::remove not found child with name " << name << "\n";
+    }
+    m_children[name]->parent(nullptr);
+    m_children.erase(name);
 }
 
 // calculate m_transformation of this Object3D relative
@@ -29,28 +33,36 @@ glm::mat4 Object3D::getWorldMatrix() const {
         return m_transform;
     else
         return m_parent->getWorldMatrix() * m_transform;
-//            return Matrix.multiply(m_parent.getWorldMatrix(), m_transform);
 }
 
 // return a single list containing all descendants
-std::list<Object3D *> Object3D::getDescendentList() {
-    std::list<Object3D *> descendents;
+std::vector<std::shared_ptr<Object3D>> Object3D::getDescendentList() const {
+    std::vector<std::shared_ptr<Object3D>> descendents;
+
     // nodes to be added to descendant list,
     // and whose m_children will be added to this list
-    std::list<Object3D *> nodesToProcess;
-    nodesToProcess.push_back(this);
+    std::vector<std::shared_ptr<Object3D>> nodesToProcess;
+    nodesToProcess.reserve(m_children.size());
+    for (auto &[name, object]: m_children) {
+        nodesToProcess.push_back(object);
+    }
+
     // continue processing nodes while any are left
     while (!nodesToProcess.empty()) {
         // remove first node from list
-        Object3D *node = nodesToProcess.front();
-        nodesToProcess.pop_front();
-        //            Object3D node = nodesToProcess.remove(0);
+        auto node = nodesToProcess.front();
+
         // add this node to descendant list
         descendents.push_back(node);
-        // m_children of this node must also be processed
-        for (Object3D *child: node->m_children)
-            nodesToProcess.push_back(child);
+
+        // children of this node must also be processed
+        for (auto &[name, object]: node->children()) {
+            nodesToProcess.push_back(object);
+        }
+
+        nodesToProcess.erase(nodesToProcess.begin());
     }
+
     return descendents;
 }
 
@@ -114,4 +126,44 @@ void Object3D::setPosition(glm::vec3 position) {
 //        m_transform.values[0][3] = position.values[0];
 //        m_transform.values[1][3] = position.values[1];
 //        m_transform.values[2][3] = position.values[2];
+}
+
+const std::string &Object3D::name() const {
+    return m_name;
+}
+
+glm::mat4x4 Object3D::transform() const {
+    return m_transform;
+}
+
+Object3D *Object3D::parent() const {
+    return m_parent;
+}
+
+void Object3D::parent(Object3D *parent) {
+    m_parent = parent;
+}
+
+std::map<std::string, std::shared_ptr<Object3D>> &Object3D::children() {
+    return m_children;
+}
+
+[[nodiscard]] bool Object3D::isMesh() const {
+    return m_isMesh;
+}
+
+std::shared_ptr<Geometry> Object3D::geometry() {
+    return m_geometry;
+}
+
+std::shared_ptr<Material> Object3D::material() {
+    return m_material;
+}
+
+bool Object3D::isVisible() const {
+    return m_visible;
+}
+
+GLuint Object3D::vaoRef() const {
+    return m_vaoRef;
 }

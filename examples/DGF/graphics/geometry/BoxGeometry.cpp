@@ -51,9 +51,9 @@ BoxGeometry::BoxGeometry(float width, float height, float depth) {
     };
     std::vector<float> colorData;
     for (auto &c: colorList) {
-        positionData.push_back(c.r);
-        positionData.push_back(c.g);
-        positionData.push_back(c.b);
+        colorData.push_back(c.r);
+        colorData.push_back(c.g);
+        colorData.push_back(c.b);
     }
 
     addAttribute("vertexPosition", Attribute::Type::Vec3, positionData);

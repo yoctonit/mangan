@@ -37,9 +37,12 @@ void Attribute::associateVariable(GLuint programRef, const std::string &variable
 
     // if the program does not reference the variable, then exit
     if (variableRef == -1) {
-        std::cerr << "Variable " << variableName << " does not exist in shader " << programRef << "\n.";
+        std::cerr << "Attribute " << variableName << " does not exist in shader " << programRef << "\n.";
         return;
     }
+//    else {
+//        std::cout << "Attribute " << variableName << " found.\n";
+//    }
 
     // select buffer used by the following functions
     glBindBuffer(GL_ARRAY_BUFFER, m_bufferRef);

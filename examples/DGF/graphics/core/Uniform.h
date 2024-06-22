@@ -40,7 +40,6 @@ public:
     Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4 data);
 
     void upload();
-    // virtual void upload() = 0;
 
     Data &data();
 

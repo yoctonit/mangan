@@ -47,3 +47,19 @@ void Material::locateUniforms() {
 void Material::addRenderSetting(const std::shared_ptr<RenderSetting> &setting) {
     m_renderSettings.push_back(setting);
 }
+
+GLuint Material::programRef() const {
+    return m_programRef;
+}
+
+GLint Material::drawStyle() const {
+    return m_drawStyle;
+}
+
+std::map<std::string, Uniform> &Material::uniforms() {
+    return m_uniforms;
+}
+
+std::vector<std::shared_ptr<RenderSetting>> &Material::renderSettings() {
+    return m_renderSettings;
+}

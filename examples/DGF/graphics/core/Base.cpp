@@ -108,9 +108,9 @@ void Base::startup() {
         // glfwGetFramebufferSize(m_windowHandle, &m_windowWidth, &m_windowHeight);
 
 
-        std::cout << "Vendor: " << glGetString(GL_VENDOR) << "\n";
-        std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
-        std::cout << "OpenGL version supported: " << glGetString(GL_VERSION) << "\n";
+//        std::cout << "Vendor: " << glGetString(GL_VENDOR) << "\n";
+//        std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
+//        std::cout << "OpenGL version supported: " << glGetString(GL_VERSION) << "\n";
 
     } catch (const std::runtime_error &e) {
         std::cerr << e.what() << '\n';

@@ -28,10 +28,18 @@ public:
 
     void addRenderSetting(const std::shared_ptr<RenderSetting> &setting);
 
+    [[nodiscard]] GLuint programRef() const;
+
+    [[nodiscard]] GLint drawStyle() const;
+
+    [[nodiscard]] std::map<std::string, Uniform> &uniforms();
+
+    [[nodiscard]] std::vector<std::shared_ptr<RenderSetting>> &renderSettings();
+
 protected:
     GLuint m_programRef{};
 
-    int m_drawStyle{};
+    GLint m_drawStyle{};
 
     // Store Uniform objects, indexed by name of associated variable in shader.
     std::map<std::string, Uniform> m_uniforms;

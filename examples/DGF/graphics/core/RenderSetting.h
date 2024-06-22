@@ -2,6 +2,7 @@
 #define DGF_GRAPHICS_CORE_RENDER_SETTING_H
 
 class RenderSetting {
+public:
     virtual void apply() = 0;
 };
 
@@ -9,7 +10,7 @@ class RenderSettingPointSize : public RenderSetting {
 public:
     explicit RenderSettingPointSize(int pointSize);
 
-    virtual void apply() override;
+    void apply() override;
 
 private:
     int m_pointSize{1};
@@ -29,7 +30,7 @@ class RenderSettingLineWidth : public RenderSetting {
 public:
     explicit RenderSettingLineWidth(int lineWidth);
 
-    virtual void apply() override;
+    void apply() override;
 
 private:
     int m_lineWidth{1};
@@ -39,7 +40,7 @@ class RenderSettingDoubleSide : public RenderSetting {
 public:
     explicit RenderSettingDoubleSide(bool doubleSide);
 
-    virtual void apply() override;
+    void apply() override;
 
 private:
     bool m_doubleSide{};
@@ -49,7 +50,7 @@ class RenderSettingWireframe : public RenderSetting {
 public:
     explicit RenderSettingWireframe(bool wireframe);
 
-    virtual void apply() override;
+    void apply() override;
 
 private:
     bool m_wireframe{};

@@ -5,8 +5,11 @@ add_library(dgf_lib
         graphics/core/Attribute.cpp
         graphics/core/Uniform.cpp
         graphics/core/Object3D.cpp
-        graphics/core/Group.h
-        graphics/core/Scene.h
+        graphics/core/Mesh.cpp
+        graphics/core/Group.cpp
+        graphics/core/Scene.cpp
+        graphics/core/Camera.cpp
+        graphics/core/Renderer.cpp
         graphics/core/RenderSetting.cpp
         graphics/geometry/Geometry.cpp
         graphics/geometry/BoxGeometry.cpp
@@ -45,4 +48,4 @@ add_library(Mn::DGF ALIAS dgf_lib)
 
 add_subdirectory(Chapter2)
 add_subdirectory(Chapter3)
-#add_subdirectory(Chapter4)
+add_subdirectory(Chapter4)

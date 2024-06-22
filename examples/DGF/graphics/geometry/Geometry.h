@@ -13,6 +13,10 @@ public:
 
     void addAttribute(const std::string &variableName, Attribute::Type dataType, std::vector<float> dataArray);
 
+    std::map<std::string, Attribute> &attributes();
+
+    [[nodiscard]] int vertexCount() const;
+
     // transform vertex position data using a matrix
     // void applyMatrix(glm::mat4x4 matrix);
 
