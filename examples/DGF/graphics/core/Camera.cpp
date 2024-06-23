@@ -42,6 +42,10 @@ void Camera::updateViewMatrix() {
     }
 }
 
+glm::vec3 Camera::getPosition() const {
+    return m_position;
+}
+
 void Camera::setPosition(glm::vec3 position) {
     m_position = position;
     m_shouldUpdate = true;

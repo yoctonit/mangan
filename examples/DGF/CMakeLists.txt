@@ -17,6 +17,11 @@ add_library(dgf_lib
         graphics/geometry/EllipsoidGeometry.cpp
         graphics/geometry/SphereGeometry.cpp
         graphics/geometry/RectangleGeometry.cpp
+        graphics/extras/AxesGeometry.cpp
+        graphics/extras/AxesHelper.cpp
+        graphics/extras/GridGeometry.cpp
+        graphics/extras/GridHelper.cpp
+        graphics/extras/MovementRig.cpp
         graphics/material/Material.cpp
         graphics/material/BasicMaterial.cpp
         graphics/material/LineMaterial.cpp

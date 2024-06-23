@@ -17,6 +17,8 @@ public:
 
     void updateViewMatrix();
 
+    glm::vec3 getPosition() const;
+
     void setPosition(glm::vec3 position);
 
 protected:

@@ -27,3 +27,7 @@ target_link_libraries(dgf_test_4_04 PRIVATE Mn::DGF)
 # Example 05
 add_executable(dgf_test_4_05 test_4_05.cpp)
 target_link_libraries(dgf_test_4_05 PRIVATE Mn::DGF)
+
+# Example 06
+add_executable(dgf_test_4_06 test_4_06.cpp)
+target_link_libraries(dgf_test_4_06 PRIVATE Mn::DGF)
