@@ -1,7 +1,9 @@
-#version 430 core
+#version 430
 
 in vec3 color;
+
 uniform float time;
+
 out vec4 fragColor;
 
 void main()

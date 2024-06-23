@@ -2,6 +2,10 @@
 file(COPY
         ../graphics/shader/BasicMaterial.vert
         ../graphics/shader/BasicMaterial.frag
+        shader/Test_4_04.vert
+        shader/Test_4_04.frag
+        shader/Test_4_05.vert
+        shader/Test_4_05.frag
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 # Example 01
@@ -16,20 +20,10 @@ target_link_libraries(dgf_test_4_02 PRIVATE Mn::DGF)
 add_executable(dgf_test_4_03 test_4_03.cpp)
 target_link_libraries(dgf_test_4_03 PRIVATE Mn::DGF)
 
-#add_executable(scene3d e01_shape.cpp)
-#target_link_libraries(scene3d PUBLIC dgf)
-#target_link_libraries(scene3d PUBLIC mnglwnd)
-#target_link_libraries(scene3d PUBLIC mngl)
-#
-## target_include_directories(scene3d PRIVATE "${CMAKE_SOURCE_DIR}/glm.0.9.9.7")
-#
-#add_custom_command(
-#    TARGET scene3d POST_BUILD
-#    COMMAND ${CMAKE_COMMAND} -E copy
-#    ${CMAKE_CURRENT_SOURCE_DIR}/shader/BasicMaterial.vert
-#    ${CMAKE_CURRENT_BINARY_DIR}/shader/BasicMaterial.vert)
-#add_custom_command(
-#    TARGET scene3d POST_BUILD
-#    COMMAND ${CMAKE_COMMAND} -E copy
-#    ${CMAKE_CURRENT_SOURCE_DIR}/shader/BasicMaterial.frag
-#    ${CMAKE_CURRENT_BINARY_DIR}/shader/BasicMaterial.frag)
+# Example 04
+add_executable(dgf_test_4_04 test_4_04.cpp)
+target_link_libraries(dgf_test_4_04 PRIVATE Mn::DGF)
+
+# Example 05
+add_executable(dgf_test_4_05 test_4_05.cpp)
+target_link_libraries(dgf_test_4_05 PRIVATE Mn::DGF)

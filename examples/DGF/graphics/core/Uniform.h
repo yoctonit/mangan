@@ -35,6 +35,8 @@ public:
 
     Uniform(GLuint programRef, const std::string &variableName, bool data);
 
+    Uniform(GLuint programRef, const std::string &variableName, float data);
+
     Uniform(GLuint programRef, const std::string &variableName, glm::vec3 data);
 
     Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4 data);

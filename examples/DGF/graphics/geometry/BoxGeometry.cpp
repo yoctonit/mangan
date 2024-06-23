@@ -22,39 +22,29 @@ BoxGeometry::BoxGeometry(float width, float height, float depth) {
     glm::vec3 C5(0.5f, 0.5f, 1.0f);
     glm::vec3 C6(0.0f, 0.0f, 0.5f);
 
-//    List positionList = Arrays.asList(
-//            P5, P1, P3, P5, P3, P7, P0, P4, P6, P0, P6, P2,
-//            P6, P7, P3, P6, P3, P2, P0, P1, P5, P0, P5, P4,
-//            P4, P5, P7, P4, P7, P6, P1, P0, P2, P1, P2, P3);
-//    float [] positionData = Vector.flattenList(positionList);
     std::vector<glm::vec3> positionList{
             P5, P1, P3, P5, P3, P7, P0, P4, P6, P0, P6, P2,
             P6, P7, P3, P6, P3, P2, P0, P1, P5, P0, P5, P4,
             P4, P5, P7, P4, P7, P6, P1, P0, P2, P1, P2, P3
     };
-    std::vector<float> positionData;
-    for (auto &p: positionList) {
-        positionData.push_back(p.x);
-        positionData.push_back(p.y);
-        positionData.push_back(p.z);
-    }
+    std::vector<float> positionData = Geometry::flatten(positionList);
+//    for (auto &p: positionList) {
+//        positionData.push_back(p.x);
+//        positionData.push_back(p.y);
+//        positionData.push_back(p.z);
+//    }
 
-//    List colorList = Arrays.asList(
-//            C1, C1, C1, C1, C1, C1, C2, C2, C2, C2, C2, C2,
-//            C3, C3, C3, C3, C3, C3, C4, C4, C4, C4, C4, C4,
-//            C5, C5, C5, C5, C5, C5, C6, C6, C6, C6, C6, C6);
-//    float [] colorData = Vector.flattenList(colorList);
     std::vector<glm::vec3> colorList{
             C1, C1, C1, C1, C1, C1, C2, C2, C2, C2, C2, C2,
             C3, C3, C3, C3, C3, C3, C4, C4, C4, C4, C4, C4,
             C5, C5, C5, C5, C5, C5, C6, C6, C6, C6, C6, C6
     };
-    std::vector<float> colorData;
-    for (auto &c: colorList) {
-        colorData.push_back(c.r);
-        colorData.push_back(c.g);
-        colorData.push_back(c.b);
-    }
+    std::vector<float> colorData = Geometry::flatten(colorList);
+//    for (auto &c: colorList) {
+//        colorData.push_back(c.r);
+//        colorData.push_back(c.g);
+//        colorData.push_back(c.b);
+//    }
 
     addAttribute("vertexPosition", Attribute::Type::Vec3, positionData);
     addAttribute("vertexColor", Attribute::Type::Vec3, colorData);

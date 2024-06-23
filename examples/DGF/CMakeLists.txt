@@ -13,6 +13,10 @@ add_library(dgf_lib
         graphics/core/RenderSettings.cpp
         graphics/geometry/Geometry.cpp
         graphics/geometry/BoxGeometry.cpp
+        graphics/geometry/SurfaceGeometry.cpp
+        graphics/geometry/EllipsoidGeometry.cpp
+        graphics/geometry/SphereGeometry.cpp
+        graphics/geometry/RectangleGeometry.cpp
         graphics/material/Material.cpp
         graphics/material/BasicMaterial.cpp
         graphics/material/LineMaterial.cpp

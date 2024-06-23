@@ -1,6 +1,7 @@
-#version 430 core
+#version 430
 
 in vec3 vertexPosition;
+
 out vec3 position;
 
 uniform mat4 modelMatrix;
