@@ -2,6 +2,7 @@
 #define DGF_GRAPHICS_GEOMETRY_GEOMETRY_H
 
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 #include <glm/mat4x4.hpp>
@@ -19,14 +20,17 @@ public:
 
     void vertexCount(int count);
 
-    static std::vector<float> flatten(const std::vector<glm::vec3>& attributeList);
+    static std::vector<float> flatten(const std::vector<glm::vec3> &attributeList);
+
+    static std::vector<glm::vec3> unflatten(std::vector<float>, int vecSize = 3);
 
     // transform vertex position data using a matrix
-    // void applyMatrix(glm::mat4x4 matrix);
+    void applyMatrix(glm::mat4x4 matrix);
 
     // merge data from attributes of other geometry into this object;
-    //   requires both geometries to have attributes with same names
-    // void merge(Geometry other);
+    // requires both geometries to have attributes with same names
+    void merge(const std::shared_ptr<Geometry>& other);
+
 protected:
     // Store Attribute objects,
     // indexed by name of associated variable in shader.

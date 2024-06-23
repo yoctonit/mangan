@@ -17,6 +17,8 @@ add_library(dgf_lib
         graphics/geometry/EllipsoidGeometry.cpp
         graphics/geometry/SphereGeometry.cpp
         graphics/geometry/RectangleGeometry.cpp
+        graphics/geometry/PolygonGeometry.cpp
+        graphics/geometry/CylindricalGeometry.cpp
         graphics/extras/AxesGeometry.cpp
         graphics/extras/AxesHelper.cpp
         graphics/extras/GridGeometry.cpp

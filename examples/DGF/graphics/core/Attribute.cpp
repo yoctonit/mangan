@@ -30,6 +30,17 @@ std::vector<GLfloat> &Attribute::getData() {
     return m_data;
 }
 
+void Attribute::uploadData(std::vector<GLfloat> data) {
+    m_data = std::move(data);
+
+    // select buffer used by the following functions
+    glBindBuffer(GL_ARRAY_BUFFER, m_bufferRef);
+
+    // store data in currently bound buffer
+    auto dataSizeBytes = static_cast<GLsizeiptr>(m_data.size() * sizeof(GLfloat));
+    glBufferData(GL_ARRAY_BUFFER, dataSizeBytes, m_data.data(), GL_STATIC_DRAW);
+}
+
 // associate variable in program with this buffer
 void Attribute::associateVariable(GLuint programRef, const std::string &variableName) const {
     // get reference for program variable with given name
