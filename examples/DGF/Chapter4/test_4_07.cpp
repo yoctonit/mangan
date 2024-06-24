@@ -2,7 +2,13 @@
 #include "core/Object3D.h"
 #include "core/Camera.h"
 #include "core/Renderer.h"
-#include "geometry/CylindricalGeometry.h"
+// #include "geometry/CylindricalGeometry.h"
+//#include "geometry/ConeGeometry.h"
+//#include "geometry/CylinderGeometry.h"
+//#include "geometry/HexagonGeometry.h"
+//#include "geometry/PlaneGeometry.h"
+//#include "geometry/PrismGeometry.h"
+#include "geometry/PyramidGeometry.h"
 #include "extras/AxesHelper.h"
 #include "extras/GridHelper.h"
 #include "extras/MovementRig.h"
@@ -36,10 +42,16 @@ public:
         // m_rig->setPosition(glm::vec3(0.5f, 1.0f, 4.0f));
         m_scene->add(m_rig);
 
-        std::shared_ptr<CylindricalGeometry> geometry = std::make_shared<CylindricalGeometry>(
-                1.0f, 1.0f, 1.0f,
-                32, 4, false, true
-        );
+//        std::shared_ptr<CylindricalGeometry> geometry = std::make_shared<CylindricalGeometry>(
+//                1.0f, 1.0f, 1.0f,
+//                32, 4, false, true
+//        );
+//        std::shared_ptr<CylindricalGeometry> geometry = std::make_shared<ConeGeometry>();
+//        std::shared_ptr<CylindricalGeometry> geometry = std::make_shared<CylinderGeometry>();
+//        std::shared_ptr<HexagonGeometry> geometry = std::make_shared<HexagonGeometry>();
+//        std::shared_ptr<PlaneGeometry> geometry = std::make_shared<PlaneGeometry>();
+//        std::shared_ptr<PrismGeometry> geometry = std::make_shared<PrismGeometry>();
+        std::shared_ptr<PyramidGeometry> geometry = std::make_shared<PyramidGeometry>();
         std::shared_ptr<Material> material = std::make_shared<SurfaceMaterial>();
         material->uniforms()["useVertexColors"].data().m_dataBool = true;
         // material->renderSettings().set(RenderSettings::Type::DoubleSide, true);

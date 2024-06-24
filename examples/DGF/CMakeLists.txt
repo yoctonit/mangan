@@ -13,12 +13,18 @@ add_library(dgf_lib
         graphics/core/RenderSettings.cpp
         graphics/geometry/Geometry.cpp
         graphics/geometry/BoxGeometry.cpp
-        graphics/geometry/SurfaceGeometry.cpp
-        graphics/geometry/EllipsoidGeometry.cpp
-        graphics/geometry/SphereGeometry.cpp
         graphics/geometry/RectangleGeometry.cpp
         graphics/geometry/PolygonGeometry.cpp
+        graphics/geometry/SurfaceGeometry.cpp
+        graphics/geometry/HexagonGeometry.cpp
+        graphics/geometry/PlaneGeometry.cpp
+        graphics/geometry/EllipsoidGeometry.cpp
+        graphics/geometry/SphereGeometry.cpp
         graphics/geometry/CylindricalGeometry.cpp
+        graphics/geometry/ConeGeometry.cpp
+        graphics/geometry/CylinderGeometry.cpp
+        graphics/geometry/PrismGeometry.cpp
+        graphics/geometry/PyramidGeometry.cpp
         graphics/extras/AxesGeometry.cpp
         graphics/extras/AxesHelper.cpp
         graphics/extras/GridGeometry.cpp
