@@ -17,9 +17,13 @@ public:
 
     void addUniform(const std::string &variableName, float data);
 
+    void addUniform(const std::string &variableName, glm::vec2 data);
+
     void addUniform(const std::string &variableName, glm::vec3 data);
 
     void addUniform(const std::string &variableName, glm::mat4x4 data);
+
+    void addUniform(const std::string &variableName, int textureRef, int textureUnit);
 
     [[nodiscard]] GLuint programRef() const;
 

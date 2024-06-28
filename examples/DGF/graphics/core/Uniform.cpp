@@ -24,6 +24,12 @@ Uniform::Uniform(GLuint programRef, const std::string &variableName, float data)
     m_data.m_dataFloat = data;
 }
 
+Uniform::Uniform(GLuint programRef, const std::string &variableName, glm::vec2 data) {
+    m_variableRef = locate(programRef, variableName);
+    m_dataType = Type::Vec2;
+    m_data.m_dataVec2 = data;
+}
+
 Uniform::Uniform(GLuint programRef, const std::string &variableName, glm::vec3 data) {
     m_variableRef = locate(programRef, variableName);
     m_dataType = Type::Vec3;
@@ -34,6 +40,15 @@ Uniform::Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4
     m_variableRef = locate(programRef, variableName);
     m_dataType = Type::Mat4x4;
     m_data.m_dataMat4x4 = data;
+}
+
+Uniform::Uniform(GLuint programRef, const std::string &variableName, int textureRef, int textureUnit) {
+    m_variableRef = locate(programRef, variableName);
+    m_dataType = Type::Sampler2D;
+    m_data.m_dataVec2 = glm::vec2(
+            static_cast<float>(textureRef),
+            static_cast<float>(textureUnit)
+    );
 }
 
 // get and store reference for program variable with given name
@@ -71,6 +86,17 @@ void Uniform::upload() {
         case Type::Mat4x4:
             glUniformMatrix4fv(m_variableRef, 1, GL_FALSE, glm::value_ptr(m_data.m_dataMat4x4));
             break;
+        case Type::Sampler2D: {
+            int textureObjectRef = static_cast<int>(m_data.m_dataVec2.x);
+            int textureUnitRef = static_cast<int>(m_data.m_dataVec2.y);
+            // activate texture unit
+            glActiveTexture(GL_TEXTURE0 + textureUnitRef);
+            // associate texture object reference to currently active texture unit
+            glBindTexture(GL_TEXTURE_2D, textureObjectRef);
+            // upload texture unit number (0...15) to uniform variable in shader
+            glUniform1i(m_variableRef, textureUnitRef);
+            break;
+        }
         default:
             std::cerr << "Unknown uniform data type\n";
     }

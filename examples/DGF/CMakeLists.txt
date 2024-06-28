@@ -35,7 +35,8 @@ add_library(dgf_lib
         graphics/material/BasicMaterial.cpp
         graphics/material/LineMaterial.cpp
         graphics/material/PointMaterial.cpp
-        graphics/material/SurfaceMaterial.cpp)
+        graphics/material/SurfaceMaterial.cpp
+        graphics/material/TextureMaterial.cpp)
 target_link_libraries(dgf_lib PRIVATE glfw)
 target_link_libraries(dgf_lib PUBLIC glad_4_3)
 target_link_libraries(dgf_lib PUBLIC glm::glm)
@@ -68,3 +69,4 @@ add_library(Mn::DGF ALIAS dgf_lib)
 add_subdirectory(Chapter2)
 add_subdirectory(Chapter3)
 add_subdirectory(Chapter4)
+add_subdirectory(Chapter5)

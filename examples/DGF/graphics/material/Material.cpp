@@ -22,12 +22,20 @@ void Material::addUniform(const std::string &variableName, float data) {
     m_uniforms[variableName] = Uniform(m_programRef, variableName, data);
 }
 
+void Material::addUniform(const std::string &variableName, glm::vec2 data) {
+    m_uniforms[variableName] = Uniform(m_programRef, variableName, data);
+}
+
 void Material::addUniform(const std::string &variableName, glm::vec3 data) {
     m_uniforms[variableName] = Uniform(m_programRef, variableName, data);
 }
 
 void Material::addUniform(const std::string &variableName, glm::mat4x4 data) {
     m_uniforms[variableName] = Uniform(m_programRef, variableName, data);
+}
+
+void Material::addUniform(const std::string &variableName, int textureRef, int textureUnit) {
+    m_uniforms[variableName] = Uniform(m_programRef, variableName, textureRef, textureUnit);
 }
 
 GLuint Material::programRef() const {

@@ -14,7 +14,7 @@
 class Uniform {
 public:
     enum class Type {
-        None, Int, Bool, Float, Vec2, Vec3, Vec4, Mat4x4
+        None, Int, Bool, Float, Vec2, Vec3, Vec4, Mat4x4, Sampler2D
     };
 
     union Data {
@@ -37,9 +37,13 @@ public:
 
     Uniform(GLuint programRef, const std::string &variableName, float data);
 
+    Uniform(GLuint programRef, const std::string &variableName, glm::vec2 data);
+
     Uniform(GLuint programRef, const std::string &variableName, glm::vec3 data);
 
     Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4 data);
+
+    Uniform(GLuint programRef, const std::string &variableName, int textureRef, int textureUnit);
 
     void upload();
 

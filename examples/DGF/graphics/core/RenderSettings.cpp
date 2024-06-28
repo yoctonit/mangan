@@ -22,6 +22,7 @@ bool RenderSettings::isActive(Type type) const {
         case Type::Wireframe:
             return m_activeWireframe;
     }
+    return false;
 }
 
 void RenderSettings::Activate(Type type) {
@@ -96,6 +97,7 @@ float RenderSettings::getValue(Type type) const {
         case Type::Wireframe:
             return m_wireframe ? 1.0f : 0.0f;
     }
+    return 0.0f;
 }
 
 void RenderSettings::applyPointSize() const {
