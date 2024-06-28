@@ -22,17 +22,18 @@ BoxGeometry::BoxGeometry(float width, float height, float depth) {
     glm::vec3 C5(0.5f, 0.5f, 1.0f);
     glm::vec3 C6(0.0f, 0.0f, 0.5f);
 
+    // texture coordinates
+    glm::vec2 T0(0.0f, 0.0f);
+    glm::vec2 T1(1.0f, 0.0f);
+    glm::vec2 T2(0.0f, 1.0f);
+    glm::vec2 T3(1.0f, 1.0f);
+
     std::vector<glm::vec3> positionList{
             P5, P1, P3, P5, P3, P7, P0, P4, P6, P0, P6, P2,
             P6, P7, P3, P6, P3, P2, P0, P1, P5, P0, P5, P4,
             P4, P5, P7, P4, P7, P6, P1, P0, P2, P1, P2, P3
     };
     std::vector<float> positionData = Geometry::flatten(positionList);
-//    for (auto &p: positionList) {
-//        positionData.push_back(p.x);
-//        positionData.push_back(p.y);
-//        positionData.push_back(p.z);
-//    }
 
     std::vector<glm::vec3> colorList{
             C1, C1, C1, C1, C1, C1, C2, C2, C2, C2, C2, C2,
@@ -40,13 +41,18 @@ BoxGeometry::BoxGeometry(float width, float height, float depth) {
             C5, C5, C5, C5, C5, C5, C6, C6, C6, C6, C6, C6
     };
     std::vector<float> colorData = Geometry::flatten(colorList);
-//    for (auto &c: colorList) {
-//        colorData.push_back(c.r);
-//        colorData.push_back(c.g);
-//        colorData.push_back(c.b);
-//    }
+
+    std::vector<glm::vec2> uvList{
+            T0, T1, T3, T0, T3, T2, T0, T1, T3, T0, T3, T2,
+            T0, T1, T3, T0, T3, T2, T0, T1, T3, T0, T3, T2,
+            T0, T1, T3, T0, T3, T2, T0, T1, T3, T0, T3, T2
+    };
+    std::vector<GLfloat> uvData = Geometry::flatten(uvList);
+
 
     addAttribute("vertexPosition", Attribute::Type::Vec3, positionData);
     addAttribute("vertexColor", Attribute::Type::Vec3, colorData);
+    addAttribute("vertexUV", Attribute::Type::Vec2, uvData);
+
     m_vertexCount = 36;
 }

@@ -16,7 +16,13 @@ public:
             float vStart, float vEnd, int vResolution
     );
 
+    std::vector<std::vector<glm::vec2>> getUVs(
+            float uStart, float uEnd, int uResolution,
+            float vStart, float vEnd, int vResolution
+    );
+
     void calculateSurface();
+
 private:
     virtual glm::vec3 surface(float u, float v) = 0;
 

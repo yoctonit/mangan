@@ -39,6 +39,9 @@ set(GLM_BUILD_TESTS OFF CACHE INTERNAL "")
 
 FetchContent_MakeAvailable(glm)
 
+### stb (stb_image.h) ###
+add_subdirectory(dependencies/stb)
+
 ### freetype ###
 #add_subdirectory(freetype-2.10.1 EXCLUDE_FROM_ALL)
 

@@ -29,6 +29,15 @@ std::vector<float> Geometry::flatten(const std::vector<glm::vec3> &attributeList
     return data;
 }
 
+std::vector<float> Geometry::flatten(const std::vector<glm::vec2> &attributeList) {
+    std::vector<float> data;
+    for (auto &p: attributeList) {
+        data.push_back(p.x);
+        data.push_back(p.y);
+    }
+    return data;
+}
+
 std::vector<glm::vec3> Geometry::unflatten(std::vector<float> flatArray, int vecSize) {
     std::vector<glm::vec3> vecList;
 

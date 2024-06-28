@@ -4,6 +4,7 @@ add_library(dgf_lib
         graphics/core/Shader.cpp
         graphics/core/Attribute.cpp
         graphics/core/Uniform.cpp
+        graphics/core/Texture.cpp
         graphics/core/Object3D.cpp
         graphics/core/Mesh.cpp
         graphics/core/Group.cpp
@@ -38,6 +39,7 @@ add_library(dgf_lib
 target_link_libraries(dgf_lib PRIVATE glfw)
 target_link_libraries(dgf_lib PUBLIC glad_4_3)
 target_link_libraries(dgf_lib PUBLIC glm::glm)
+target_link_libraries(dgf_lib PUBLIC nothings::stb)
 
 target_include_directories(dgf_lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/graphics")
 

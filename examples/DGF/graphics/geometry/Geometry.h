@@ -22,6 +22,8 @@ public:
 
     static std::vector<float> flatten(const std::vector<glm::vec3> &attributeList);
 
+    static std::vector<float> flatten(const std::vector<glm::vec2> &attributeList);
+
     static std::vector<glm::vec3> unflatten(std::vector<float>, int vecSize = 3);
 
     // transform vertex position data using a matrix
@@ -29,7 +31,7 @@ public:
 
     // merge data from attributes of other geometry into this object;
     // requires both geometries to have attributes with same names
-    void merge(const std::shared_ptr<Geometry>& other);
+    void merge(const std::shared_ptr<Geometry> &other);
 
 protected:
     // Store Attribute objects,
