@@ -43,7 +43,7 @@ public:
 
     Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4 data);
 
-    Uniform(GLuint programRef, const std::string &variableName, int textureRef, int textureUnit);
+    Uniform(GLuint programRef, const std::string &variableName, unsigned int textureRef, int textureUnit);
 
     void upload();
 

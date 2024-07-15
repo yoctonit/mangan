@@ -5,6 +5,7 @@ uniform sampler2D noise;
 uniform float time;
 
 in vec2 UV;
+
 out vec4 fragColor;
 
 void main()

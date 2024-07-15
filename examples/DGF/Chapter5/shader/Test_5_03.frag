@@ -1,11 +1,14 @@
 #version 430 core
 
 uniform sampler2D tex;
-in vec2 UV;
 uniform float time;
+
+in vec2 UV;
+
 out vec4 fragColor;
+
 void main()
 {
-    vec2 shiftUV = UV + vec2(0, 0.2 * sin(6.0*UV.x + time));
+    vec2 shiftUV = UV + vec2(0, 0.2 * sin(6.0 * UV.x + time));
     fragColor = texture(tex, shiftUV);
 }

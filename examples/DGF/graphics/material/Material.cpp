@@ -34,7 +34,7 @@ void Material::addUniform(const std::string &variableName, glm::mat4x4 data) {
     m_uniforms[variableName] = Uniform(m_programRef, variableName, data);
 }
 
-void Material::addUniform(const std::string &variableName, int textureRef, int textureUnit) {
+void Material::addUniform(const std::string &variableName, unsigned int textureRef, int textureUnit) {
     m_uniforms[variableName] = Uniform(m_programRef, variableName, textureRef, textureUnit);
 }
 

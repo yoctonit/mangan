@@ -2,8 +2,10 @@
 
 uniform sampler2D texture1;
 uniform sampler2D texture2;
-in vec2 UV;
 uniform float time;
+
+in vec2 UV;
+
 out vec4 fragColor;
 
 void main()

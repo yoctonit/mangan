@@ -42,7 +42,7 @@ Uniform::Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4
     m_data.m_dataMat4x4 = data;
 }
 
-Uniform::Uniform(GLuint programRef, const std::string &variableName, int textureRef, int textureUnit) {
+Uniform::Uniform(GLuint programRef, const std::string &variableName, unsigned int textureRef, int textureUnit) {
     m_variableRef = locate(programRef, variableName);
     m_dataType = Type::Sampler2D;
     m_data.m_dataVec2 = glm::vec2(
