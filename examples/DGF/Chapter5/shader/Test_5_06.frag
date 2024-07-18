@@ -3,7 +3,7 @@
 // return a random value in [0, 1]
 float random(vec2 UV)
 {
-    return fract(235711.0 * sin(14.337*UV.x + 42.418*UV.y));
+    return fract(235711.0 * sin(14.337 * UV.x + 42.418 * UV.y));
 }
 
 float boxRandom(vec2 UV, float scale)
@@ -21,8 +21,8 @@ float smoothRandom(vec2 UV, float scale)
     float c = random(round(iScaleUV + vec2(0, 1)));
     float d = random(round(iScaleUV + vec2(1, 1)));
     return mix(mix(a, b, fScaleUV.x),
-    mix(c, d, fScaleUV.x),
-    fScaleUV.y);
+               mix(c, d, fScaleUV.x),
+               fScaleUV.y);
 }
 
 // add smooth random values at different scales
@@ -72,8 +72,8 @@ void main()
 
     // wood grain
     float t = 80 * UV.y + 20 * fractalRandom(UV, 2);
-    float r = clamp( 2 * abs(sin(t)), 0, 1 );
+    float r = clamp(2 * abs(sin(t)), 0, 1);
     vec4 color1 = vec4(0.3, 0.2, 0.0, 1.0);
     vec4 color2 = vec4(0.6, 0.4, 0.2, 1.0);
-    fragColor = mix( color1, color2, r );
+    fragColor = mix(color1, color2, r);
 }

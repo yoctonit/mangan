@@ -6,6 +6,8 @@ file(COPY
         shader/Test_5_03.frag
         shader/Test_5_04.frag
         shader/Test_5_05.frag
+        shader/Test_5_06.vert
+        shader/Test_5_06.frag
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -35,3 +37,7 @@ target_link_libraries(dgf_test_5_04 PRIVATE Mn::DGF)
 # Example 05
 add_executable(dgf_test_5_05 test_5_05.cpp)
 target_link_libraries(dgf_test_5_05 PRIVATE Mn::DGF)
+
+# Example 06
+add_executable(dgf_test_5_06 test_5_06.cpp)
+target_link_libraries(dgf_test_5_06 PRIVATE Mn::DGF)
