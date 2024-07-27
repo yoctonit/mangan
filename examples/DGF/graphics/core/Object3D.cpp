@@ -76,6 +76,12 @@ void Object3D::applyMatrix(glm::mat4 m, bool local) {
 //            m_transform.leftMultiply(m);
 }
 
+// does not work (yet)!
+void Object3D::lookAt(glm::vec3 targetPosition) {
+    // m_transform = Matrix.makeLookAt(getWorldPosition(), targetPosition );
+    m_transform = glm::lookAt(getWorldPosition(), targetPosition, glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
 void Object3D::translate(float x, float y, float z, bool local) {
     applyMatrix(glm::translate(glm::vec3(x, y, z)), local);
 //        applyMatrix(glm::translate(x, y, z), local);

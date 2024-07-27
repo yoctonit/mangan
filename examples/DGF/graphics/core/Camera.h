@@ -11,6 +11,16 @@ public:
     // angleOfView in RADIANS!!!
     Camera(float angleOfView, float aspectRatio, float near, float far);
 
+    void setPerspective(float angleOfView, float aspectRatio, float near, float far);
+
+    void setPerspective();
+
+    void setOrthographic(float left, float right,
+                         float bottom, float top,
+                         float near, float far);
+
+    void setOrthographic();
+
     [[nodiscard]] glm::mat4 viewMatrix() const;
 
     [[nodiscard]] glm::mat4 projectionMatrix() const;

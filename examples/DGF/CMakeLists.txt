@@ -36,7 +36,8 @@ add_library(dgf_lib
         graphics/material/LineMaterial.cpp
         graphics/material/PointMaterial.cpp
         graphics/material/SurfaceMaterial.cpp
-        graphics/material/TextureMaterial.cpp)
+        graphics/material/TextureMaterial.cpp
+        graphics/material/SpriteMaterial.cpp)
 target_link_libraries(dgf_lib PRIVATE glfw)
 target_link_libraries(dgf_lib PUBLIC glad_4_3)
 target_link_libraries(dgf_lib PUBLIC glm::glm)

@@ -2,13 +2,15 @@
 #include "Renderer.h"
 
 
-void Renderer::initialize() {
+Renderer::Renderer()
+        : clearColorBuffer{true}, clearDepthBuffer{true} {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+    // support depth testing
     glEnable(GL_DEPTH_TEST);
 
     // support transparency
-    glEnable( GL_BLEND );
+    glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // required for antialiasing
@@ -24,7 +26,11 @@ void Renderer::setClearColor(float r, float g, float b, float a) {
 }
 
 void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_ptr<Camera> &camera) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // clear color and/or depth buffers
+    if (clearColorBuffer)
+        glClear(GL_COLOR_BUFFER_BIT);
+    if (clearDepthBuffer)
+        glClear(GL_DEPTH_BUFFER_BIT);
 
     camera->updateViewMatrix();
 

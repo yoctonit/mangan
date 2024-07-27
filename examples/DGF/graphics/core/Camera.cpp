@@ -28,6 +28,26 @@ Camera::Camera(float angleOfView, float aspectRatio, float near, float far) {
     m_shouldUpdate = false;
 }
 
+void Camera::setPerspective(float angleOfView, float aspectRatio, float near, float far) {
+    m_projectionMatrix = glm::perspective(
+            glm::radians(angleOfView), aspectRatio,
+            near, far
+    );
+}
+
+void Camera::setPerspective() {
+    m_projectionMatrix = glm::perspective(glm::radians(60.0f), 1.0f, 0.1f, 1000.0f);
+}
+
+void Camera::setOrthographic(float left, float right,
+                             float bottom, float top, float near, float far) {
+    m_projectionMatrix = glm::ortho(left, right, bottom, top, near, far);
+}
+
+void Camera::setOrthographic() {
+    m_projectionMatrix = glm::ortho(-1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f);
+}
+
 glm::mat4 Camera::viewMatrix() const {
     return m_viewMatrix;
 }

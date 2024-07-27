@@ -14,7 +14,7 @@ class Object3D {
 public:
     explicit Object3D(const std::string &name);
 
-    void add(const std::shared_ptr<Object3D>& child);
+    void add(const std::shared_ptr<Object3D> &child);
 
     void remove(const std::string &name);
 
@@ -27,6 +27,8 @@ public:
 
     // apply geometric m_transformations
     void applyMatrix(glm::mat4 m, bool local);
+
+    void lookAt(glm::vec3 targetPosition);
 
     void translate(float x, float y, float z, bool local);
 
@@ -45,15 +47,15 @@ public:
 
     void setPosition(glm::vec3 position);
 
-    [[nodiscard]] const std::string& name() const;
+    [[nodiscard]] const std::string &name() const;
 
     [[nodiscard]] glm::mat4x4 transform() const;
 
-    [[nodiscard]] Object3D* parent() const;
+    [[nodiscard]] Object3D *parent() const;
 
-    void parent(Object3D* parent);
+    void parent(Object3D *parent);
 
-    [[nodiscard]] std::map<std::string, std::shared_ptr<Object3D>>& children();
+    [[nodiscard]] std::map<std::string, std::shared_ptr<Object3D>> &children();
 
     [[nodiscard]] bool isMesh() const;
 
@@ -70,7 +72,7 @@ protected:
 
     glm::mat4 m_transform{};
 
-    Object3D* m_parent;
+    Object3D *m_parent;
 
     std::map<std::string, std::shared_ptr<Object3D>> m_children;
 
