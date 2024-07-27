@@ -11,6 +11,7 @@ add_library(dgf_lib
         graphics/core/Scene.cpp
         graphics/core/Camera.cpp
         graphics/core/Renderer.cpp
+        graphics/core/RenderTarget.cpp
         graphics/core/RenderSettings.cpp
         graphics/geometry/Geometry.cpp
         graphics/geometry/BoxGeometry.cpp

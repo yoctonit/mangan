@@ -48,6 +48,10 @@ void Camera::setOrthographic() {
     m_projectionMatrix = glm::ortho(-1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f);
 }
 
+void Camera::setLookAt(glm::vec3 target) {
+    m_viewMatrix = glm::lookAt(m_position, m_center, m_up);
+}
+
 glm::mat4 Camera::viewMatrix() const {
     return m_viewMatrix;
 }

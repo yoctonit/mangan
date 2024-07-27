@@ -12,7 +12,8 @@
 class Test_5_02 : public Base {
 public:
     void initialize() override {
-        Renderer::initialize();
+        m_renderer = std::make_shared<Renderer>();
+        m_renderer->setDimensions(1024, 1024);
 
         m_scene = std::make_shared<Object3D>("scene");
 
@@ -40,10 +41,11 @@ public:
 
     void update() override {
         m_rig->update(m_input, m_deltaTimeSeconds);
-        Renderer::render(m_scene, m_camera);
+        m_renderer->render(m_scene, m_camera);
     }
 
 private:
+    std::shared_ptr<Renderer> m_renderer{};
     std::shared_ptr<Object3D> m_scene{};
     std::shared_ptr<Camera> m_camera{};
     std::shared_ptr<MovementRig> m_rig;

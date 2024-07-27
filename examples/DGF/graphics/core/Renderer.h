@@ -4,6 +4,7 @@
 #include <glm/vec3.hpp>
 #include "Scene.h"
 #include "Camera.h"
+#include "RenderTarget.h"
 
 class Renderer {
 public:
@@ -13,12 +14,17 @@ public:
 
     static void setClearColor(float r, float g, float b, float a = 1.0f);
 
+    void setDimensions(int w, int h);
+
     void render(const std::shared_ptr<Object3D> &scene, const std::shared_ptr<Camera> &camera);
 
     // static void render1(const std::shared_ptr<Object3D> &object, const std::shared_ptr<Camera>& camera);
 
     bool clearColorBuffer;
     bool clearDepthBuffer;
+    int width;
+    int height;
+    std::shared_ptr<RenderTarget> renderTarget;
 };
 
 #endif //DGF_GRAPHICS_CORE_RENDERER_H

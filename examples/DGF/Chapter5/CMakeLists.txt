@@ -63,3 +63,7 @@ target_link_libraries(dgf_test_5_09 PRIVATE Mn::DGF)
 # Example 10
 add_executable(dgf_test_5_10 test_5_10.cpp)
 target_link_libraries(dgf_test_5_10 PRIVATE Mn::DGF)
+
+# Example 11
+add_executable(dgf_test_5_11 test_5_11.cpp)
+target_link_libraries(dgf_test_5_11 PRIVATE Mn::DGF)

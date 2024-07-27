@@ -21,6 +21,8 @@ public:
 
     void setOrthographic();
 
+    void setLookAt(glm::vec3 target);
+
     [[nodiscard]] glm::mat4 viewMatrix() const;
 
     [[nodiscard]] glm::mat4 projectionMatrix() const;

@@ -3,7 +3,7 @@
 
 
 Renderer::Renderer()
-        : clearColorBuffer{true}, clearDepthBuffer{true} {
+        : clearColorBuffer{true}, clearDepthBuffer{true}, renderTarget{nullptr} {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     // support depth testing
@@ -25,7 +25,23 @@ void Renderer::setClearColor(float r, float g, float b, float a) {
     glClearColor(r, g, b, a);
 }
 
+void Renderer::setDimensions(int w, int h) {
+    width = w;
+    height = h;
+}
+
 void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_ptr<Camera> &camera) {
+    // activate render target
+    if (renderTarget == nullptr) {
+        // set render target to window
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, width, height); // TODO: set correctly...
+    } else {
+        // set render target properties
+        glBindFramebuffer(GL_FRAMEBUFFER, renderTarget->framebufferRef);
+        glViewport(0, 0, renderTarget->width, renderTarget->height);
+    }
+
     // clear color and/or depth buffers
     if (clearColorBuffer)
         glClear(GL_COLOR_BUFFER_BIT);
