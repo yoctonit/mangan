@@ -6,6 +6,13 @@ file(COPY
         ../graphics/shader/TextureMaterial.frag
         ../graphics/shader/SpriteMaterial.vert
         ../graphics/shader/SpriteMaterial.frag
+        ../graphics/shader/Effect.vert
+        ../graphics/shader/Effect.frag
+        ../graphics/shader/ColorReduceEffect.frag
+        ../graphics/shader/InvertEffect.frag
+        ../graphics/shader/PixelateEffect.frag
+        ../graphics/shader/TintEffect.frag
+        ../graphics/shader/VignetteEffect.frag
         shader/Test_5_03.vert
         shader/Test_5_03.frag
         shader/Test_5_04.frag
@@ -67,3 +74,7 @@ target_link_libraries(dgf_test_5_10 PRIVATE Mn::DGF)
 # Example 11
 add_executable(dgf_test_5_11 test_5_11.cpp)
 target_link_libraries(dgf_test_5_11 PRIVATE Mn::DGF)
+
+# Example 12
+add_executable(dgf_test_5_12 test_5_12.cpp)
+target_link_libraries(dgf_test_5_12 PRIVATE Mn::DGF)

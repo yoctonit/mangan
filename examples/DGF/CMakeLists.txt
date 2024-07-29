@@ -32,13 +32,20 @@ add_library(dgf_lib
         graphics/extras/GridGeometry.cpp
         graphics/extras/GridHelper.cpp
         graphics/extras/MovementRig.cpp
+        graphics/extras/Postprocessor.cpp
         graphics/material/Material.cpp
         graphics/material/BasicMaterial.cpp
         graphics/material/LineMaterial.cpp
         graphics/material/PointMaterial.cpp
         graphics/material/SurfaceMaterial.cpp
         graphics/material/TextureMaterial.cpp
-        graphics/material/SpriteMaterial.cpp)
+        graphics/material/SpriteMaterial.cpp
+        graphics/effects/Effect.cpp
+        graphics/effects/ColorReduceEffect.cpp
+        graphics/effects/InvertEffect.cpp
+        graphics/effects/PixelateEffect.cpp
+        graphics/effects/VignetteEffect.cpp
+        graphics/effects/TintEffect.cpp)
 target_link_libraries(dgf_lib PRIVATE glfw)
 target_link_libraries(dgf_lib PUBLIC glad_4_3)
 target_link_libraries(dgf_lib PUBLIC glm::glm)
