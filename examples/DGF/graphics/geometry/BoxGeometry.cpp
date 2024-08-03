@@ -28,6 +28,14 @@ BoxGeometry::BoxGeometry(float width, float height, float depth) {
     glm::vec2 T2(0.0f, 1.0f);
     glm::vec2 T3(1.0f, 1.0f);
 
+    // normal vectors for x+, x-, y+, y-, z+, z-
+    glm::vec3 N1(1.0f, 0.0f, 0.0f);
+    glm::vec3 N2(-1.0f, 0.0f, 0.0f);
+    glm::vec3 N3(0.0f, 1.0f, 0.0f);
+    glm::vec3 N4(0.0f, -1.0f, 0.0f);
+    glm::vec3 N5(0.0f, 0.0f, 1.0f);
+    glm::vec3 N6(0.0f, 0.0f, -1.0f);
+
     std::vector<glm::vec3> positionList{
             P5, P1, P3, P5, P3, P7, P0, P4, P6, P0, P6, P2,
             P6, P7, P3, P6, P3, P2, P0, P1, P5, P0, P5, P4,
@@ -49,10 +57,18 @@ BoxGeometry::BoxGeometry(float width, float height, float depth) {
     };
     std::vector<GLfloat> uvData = Geometry::flatten(uvList);
 
+    std::vector<glm::vec2> normalList{
+            N1, N1, N1, N1, N1, N1, N2, N2, N2, N2, N2, N2,
+            N3, N3, N3, N3, N3, N3, N4, N4, N4, N4, N4, N4,
+            N5, N5, N5, N5, N5, N5, N6, N6, N6, N6, N6, N6
+    };
+    std::vector<GLfloat> normalData = Geometry::flatten(normalList);
 
     addAttribute("vertexPosition", Attribute::Type::Vec3, positionData);
     addAttribute("vertexColor", Attribute::Type::Vec3, colorData);
     addAttribute("vertexUV", Attribute::Type::Vec2, uvData);
+    addAttribute("vertexNormal", Attribute::Type::Vec3, normalData);
+    addAttribute("faceNormal", Attribute::Type::Vec3, normalData);
 
     m_vertexCount = 36;
 }

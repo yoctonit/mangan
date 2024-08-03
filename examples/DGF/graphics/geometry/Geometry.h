@@ -26,6 +26,8 @@ public:
 
     static std::vector<glm::vec3> unflatten(std::vector<float>, int vecSize = 3);
 
+    static glm::vec3 calcNormal(glm::vec3 P0, glm::vec3 P1, glm::vec3 P2);
+
     // transform vertex position data using a matrix
     void applyMatrix(glm::mat4x4 matrix);
 

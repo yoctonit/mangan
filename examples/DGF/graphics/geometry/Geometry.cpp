@@ -48,6 +48,14 @@ std::vector<glm::vec3> Geometry::unflatten(std::vector<float> flatArray, int vec
     return vecList;
 }
 
+glm::vec3 Geometry::calcNormal(glm::vec3 P0, glm::vec3 P1, glm::vec3 P2) {
+    glm::vec3 v1 = P1 - P0;
+    glm::vec3 v2 = P2 - P0;
+    glm::vec3 normal = glm::cross(v1, v2);
+    // normal.setLength(1);
+    return glm::normalize(normal);
+}
+
 // transform vertex position data using a matrix
 void Geometry::applyMatrix(glm::mat4x4 matrix) {
     auto oldPositionData = m_attributes["vertexPosition"].getData();
@@ -68,6 +76,31 @@ void Geometry::applyMatrix(glm::mat4x4 matrix) {
     auto newPositionData = Geometry::flatten(newPositionList);
     // new data must be uploaded
     m_attributes["vertexPosition"].uploadData(newPositionData);
+
+    // extract the rotation sub matrix
+    auto rotationMatrix = glm::mat3(matrix);
+
+    // update vertex normal data
+    auto oldVertexNormalData = m_attributes["vertexNormal"].getData();
+    std::vector<glm::vec3> oldVertexNormalList = Geometry::unflatten(oldVertexNormalData, 3);
+    std::vector<glm::vec3> newVertexNormalList;
+    for (auto &oldNormal: oldVertexNormalList) {
+        glm::vec3 newNormal = rotationMatrix * oldNormal;
+        newVertexNormalList.push_back(newNormal);
+    }
+    auto newVertexNormalData = Geometry::flatten(newVertexNormalList);
+    m_attributes["vertexNormal"].uploadData(newVertexNormalData);
+
+    // update face normal data
+    auto oldFaceNormalData = m_attributes["faceNormal"].getData();
+    std::vector<glm::vec3> oldFaceNormalList = Geometry::unflatten(oldFaceNormalData, 3);
+    std::vector<glm::vec3> newFaceNormalList;
+    for (auto &oldNormal: oldFaceNormalList) {
+        glm::vec3 newNormal = rotationMatrix * oldNormal;
+        newFaceNormalList.push_back(newNormal);
+    }
+    auto newFaceNormalData = Geometry::flatten(newFaceNormalList);
+    m_attributes["faceNormal"].uploadData(newFaceNormalData);
 }
 
 // merge data from attributes of other geometry into this object;

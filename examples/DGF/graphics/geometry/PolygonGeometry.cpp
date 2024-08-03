@@ -10,12 +10,14 @@ PolygonGeometry::PolygonGeometry(int sides, float radius) {
     std::vector<glm::vec3> positionList;
     std::vector<glm::vec3> colorList;
     std::vector<glm::vec2> uvList;
+    std::vector<glm::vec3> normalList;
 
     glm::vec3 positionCenter(0.0f, 0.0f, 0.0f);
     glm::vec3 C1(1.0f, 1.0f, 1.0f);
     glm::vec3 C2(1.0f, 0.0f, 0.0f);
     glm::vec3 C3(0.0f, 0.0f, 1.0f);
     glm::vec2 uvCenter(0.5f, 0.5f);
+    glm::vec3 normalVector(0.0f, 0.0f, 1.0f);
 
     float A = 2.0f * static_cast<float>(M_PI) / static_cast<float>(sides);
 
@@ -41,15 +43,22 @@ PolygonGeometry::PolygonGeometry(int sides, float radius) {
         uvList.emplace_back(
                 std::cos(static_cast<float>(n + 1) * A) * 0.5f + 0.5f,
                 std::sin(static_cast<float>(n + 1) * A) * 0.5f + 0.5f);
+
+        normalList.emplace_back(normalVector);
+        normalList.emplace_back(normalVector);
+        normalList.emplace_back(normalVector);
     }
 
     auto positionData = Geometry::flatten(positionList);
     auto colorData = Geometry::flatten(colorList);
     auto uvData = Geometry::flatten(uvList);
+    auto normalData = Geometry::flatten(normalList);
 
     addAttribute("vertexPosition", Attribute::Type::Vec3, positionData);
     addAttribute("vertexColor", Attribute::Type::Vec3, colorData);
     addAttribute("vertexUV", Attribute::Type::Vec2, uvData);
+    addAttribute("vertexNormal", Attribute::Type::Vec3, normalData);
+    addAttribute("faceNormal", Attribute::Type::Vec3, normalData);
 
     m_vertexCount = sides * 3;
 }

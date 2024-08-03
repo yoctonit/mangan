@@ -34,6 +34,9 @@ RectangleGeometry::RectangleGeometry(float width, float height, glm::vec2 positi
     glm::vec2 T2(0.0f, 1.0f);
     glm::vec2 T3(1.0f, 1.0f);
 
+    // normal vector
+    glm::vec3 N0(0.0f, 0.0f, 1.0f);
+
     std::vector<glm::vec3> positionList{P0, P1, P3, P0, P3, P2};
     std::vector<GLfloat> positionData = Geometry::flatten(positionList);
 
@@ -43,9 +46,14 @@ RectangleGeometry::RectangleGeometry(float width, float height, glm::vec2 positi
     std::vector<glm::vec2> uvList{T0, T1, T3, T0, T3, T2};
     std::vector<GLfloat> uvData = Geometry::flatten(uvList);
 
+    std::vector<glm::vec2> normalList{N0, N0, N0, N0, N0, N0};
+    std::vector<GLfloat> normalData = Geometry::flatten(normalList);
+
     addAttribute("vertexPosition", Attribute::Type::Vec3, positionData);
     addAttribute("vertexColor", Attribute::Type::Vec3, colorData);
     addAttribute("vertexUV", Attribute::Type::Vec2, uvData);
+    addAttribute("vertexNormal", Attribute::Type::Vec3, normalData);
+    addAttribute("faceNormal", Attribute::Type::Vec3, normalData);
 
     m_vertexCount = 6;
 }

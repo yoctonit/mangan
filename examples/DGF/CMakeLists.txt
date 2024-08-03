@@ -33,6 +33,10 @@ add_library(dgf_lib
         graphics/extras/GridHelper.cpp
         graphics/extras/MovementRig.cpp
         graphics/extras/Postprocessor.cpp
+        graphics/light/Light.cpp
+        graphics/light/AmbientLight.cpp
+        graphics/light/DirectionalLight.cpp
+        graphics/light/PointLight.cpp
         graphics/material/Material.cpp
         graphics/material/BasicMaterial.cpp
         graphics/material/LineMaterial.cpp
@@ -40,6 +44,9 @@ add_library(dgf_lib
         graphics/material/SurfaceMaterial.cpp
         graphics/material/TextureMaterial.cpp
         graphics/material/SpriteMaterial.cpp
+        graphics/material/FlatMaterial.cpp
+        graphics/material/LambertMaterial.cpp
+        graphics/material/PhongMaterial.cpp
         graphics/effects/Effect.cpp
         graphics/effects/ColorReduceEffect.cpp
         graphics/effects/InvertEffect.cpp

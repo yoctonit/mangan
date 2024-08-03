@@ -21,6 +21,11 @@ public:
             float vStart, float vEnd, int vResolution
     );
 
+    std::vector<std::vector<glm::vec3>> getNormals(
+            float uStart, float uEnd, int uResolution,
+            float vStart, float vEnd, int vResolution
+    );
+
     void calculateSurface();
 
 private:
