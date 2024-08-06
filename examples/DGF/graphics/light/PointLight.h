@@ -8,6 +8,8 @@ public:
     PointLight(glm::vec3 color, glm::vec3 position, glm::vec3 attenuation);
 
     PointLight(glm::vec3 color, glm::vec3 position);
+
+    void setPosition(glm::vec3 position);
 };
 
 #endif //DGF_GRAPHICS_LIGHT_POINT_LIGHT_H

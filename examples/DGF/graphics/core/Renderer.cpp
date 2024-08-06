@@ -15,6 +15,12 @@ Renderer::Renderer()
 
     // required for antialiasing
     glEnable(GL_MULTISAMPLE);
+
+    // scenes support 4 lights; precisely 4 must be present
+    light0 = std::make_shared<Light>();
+    light1 = std::make_shared<Light>();
+    light2 = std::make_shared<Light>();
+    light3 = std::make_shared<Light>();
 }
 
 void Renderer::setClearColor(glm::vec3 color) {
@@ -53,11 +59,11 @@ void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_
     // extract list of all objects in scene
     std::vector<std::shared_ptr<Object3D>> descendentList = scene->getDescendentList();
 
-    // scenes support 4 lights; precisely 4 must be present
-    light0 = std::make_shared<Light>();
-    light1 = std::make_shared<Light>();
-    light2 = std::make_shared<Light>();
-    light3 = std::make_shared<Light>();
+//    // scenes support 4 lights; precisely 4 must be present
+//    light0 = std::make_shared<Light>();
+//    light1 = std::make_shared<Light>();
+//    light2 = std::make_shared<Light>();
+//    light3 = std::make_shared<Light>();
 
     for (const auto &object: descendentList) {
         // if this object is not mesh, continue to next object in list
@@ -84,7 +90,7 @@ void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_
             light3->setUniforms(object->material()->programRef(), 3);
         }
         // add camera position if needed (specular lighting)
-        if ( object->material()->containsUniform("viewPosition") ) {
+        if (object->material()->containsUniform("viewPosition")) {
             object->material()->uniforms()["viewPosition"].data().m_dataVec3 = camera->getPosition();
         }
 

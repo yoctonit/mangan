@@ -22,15 +22,15 @@ file(COPY
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
-        images/crate.png
-        images/crate-label.png
-        images/crate-sim.png
-        images/grass.jpg
-        images/grid.png
-        images/noise.png
-        images/rolling-ball.png
-        images/sky-earth.jpg
-        images/version-1.png
+        ../images/crate.png
+        ../images/crate-label.png
+        ../images/crate-sim.png
+        ../images/grass.jpg
+        ../images/grid.png
+        ../images/noise.png
+        ../images/rolling-ball.png
+        ../images/sky-earth.jpg
+        ../images/version-1.png
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
 
 # Example 01

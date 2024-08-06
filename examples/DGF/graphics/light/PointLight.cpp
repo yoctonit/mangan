@@ -13,3 +13,7 @@ PointLight::PointLight(glm::vec3 color, glm::vec3 position) {
     m_position = position;
     m_attenuation = glm::vec3(1.0f, 0.0f, 0.1f);
 }
+
+void PointLight::setPosition(glm::vec3 position) {
+    m_position = position;
+}

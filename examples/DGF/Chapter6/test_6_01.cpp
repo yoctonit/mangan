@@ -2,42 +2,84 @@
 #include "core/Object3D.h"
 #include "core/Camera.h"
 #include "core/Renderer.h"
+#include "core/RenderTarget.h"
 #include "core/Mesh.h"
-#include "geometry/RectangleGeometry.h"
-#include "material/TextureMaterial.h"
+#include "geometry/SphereGeometry.h"
+#include "material/FlatMaterial.h"
+#include "material/LambertMaterial.h"
+#include "material/PhongMaterial.h"
+#include "light/AmbientLight.h"
+#include "light/DirectionalLight.h"
+#include "light/PointLight.h"
+
+#define GLM_ENABLE_EXPERIMENTAL
+
+#include "glm/gtx/transform.hpp"
 
 
 class Test_6_01 : public Base {
 public:
     void initialize() override {
-        Renderer::initialize();
+        m_renderer = std::make_shared<Renderer>();
+        m_renderer->setDimensions(1600, 1200);
 
         m_scene = std::make_shared<Object3D>("scene");
 
         m_camera = std::make_shared<Camera>();
-        m_camera->setPosition(glm::vec3(0.0f, 0.0f, 2.0f));
+        m_camera->setPerspective(60.0f, 800.0f / 600.0f, 0.1f, 1000.0f);
+        m_camera->setPosition(glm::vec3(0.0f, 0.0f, 6.0f));
 
-        auto geometry = std::make_shared<RectangleGeometry>();
-        Texture grid("images/grid.png");
-        auto material = std::make_shared<TextureMaterial>(grid);
+        m_renderer->light0 = std::make_shared<AmbientLight>(glm::vec3(0.1f, 0.1f, 0.1f));
 
-        m_mesh = std::make_shared<Mesh>("textured_rectangle", geometry, material);
-        m_scene->add(m_mesh);
+        m_directionalLight = std::make_shared<DirectionalLight>(
+                glm::vec3(0.8f, 0.8f, 0.8f),
+                glm::vec3(-1.0f, -1.0f, -2.0f)
+        );
+        m_renderer->light1 = m_directionalLight;
+
+        m_pointLight = std::make_shared<PointLight>(
+                glm::vec3(0.9f, 0.0f, 0.0f),
+                glm::vec3(1.0f, 1.0f, 0.8f)
+        );
+        m_renderer->light2 = m_pointLight;
+
+        std::shared_ptr<Geometry> sphereGeometry = std::make_shared<SphereGeometry>();
+
+        auto flatMaterial = std::make_shared<FlatMaterial>(nullptr);
+        flatMaterial->uniforms()["baseColor"].data().m_dataVec3 = glm::vec3(0.6f, 0.2f, 0.2f);
+        auto sphere1 = std::make_shared<Mesh>("sphere1", sphereGeometry, flatMaterial);
+        sphere1->applyMatrix(glm::translate(glm::vec3(-2.2f, 0.0f, 0.0f)), true);
+        m_scene->add(sphere1);
+
+        auto grid = std::make_shared<Texture>("images/grid.png");
+        auto lambertMaterial = std::make_shared<LambertMaterial>(grid);
+        auto sphere2 = std::make_shared<Mesh>("sphere2", sphereGeometry, lambertMaterial);
+        sphere2->applyMatrix(glm::translate(glm::vec3(0.0f, 0.0f, 0.0f)), true);
+        m_scene->add(sphere2);
+
+        auto phongMaterial = std::make_shared<PhongMaterial>(nullptr);
+        phongMaterial->uniforms()["baseColor"].data().m_dataVec3 = glm::vec3(0.5f, 0.5f, 1.0f);
+        auto sphere3 = std::make_shared<Mesh>("sphere3", sphereGeometry, phongMaterial);
+        sphere3->applyMatrix(glm::translate(glm::vec3(2.2f, 0.0f, 0.0f)), true);
+        m_scene->add(sphere3);
     }
 
     void update() override {
-        // m_mesh->rotateY(0.01334, true);
-        // m_mesh->rotateX(0.02345, true);
-        Renderer::render(m_scene, m_camera);
+        m_directionalLight->setDirection(glm::vec3(-1.0f, std::sin(0.7f * m_timeSeconds), -2.0f));
+        m_pointLight->setPosition(glm::vec3(1.0f, std::sin(m_timeSeconds), 0.8f));
+        // m_mesh->rotateY(0.01337f, true);
+        m_renderer->render(m_scene, m_camera);
     }
 
 private:
+    std::shared_ptr<Renderer> m_renderer{};
     std::shared_ptr<Object3D> m_scene{};
     std::shared_ptr<Camera> m_camera{};
-    std::shared_ptr<Mesh> m_mesh;
+    std::shared_ptr<DirectionalLight> m_directionalLight;
+    std::shared_ptr<PointLight> m_pointLight;
 };
 
 int main() {
-    Test_6_01().run();
+    Test_6_01().run(1600, 1200, "Light Example");
     return 0;
 }
