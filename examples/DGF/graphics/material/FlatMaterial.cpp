@@ -28,3 +28,7 @@ FlatMaterial::FlatMaterial(std::shared_ptr<Texture> texture)
 
     m_renderSettings.Activate(RenderSettings::Type::LineWidth);
 }
+
+bool FlatMaterial::usesLight() const {
+    return true;
+}

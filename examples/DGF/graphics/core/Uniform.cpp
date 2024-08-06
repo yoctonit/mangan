@@ -18,6 +18,12 @@ Uniform::Uniform(GLuint programRef, const std::string &variableName, bool data) 
     m_data.m_dataBool = data;
 }
 
+Uniform::Uniform(GLuint programRef, const std::string &variableName, int data) {
+    m_variableRef = locate(programRef, variableName);
+    m_dataType = Type::Int;
+    m_data.m_dataInt = data;
+}
+
 Uniform::Uniform(GLuint programRef, const std::string &variableName, float data) {
     m_variableRef = locate(programRef, variableName);
     m_dataType = Type::Float;

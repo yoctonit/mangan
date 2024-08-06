@@ -9,6 +9,8 @@ class LambertMaterial : public Material {
 public:
     explicit LambertMaterial(std::shared_ptr<Texture> texture);
 
+    [[nodiscard]] bool usesLight() const override;
+
 //    void addTextureData(std::shared_ptr<Texture> texture);
 //
 //    void addBumpData(std::shared_ptr<Texture> bumpTexture, float bumpStrength);

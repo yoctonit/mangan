@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "RenderTarget.h"
+#include "../light/Light.h"
 
 class Renderer {
 public:
@@ -22,9 +23,16 @@ public:
 
     bool clearColorBuffer;
     bool clearDepthBuffer;
+
     int width;
     int height;
+
     std::shared_ptr<RenderTarget> renderTarget;
+
+    std::shared_ptr<Light> light0{nullptr};
+    std::shared_ptr<Light> light1{nullptr};
+    std::shared_ptr<Light> light2{nullptr};
+    std::shared_ptr<Light> light3{nullptr};
 };
 
 #endif //DGF_GRAPHICS_CORE_RENDERER_H

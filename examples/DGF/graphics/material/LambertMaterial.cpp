@@ -37,3 +37,7 @@ LambertMaterial::LambertMaterial(std::shared_ptr<Texture> texture)
 
     m_renderSettings.Activate(RenderSettings::Type::LineWidth);
 }
+
+bool LambertMaterial::usesLight() const {
+    return true;
+}

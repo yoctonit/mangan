@@ -8,6 +8,8 @@
 class FlatMaterial : public Material {
 public:
     explicit FlatMaterial(std::shared_ptr<Texture> texture);
+
+    [[nodiscard]] bool usesLight() const override;
 };
 
 #endif //DGF_GRAPHICS_MATERIAL_FLAT_MATERIAL_H

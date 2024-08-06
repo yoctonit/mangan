@@ -41,3 +41,7 @@ PhongMaterial::PhongMaterial(std::shared_ptr<Texture> texture)
 
     m_renderSettings.Activate(RenderSettings::Type::LineWidth);
 }
+
+bool PhongMaterial::usesLight() const {
+    return true;
+}

@@ -53,6 +53,12 @@ void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_
     // extract list of all objects in scene
     std::vector<std::shared_ptr<Object3D>> descendentList = scene->getDescendentList();
 
+    // scenes support 4 lights; precisely 4 must be present
+    light0 = std::make_shared<Light>();
+    light1 = std::make_shared<Light>();
+    light2 = std::make_shared<Light>();
+    light3 = std::make_shared<Light>();
+
     for (const auto &object: descendentList) {
         // if this object is not mesh, continue to next object in list
         if (!object->isMesh()) continue;
@@ -70,8 +76,34 @@ void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_
         object->material()->uniforms()["viewMatrix"].data().m_dataMat4x4 = camera->viewMatrix();
         object->material()->uniforms()["projectionMatrix"].data().m_dataMat4x4 = camera->projectionMatrix();
 
+        // if material uses light data, add lights from list
+        if (object->material()->usesLight()) {
+            light0->setUniforms(object->material()->programRef(), 0);
+            light1->setUniforms(object->material()->programRef(), 1);
+            light2->setUniforms(object->material()->programRef(), 2);
+            light3->setUniforms(object->material()->programRef(), 3);
+        }
+        // add camera position if needed (specular lighting)
+        if ( object->material()->containsUniform("viewPosition") ) {
+            object->material()->uniforms()["viewPosition"].data().m_dataVec3 = camera->getPosition();
+        }
+
         // update uniforms stored in material
         for (auto &[key, val]: object->material()->uniforms()) {
+            val.upload();
+        }
+
+        // update uniforms stored in lights
+        for (auto &[key, val]: light0->uniforms()) {
+            val.upload();
+        }
+        for (auto &[key, val]: light1->uniforms()) {
+            val.upload();
+        }
+        for (auto &[key, val]: light2->uniforms()) {
+            val.upload();
+        }
+        for (auto &[key, val]: light3->uniforms()) {
             val.upload();
         }
 

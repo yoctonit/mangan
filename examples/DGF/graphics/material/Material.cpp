@@ -53,3 +53,11 @@ std::map<std::string, Uniform> &Material::uniforms() {
 RenderSettings &Material::renderSettings() {
     return m_renderSettings;
 }
+
+bool Material::usesLight() const {
+    return false;
+}
+
+bool Material::containsUniform(const std::string &name) const {
+    return m_uniforms.find(name) != m_uniforms.end();
+}

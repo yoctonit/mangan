@@ -33,6 +33,10 @@ public:
 
     [[nodiscard]] RenderSettings &renderSettings();
 
+    [[nodiscard]] virtual bool usesLight() const;
+
+    [[nodiscard]] bool containsUniform(const std::string &name) const;
+
 protected:
     GLuint m_programRef{};
 
