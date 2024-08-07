@@ -6,21 +6,16 @@ LambertMaterial::LambertMaterial(std::shared_ptr<Texture> texture)
         "shader/LambertMaterial.frag"
 ) {
     addUniform("baseColor", glm::vec3(1.0f, 1.0f, 1.0f));
-    // addUniform("Light", "light0", null );
-    // addUniform("Light", "light1", null );
-    // addUniform("Light", "light2", null );
-    // addUniform("Light", "light3", null );
 
     /*
     addUniform("bool", "useTexture", 0);
 
     if (texture != null)
         addTextureData(texture);
+    */
+    addUniform("useBumpTexture", false);
 
-    addUniform("bool", "useBumpTexture", 0);
-
-    addUniform("bool", "useShadow", 0);
-     */
+//    addUniform("bool", "useShadow", 0);
 
     if (texture == nullptr)
         addUniform("useTexture", false);
@@ -40,4 +35,10 @@ LambertMaterial::LambertMaterial(std::shared_ptr<Texture> texture)
 
 bool LambertMaterial::usesLight() const {
     return true;
+}
+
+void LambertMaterial::addBumpData(const std::shared_ptr<Texture> &bumpTexture, float bumpStrength) {
+    m_uniforms["useBumpTexture"].data().m_dataBool = true;
+    addUniform("bumpTexture", bumpTexture->textureRef(), 2);
+    addUniform("bumpStrength", bumpStrength);
 }

@@ -20,11 +20,10 @@ PhongMaterial::PhongMaterial(std::shared_ptr<Texture> texture)
 
     if (texture != null)
         addTextureData(texture);
+    */
+    addUniform("useBumpTexture", false);
 
-    addUniform("bool", "useBumpTexture", 0);
-
-    addUniform("bool", "useShadow", 0);
-     */
+//    addUniform("bool", "useShadow", 0);
 
     if (texture == nullptr)
         addUniform("useTexture", false);
@@ -44,4 +43,10 @@ PhongMaterial::PhongMaterial(std::shared_ptr<Texture> texture)
 
 bool PhongMaterial::usesLight() const {
     return true;
+}
+
+void PhongMaterial::addBumpData(const std::shared_ptr<Texture> &bumpTexture, float bumpStrength) {
+    m_uniforms["useBumpTexture"].data().m_dataBool = true;
+    addUniform("bumpTexture", bumpTexture->textureRef(), 2);
+    addUniform("bumpStrength", bumpStrength);
 }

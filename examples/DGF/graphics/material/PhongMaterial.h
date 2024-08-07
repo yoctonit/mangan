@@ -12,9 +12,9 @@ public:
     [[nodiscard]] bool usesLight() const override;
 
 //    void addTextureData(std::shared_ptr<Texture> texture);
-//
-//    void addBumpData(std::shared_ptr<Texture> bumpTexture, float bumpStrength);
-//
+
+    void addBumpData(const std::shared_ptr<Texture> &bumpTexture, float bumpStrength);
+
 //    void enableShadow();
 };
 

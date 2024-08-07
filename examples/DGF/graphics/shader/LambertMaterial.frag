@@ -73,9 +73,9 @@ uniform vec3 baseColor;
 uniform bool useTexture;
 uniform sampler2D tex;
 
-//uniform bool useBumpTexture;
-//uniform sampler2D bumpTexture;
-//uniform float bumpStrength;
+uniform bool useBumpTexture;
+uniform sampler2D bumpTexture;
+uniform float bumpStrength;
 
 in vec3 position;
 in vec2 UV;
@@ -88,12 +88,13 @@ void main()
     vec4 color = vec4(baseColor, 1.0);
 
     if (useTexture)
-        color *= texture(tex, UV);
+    color *= texture(tex, UV);
 
     // calculate total effect of lights on color
     vec3 bNormal = normal;
-//    if (useBumpTexture)
-//        bNormal += bumpStrength * vec3(texture(bumpTexture, UV));
+    if (useBumpTexture) {
+        bNormal += bumpStrength * vec3(texture(bumpTexture, UV));
+    }
 
     vec3 total = vec3(0, 0, 0);
     total += lightCalc(light0, position, bNormal);
