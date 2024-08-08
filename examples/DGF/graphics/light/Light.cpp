@@ -72,6 +72,18 @@ void Light::setUniforms(GLuint shaderId, int lightIndex) {
     }
 }
 
+glm::vec3 Light::color() const {
+    return m_color;
+}
+
+glm::vec3 Light::direction() const {
+    return m_direction;
+}
+
+glm::vec3 Light::position() const {
+    return m_position;
+}
+
 std::map<std::string, Uniform> &Light::uniforms() {
     return m_uniforms;
 }

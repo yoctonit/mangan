@@ -47,6 +47,8 @@ public:
 
     void setPosition(glm::vec3 position);
 
+    void setTransform(glm::mat4x4 t);
+
     [[nodiscard]] const std::string &name() const;
 
     [[nodiscard]] glm::mat4x4 transform() const;

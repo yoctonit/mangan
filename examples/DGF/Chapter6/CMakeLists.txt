@@ -1,5 +1,7 @@
 # prepare shader files for chapter examples
 file(COPY
+        ../graphics/shader/BasicMaterial.vert
+        ../graphics/shader/BasicMaterial.frag
         ../graphics/shader/FlatMaterial.vert
         ../graphics/shader/FlatMaterial.frag
         ../graphics/shader/LambertMaterial.vert

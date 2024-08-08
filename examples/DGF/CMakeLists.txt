@@ -32,6 +32,8 @@ add_library(dgf_lib
         graphics/extras/GridGeometry.cpp
         graphics/extras/GridHelper.cpp
         graphics/extras/MovementRig.cpp
+        graphics/extras/DirectionalLightHelper.cpp
+        graphics/extras/PointLightHelper.cpp
         graphics/extras/Postprocessor.cpp
         graphics/light/Light.cpp
         graphics/light/AmbientLight.cpp

@@ -1,6 +1,6 @@
 #include "PhongMaterial.h"
 
-PhongMaterial::PhongMaterial(std::shared_ptr<Texture> texture)
+PhongMaterial::PhongMaterial(const std::shared_ptr<Texture>& texture)
         : Material(
         "shader/PhongMaterial.vert",
         "shader/PhongMaterial.frag"

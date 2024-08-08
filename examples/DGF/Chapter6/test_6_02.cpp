@@ -5,6 +5,8 @@
 #include "core/RenderTarget.h"
 #include "core/Mesh.h"
 #include "geometry/RectangleGeometry.h"
+#include "geometry/BoxGeometry.h"
+#include "geometry/SphereGeometry.h"
 #include "material/LambertMaterial.h"
 #include "light/AmbientLight.h"
 #include "light/DirectionalLight.h"
@@ -42,17 +44,22 @@ public:
 
         m_renderer->light1 = std::make_shared<PointLight>(
                 glm::vec3(1.0f, 1.0f, 1.0f),
+//                glm::vec3(0.2f, 0.2f, 3.3f)
                 glm::vec3(1.2f, 1.2f, 0.3f)
         );
 
-        std::shared_ptr<Geometry> geometry = std::make_shared<RectangleGeometry>(2.0f, 2.0f);
+//        std::shared_ptr<Geometry> geometry = std::make_shared<RectangleGeometry>(2.0f, 2.0f);
+        std::shared_ptr<Geometry> geometry = std::make_shared<BoxGeometry>(2.0f, 2.0f, 2.0f);
+//        geometry->applyMatrix(glm::rotate(3.14f/2.0f, glm::vec3(1.0f, 0.0f,0.0f)));
+//        std::shared_ptr<Geometry> geometry = std::make_shared<SphereGeometry>();
 
         auto brickColor = std::make_shared<Texture>("images/brick-color.png");
         auto bumpMaterial = std::make_shared<LambertMaterial>(brickColor);
         auto brickBump = std::make_shared<Texture>("images/brick-bump.png");
-        bumpMaterial->addBumpData(brickBump, 1.5f);
+        bumpMaterial->addBumpData(brickBump, 1.0f);
 
         auto mesh = std::make_shared<Mesh>("rectangle", geometry, bumpMaterial);
+        // mesh->rotateX(3.14f/2.0f, true);
         m_scene->add(mesh);
     }
 

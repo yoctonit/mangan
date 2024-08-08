@@ -14,6 +14,12 @@ public:
 
     Light();
 
+    [[nodiscard]] glm::vec3 color() const;
+
+    [[nodiscard]] glm::vec3 direction() const;
+
+    [[nodiscard]] glm::vec3 position() const;
+
     [[nodiscard]] std::map<std::string, Uniform> &uniforms();
 
     void setUniforms(GLuint shaderId, int lightIndex);

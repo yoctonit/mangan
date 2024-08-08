@@ -7,7 +7,7 @@
 
 class LambertMaterial : public Material {
 public:
-    explicit LambertMaterial(std::shared_ptr<Texture> texture);
+    explicit LambertMaterial(const std::shared_ptr<Texture>& texture);
 
     [[nodiscard]] bool usesLight() const override;
 

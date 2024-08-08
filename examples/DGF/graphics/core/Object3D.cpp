@@ -134,6 +134,10 @@ void Object3D::setPosition(glm::vec3 position) {
 //        m_transform.values[2][3] = position.values[2];
 }
 
+void Object3D::setTransform(glm::mat4x4 t) {
+    m_transform = t;
+}
+
 const std::string &Object3D::name() const {
     return m_name;
 }

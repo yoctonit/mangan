@@ -1,6 +1,6 @@
 #include "LambertMaterial.h"
 
-LambertMaterial::LambertMaterial(std::shared_ptr<Texture> texture)
+LambertMaterial::LambertMaterial(const std::shared_ptr<Texture> &texture)
         : Material(
         "shader/LambertMaterial.vert",
         "shader/LambertMaterial.frag"

@@ -7,7 +7,7 @@
 
 class PhongMaterial : public Material {
 public:
-    explicit PhongMaterial(std::shared_ptr<Texture> texture);
+    explicit PhongMaterial(const std::shared_ptr<Texture>& texture);
 
     [[nodiscard]] bool usesLight() const override;
 
