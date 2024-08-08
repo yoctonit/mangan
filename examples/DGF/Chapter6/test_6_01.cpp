@@ -48,8 +48,8 @@ public:
 
         m_directionalLightHelper = std::make_shared<DirectionalLightHelper>(m_directionalLight);
         m_directionalLightHelper->setTransform(glm::translate(glm::vec3(3.0f, 2.0f, 0.0f)));
-        // m_directionalLightHelper->setDirection(); not implemented
-        m_scene->add(m_directionalLightHelper);
+        // m_directionalLightHelper->setDirection(); not implemented, that is why next line is commented out
+        // m_scene->add(m_directionalLightHelper);
 
         m_pointLightHelper = std::make_shared<PointLightHelper>(m_pointLight);
         m_pointLightHelper->setTransform(glm::translate(m_pointLight->position()));
@@ -61,7 +61,7 @@ public:
         flatMaterial->uniforms()["baseColor"].data().m_dataVec3 = glm::vec3(0.6f, 0.2f, 0.2f);
         auto sphere1 = std::make_shared<Mesh>("sphere1", sphereGeometry, flatMaterial);
         sphere1->applyMatrix(glm::translate(glm::vec3(-2.2f, 0.0f, 0.0f)), true);
-        m_scene->add(sphere1);
+//        m_scene->add(sphere1);
 
         auto grid = std::make_shared<Texture>("images/grid.png");
         auto lambertMaterial = std::make_shared<LambertMaterial>(grid);

@@ -7,7 +7,7 @@
 
 class FlatMaterial : public Material {
 public:
-    explicit FlatMaterial(std::shared_ptr<Texture> texture);
+    explicit FlatMaterial(const std::shared_ptr<Texture>& texture);
 
     [[nodiscard]] bool usesLight() const override;
 };
