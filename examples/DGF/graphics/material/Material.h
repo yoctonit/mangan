@@ -15,6 +15,8 @@ public:
 
     void addUniform(const std::string &variableName, bool data);
 
+    void addUniform(const std::string &variableName, int data);
+
     void addUniform(const std::string &variableName, float data);
 
     void addUniform(const std::string &variableName, glm::vec2 data);

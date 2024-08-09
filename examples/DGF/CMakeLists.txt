@@ -50,11 +50,15 @@ add_library(dgf_lib
         graphics/material/LambertMaterial.cpp
         graphics/material/PhongMaterial.cpp
         graphics/effects/Effect.cpp
+        graphics/effects/AdditiveBlendEffect.cpp
+        graphics/effects/BrightFilterEffect.cpp
         graphics/effects/ColorReduceEffect.cpp
+        graphics/effects/HorizontalBlurEffect.cpp
         graphics/effects/InvertEffect.cpp
         graphics/effects/PixelateEffect.cpp
-        graphics/effects/VignetteEffect.cpp
-        graphics/effects/TintEffect.cpp)
+        graphics/effects/TintEffect.cpp
+        graphics/effects/VerticalBlurEffect.cpp
+        graphics/effects/VignetteEffect.cpp)
 target_link_libraries(dgf_lib PRIVATE glfw)
 target_link_libraries(dgf_lib PUBLIC glad_4_3)
 target_link_libraries(dgf_lib PUBLIC glm::glm)

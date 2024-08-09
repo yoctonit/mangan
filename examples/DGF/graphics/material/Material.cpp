@@ -18,6 +18,10 @@ void Material::addUniform(const std::string &variableName, bool data) {
     m_uniforms[variableName] = Uniform(m_programRef, variableName, data);
 }
 
+void Material::addUniform(const std::string &variableName, int data) {
+    m_uniforms[variableName] = Uniform(m_programRef, variableName, data);
+}
+
 void Material::addUniform(const std::string &variableName, float data) {
     m_uniforms[variableName] = Uniform(m_programRef, variableName, data);
 }
