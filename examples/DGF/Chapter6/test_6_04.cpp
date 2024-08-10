@@ -6,6 +6,7 @@
 #include "core/Mesh.h"
 #include "geometry/RectangleGeometry.h"
 #include "geometry/SphereGeometry.h"
+#include "material/SurfaceMaterial.h"
 #include "material/TextureMaterial.h"
 #include "extras/MovementRig.h"
 #include "extras/Postprocessor.h"
@@ -19,7 +20,7 @@
 #include "glm/gtx/transform.hpp"
 
 
-class Test_6_03 : public Base {
+class Test_6_04 : public Base {
 public:
     void initialize() override {
         m_renderer = std::make_shared<Renderer>();
@@ -57,19 +58,26 @@ public:
         m_scene->add(m_sphere);
 
         // set up postprocessing
-        m_postprocessor = std::make_shared<Postprocessor>(m_renderer, m_scene, m_camera, nullptr);
-        // m_postprocessor->addEffect(std::make_shared<BrightFilterEffect>(2.4f));
-        // m_postprocessor->addEffect(std::make_shared<HorizontalBlurEffect>(glm::vec2(1200.0f,800.0f), 50) );
-        // m_postprocessor->addEffect(std::make_shared<VerticalBlurEffect>(glm::vec2(1200.0f,800.0f), 50));
-        // m_postprocessor->addEffect(std::make_shared<AdditiveBlendEffect>(grid, 0.5f, 0.5f));
+        // glow scene
+        auto glowScene = std::make_shared<Scene>("glow-scene");
+        auto redMaterial = std::make_shared<SurfaceMaterial>();
+        redMaterial->uniforms()["baseColor"].data().m_dataVec3 = glm::vec3(1.0f, 0.0f, 0.0f);
+        auto glowSphere = std::make_shared<Mesh>("glow-sphere", sphereGeometry, redMaterial);
+        glowSphere->setTransform(m_sphere->transform());
+        glowScene->add(glowSphere);
 
-        // light bloom effect
-        m_postprocessor->addEffect(std::make_shared<BrightFilterEffect>(2.4f));
-        m_postprocessor->addEffect(std::make_shared<HorizontalBlurEffect>(glm::vec2(800.0f, 600.0f), 30));
-        m_postprocessor->addEffect(std::make_shared<VerticalBlurEffect>(glm::vec2(800.0f, 600.0f), 30));
-        // access results of first render pass (original scene)
-        auto mainScene = m_postprocessor->renderTargetList[0]->texture;
-        m_postprocessor->addEffect(std::make_shared<AdditiveBlendEffect>(*mainScene, 2.0f, 1.0f));
+        // glow postprocessing
+        glm::vec2 size(800, 600);
+        auto glowTarget = std::make_shared<RenderTarget>(800, 600);
+        m_glowPass = std::make_shared<Postprocessor>(m_renderer, glowScene, m_camera, glowTarget);
+
+        // empty spots have no initialized values, causing no glow blur...
+        m_glowPass->addEffect(std::make_shared<HorizontalBlurEffect>(size, 50));
+        m_glowPass->addEffect(std::make_shared<VerticalBlurEffect>(size, 50));
+
+        // combining results of glow effect with main scene
+        m_comboPass = std::make_shared<Postprocessor>(m_renderer, m_scene, m_camera, nullptr);
+        m_comboPass->addEffect(std::make_shared<AdditiveBlendEffect>(*glowTarget->texture, 1, 3));
     }
 
     void update() override {
@@ -77,12 +85,14 @@ public:
 
         m_sphere->rotateY(0.01337f, true);
 
-        m_postprocessor->render();
+        m_glowPass->render();
+        m_comboPass->render();
     }
 
 private:
     std::shared_ptr<Renderer> m_renderer{};
-    std::shared_ptr<Postprocessor> m_postprocessor{};
+    std::shared_ptr<Postprocessor> m_glowPass{};
+    std::shared_ptr<Postprocessor> m_comboPass{};
     std::shared_ptr<Object3D> m_scene{};
     std::shared_ptr<Camera> m_camera{};
     std::shared_ptr<MovementRig> m_rig;
@@ -90,6 +100,6 @@ private:
 };
 
 int main() {
-    Test_6_03().run(800, 600, "Lighting Effects Example");
+    Test_6_04().run(800, 600, "Glow Effect Example");
     return 0;
 }
