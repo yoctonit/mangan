@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include "Renderer.h"
+#include "../material/DepthMaterial.h"
 
 
 Renderer::Renderer()
@@ -24,10 +25,12 @@ Renderer::Renderer()
 }
 
 void Renderer::setClearColor(glm::vec3 color) {
-    glClearColor(color.r, color.g, color.b, 1);
+    clearColor = glm::vec4(color, 1.0f);
+    glClearColor(color.r, color.g, color.b, 1.0f);
 }
 
 void Renderer::setClearColor(float r, float g, float b, float a) {
+    clearColor = glm::vec4(r, g, b, a);
     glClearColor(r, g, b, a);
 }
 
@@ -37,6 +40,62 @@ void Renderer::setDimensions(int w, int h) {
 }
 
 void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_ptr<Camera> &camera) {
+    // extract list of all objects in scene
+    std::vector<std::shared_ptr<Object3D>> descendentList = scene->getDescendentList();
+
+    // shadow pass start ----------------------------
+
+    if (shadowsEnabled) {
+        // set render target properties
+        glBindFramebuffer(GL_FRAMEBUFFER, shadowObject->renderTarget->framebufferRef);
+        glViewport(0, 0, shadowObject->renderTarget->width, shadowObject->renderTarget->height);
+
+        // set default color to white, used when no objects present to cast shadows
+        glClearColor(1, 1, 1, 1);
+
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_DEPTH_BUFFER_BIT);
+
+        // reset original clear color
+        glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
+
+        // everything in the scene gets rendered with depthMaterial
+        //   so only need to call glUseProgram & set matrices once
+        glUseProgram(shadowObject->material->programRef());
+
+        shadowObject->updateInternal();
+
+        for (const auto &object: descendentList) {
+            // if this object is not mesh, continue to next object in list
+            if (!object->isMesh()) continue;
+
+            // if this (mesh) object is not visible, continue to next object in list
+            if (!object->isVisible()) continue;
+
+            // only triangle-based meshes cast shadows
+            if (object->material()->drawStyle() != GL_TRIANGLES) continue;
+
+            glUseProgram(object->material()->programRef());
+
+            // bind VAO
+            glBindVertexArray(object->vaoRef());
+
+            // update transform data
+            shadowObject->material->uniforms()["modelMatrix"].data().m_dataMat4x4 = object->getWorldMatrix();
+
+            // update uniforms (matrix data) stored in shadow material
+            for (auto &[key, val]: shadowObject->material->uniforms()) {
+                val.upload();
+            }
+
+            // no render settings to update
+
+            glDrawArrays(GL_TRIANGLES, 0, object->geometry()->vertexCount());
+        }
+    }
+
+    // shadow pass end ----------------------------
+
     // activate render target
     if (renderTarget == nullptr) {
         // set render target to window
@@ -55,9 +114,6 @@ void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_
         glClear(GL_DEPTH_BUFFER_BIT);
 
     camera->updateViewMatrix();
-
-    // extract list of all objects in scene
-    std::vector<std::shared_ptr<Object3D>> descendentList = scene->getDescendentList();
 
     for (const auto &object: descendentList) {
         // if this object is not mesh, continue to next object in list
@@ -88,6 +144,11 @@ void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_
             object->material()->uniforms()["viewPosition"].data().m_dataVec3 = camera->getPosition();
         }
 
+        // add shadow data if enabled and used by shader
+        if (shadowsEnabled && object->material()->containsUniform("shadow0.lightDirection")) {
+            object->material()->setShadowUniform("shadow0", shadowObject);
+        }
+
         // update uniforms stored in material
         for (auto &[key, val]: object->material()->uniforms()) {
             val.upload();
@@ -112,4 +173,15 @@ void Renderer::render(const std::shared_ptr<Object3D> &scene, const std::shared_
 
         glDrawArrays(object->material()->drawStyle(), 0, object->geometry()->vertexCount());
     }
+}
+
+void Renderer::enableShadows(
+        const std::shared_ptr<DirectionalLight> &shadowLight,
+        float strength, glm::vec2 resolution, float bias) {
+    shadowsEnabled = true;
+    shadowObject = std::make_shared<Shadow>(shadowLight, strength, resolution, bias);
+}
+
+void Renderer::enableShadows(const std::shared_ptr<DirectionalLight> &shadowLight) {
+    enableShadows(shadowLight, 0.5f, glm::vec2(512, 512), 0.01f);
 }

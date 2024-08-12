@@ -65,3 +65,6 @@ bool Material::usesLight() const {
 bool Material::containsUniform(const std::string &name) const {
     return m_uniforms.find(name) != m_uniforms.end();
 }
+
+void Material::setShadowUniform(const std::string &name, const std::shared_ptr<Shadow> &shadowObject) {
+}

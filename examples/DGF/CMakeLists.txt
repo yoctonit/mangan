@@ -35,10 +35,6 @@ add_library(dgf_lib
         graphics/extras/DirectionalLightHelper.cpp
         graphics/extras/PointLightHelper.cpp
         graphics/extras/Postprocessor.cpp
-        graphics/light/Light.cpp
-        graphics/light/AmbientLight.cpp
-        graphics/light/DirectionalLight.cpp
-        graphics/light/PointLight.cpp
         graphics/material/Material.cpp
         graphics/material/BasicMaterial.cpp
         graphics/material/LineMaterial.cpp
@@ -49,6 +45,12 @@ add_library(dgf_lib
         graphics/material/FlatMaterial.cpp
         graphics/material/LambertMaterial.cpp
         graphics/material/PhongMaterial.cpp
+        graphics/material/DepthMaterial.cpp
+        graphics/light/Light.cpp
+        graphics/light/AmbientLight.cpp
+        graphics/light/DirectionalLight.cpp
+        graphics/light/PointLight.cpp
+        graphics/light/Shadow.cpp
         graphics/effects/Effect.cpp
         graphics/effects/AdditiveBlendEffect.cpp
         graphics/effects/BrightFilterEffect.cpp

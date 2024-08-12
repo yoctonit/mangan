@@ -9,6 +9,8 @@ class Texture {
 public:
     explicit Texture(const std::string &fileName);
 
+    Texture(int width, int height, int magFilter, int minFilter, int wrap);
+
     Texture(int width, int height);
 
     // ~Texture();

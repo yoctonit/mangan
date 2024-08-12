@@ -3,11 +3,11 @@
 #include "RenderTarget.h"
 
 
-RenderTarget::RenderTarget(int w, int h)
+RenderTarget::RenderTarget(int w, int h, int magFilter, int minFilter, int wrap)
         : width{w}, height{h} {
 
     // generate an empty texture
-    texture = std::make_shared<Texture>(width, height);
+    texture = std::make_shared<Texture>(width, height, magFilter, minFilter, wrap);
 
     // create a framebuffer
     glGenFramebuffers(1, &framebufferRef);
@@ -29,4 +29,8 @@ RenderTarget::RenderTarget(int w, int h)
     if (status != GL_FRAMEBUFFER_COMPLETE) {
         std::cerr << "Framebuffer status error: " << status << "\n";
     }
+}
+
+RenderTarget::RenderTarget(int w, int h)
+        : RenderTarget(w, h, GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE) {
 }

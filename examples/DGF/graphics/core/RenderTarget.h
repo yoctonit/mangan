@@ -6,6 +6,8 @@
 
 class RenderTarget {
 public:
+    RenderTarget(int w, int h, int magFilter, int minFilter, int wrap);
+
     RenderTarget(int w, int h);
 
     int width{};

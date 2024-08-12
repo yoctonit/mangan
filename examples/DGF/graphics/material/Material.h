@@ -8,6 +8,7 @@
 #include <glm/mat4x4.hpp>
 #include "../core/Uniform.h"
 #include "../core/RenderSettings.h"
+#include "../light/Shadow.h"
 
 class Material {
 public:
@@ -38,6 +39,8 @@ public:
     [[nodiscard]] virtual bool usesLight() const;
 
     [[nodiscard]] bool containsUniform(const std::string &name) const;
+
+    virtual void setShadowUniform(const std::string &name, const std::shared_ptr<Shadow> &shadowObject);
 
 protected:
     GLuint m_programRef{};

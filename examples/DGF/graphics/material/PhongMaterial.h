@@ -7,15 +7,17 @@
 
 class PhongMaterial : public Material {
 public:
-    explicit PhongMaterial(const std::shared_ptr<Texture>& texture);
+    explicit PhongMaterial(const std::shared_ptr<Texture> &texture);
 
     [[nodiscard]] bool usesLight() const override;
 
-//    void addTextureData(std::shared_ptr<Texture> texture);
+    void addTextureData(const std::shared_ptr<Texture> &texture);
 
     void addBumpData(const std::shared_ptr<Texture> &bumpTexture, float bumpStrength);
 
-//    void enableShadow();
+    void enableShadow();
+
+    void setShadowUniform(const std::string &name, const std::shared_ptr<Shadow> &shadowObject) override;
 };
 
 #endif //DGF_GRAPHICS_MATERIAL_PHONG_MATERIAL_H

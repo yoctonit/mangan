@@ -10,6 +10,8 @@ file(COPY
         ../graphics/shader/LambertMaterial.frag
         ../graphics/shader/PhongMaterial.vert
         ../graphics/shader/PhongMaterial.frag
+        ../graphics/shader/DepthMaterial.vert
+        ../graphics/shader/DepthMaterial.frag
         ../graphics/shader/Effect.vert
         ../graphics/shader/AdditiveBlendEffect.frag
         ../graphics/shader/BrightFilterEffect.frag
@@ -40,3 +42,7 @@ target_link_libraries(dgf_test_6_03 PRIVATE Mn::DGF)
 # Example 04
 add_executable(dgf_test_6_04 test_6_04.cpp)
 target_link_libraries(dgf_test_6_04 PRIVATE Mn::DGF)
+
+# Example 05
+add_executable(dgf_test_6_05 test_6_05.cpp)
+target_link_libraries(dgf_test_6_05 PRIVATE Mn::DGF)
