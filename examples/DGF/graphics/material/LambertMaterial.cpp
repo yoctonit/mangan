@@ -44,7 +44,6 @@ void LambertMaterial::addBumpData(const std::shared_ptr<Texture> &bumpTexture, f
 void LambertMaterial::enableShadow() {
     m_uniforms["useShadow"].data().m_dataBool = true;
     // addUniform("Shadow", "shadow0", null);
-    m_uniforms["shadowPosition0"] = Uniform(m_programRef, "shadow0Position", glm::vec3(10.0, 10.0, 10.0));
     // variableRefMap.put("lightDirection", glGetUniformLocation(programRef, variableName + ".lightDirection") );
     m_uniforms["shadow0.lightDirection"] = Uniform(m_programRef, "shadow0.lightDirection", glm::vec3(0.0, 0.0, 0.0));
 

@@ -55,7 +55,6 @@ void PhongMaterial::addBumpData(const std::shared_ptr<Texture> &bumpTexture, flo
 
 void PhongMaterial::enableShadow() {
     m_uniforms["useShadow"].data().m_dataBool = true;
-    m_uniforms["shadowPosition0"] = Uniform(m_programRef, "shadow0Position", glm::vec3(10.0, 10.0, 10.0));
     // addUniform("Shadow", "shadow0", null);
     // variableRefMap.put("lightDirection", glGetUniformLocation(programRef, variableName + ".lightDirection") );
     m_uniforms["shadow0.lightDirection"] = Uniform(m_programRef, "shadow0.lightDirection", glm::vec3(0.0, 0.0, 0.0));
