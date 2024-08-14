@@ -108,6 +108,8 @@ namespace Mn {
         // Always detach shaders after a successful link.
         glDetachShader(programId, vertexShaderId);
         glDetachShader(programId, fragmentShaderId);
+        glDeleteShader(vertexShaderId);
+        glDeleteShader(fragmentShaderId);
 
         // linking was successful; return program reference value
         return programId;
