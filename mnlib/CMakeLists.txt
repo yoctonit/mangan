@@ -1,6 +1,7 @@
 add_library(engine
         engine/Input.cpp engine/Window.cpp engine/Run.h
-        graphics/Shader.cpp
+        graphics/Shader.cpp graphics/Vbo.cpp
+        graphics/Vao.cpp graphics/Ebo.cpp
 )
 
 target_link_libraries(engine PRIVATE glfw)

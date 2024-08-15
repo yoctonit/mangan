@@ -8,22 +8,27 @@ namespace Mn {
 
     class Shader {
     public:
-        Shader();
+        static Shader FromFiles(
+                const std::string &vertexShaderFile,
+                const std::string &fragmentShaderFile
+        );
 
-        explicit Shader(GLuint id);
+        [[nodiscard]] GLuint Id() const;
 
-        [[nodiscard]] GLuint id() const;
+        void Use() const;
 
-        static Shader FromFiles(const std::string &vertexShaderFile, const std::string &fragmentShaderFile);
+        void Release();
+
+        void Debug(const std::string &msg) const;
 
     private:
-        GLuint m_id{};
+        unsigned int m_id{};
 
         static std::string LoadFile(const std::string &fileName);
 
-        static GLuint Compile(const std::string &shaderSource, GLenum shaderType);
+        static unsigned int Compile(const std::string &shaderSource, GLenum shaderType);
 
-        static GLuint Link(GLuint vertexShaderId, GLuint fragmentShaderId);
+        static unsigned int Link(unsigned int vertexShaderId, unsigned int fragmentShaderId);
 
     };
 

@@ -7,28 +7,43 @@
 
 namespace Mn {
 
-    Shader::Shader() = default;
-
-    Shader::Shader(GLuint id) {
-        m_id = id;
+    unsigned int Shader::Id() const {
+        return m_id;
     }
 
-    GLuint Shader::id() const {
-        return m_id;
+    void Shader::Use() const {
+        glUseProgram(m_id);
+    }
+
+    void Shader::Release() {
+        if (m_id == 0) {
+            std::cerr << "Error: Trying to release null shader\n";
+            return;
+        }
+        std::cout << "Deleted Shader with id " << m_id << "\n";
+        glDeleteProgram(m_id);
+        m_id = 0;
+    }
+
+    void Shader::Debug(const std::string &msg) const {
+        std::cout << msg << " has id " << m_id << "\n";
     }
 
     Shader Shader::FromFiles(const std::string &vertexShaderFile, const std::string &fragmentShaderFile) {
         std::string vertexShaderSource = LoadFile(vertexShaderFile);
-        GLuint vertexShaderId = Compile(vertexShaderSource, GL_VERTEX_SHADER);
+        unsigned int vertexShaderId = Compile(vertexShaderSource, GL_VERTEX_SHADER);
 
         std::string fragmentShaderSource = LoadFile(fragmentShaderFile);
-        GLuint fragmentShaderId = Compile(fragmentShaderSource, GL_FRAGMENT_SHADER);
+        unsigned int fragmentShaderId = Compile(fragmentShaderSource, GL_FRAGMENT_SHADER);
 
-        return Shader{Link(vertexShaderId, fragmentShaderId)};
+        Shader shader;
+        shader.m_id = Link(vertexShaderId, fragmentShaderId);
+        std::cout << "Created Shader with id " << shader.m_id << "\n";
+        return shader;
     }
 
-    GLuint Shader::Compile(const std::string &shaderSource, GLenum shaderType) {
-        GLuint shaderId = glCreateShader(shaderType);
+    unsigned int Shader::Compile(const std::string &shaderSource, GLenum shaderType) {
+        unsigned int shaderId = glCreateShader(shaderType);
 
         // Send the shader source code to GL.
         // Note that std::string's .c_str is NULL character terminated.
@@ -61,11 +76,11 @@ namespace Mn {
         return shaderId;
     }
 
-    GLuint Shader::Link(GLuint vertexShaderId, GLuint fragmentShaderId) {
+    unsigned int Shader::Link(unsigned int vertexShaderId, unsigned int fragmentShaderId) {
         // Vertex and fragment shaders are successfully compiled.
         // Now time to link them together into a program.
         // Create empty program object and store reference to it.
-        GLuint programId = glCreateProgram();
+        unsigned int programId = glCreateProgram();
 
         // Attach previously compiled shader programs
         glAttachShader(programId, vertexShaderId);
