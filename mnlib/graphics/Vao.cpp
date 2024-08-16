@@ -32,9 +32,11 @@ namespace Mn {
         std::cout << msg << " has id " << m_id << "\n";
     }
 
-    void Vao::Connect(unsigned int index, int size, int stride, const void *pointer) const {
-        // (void *) 0
-        glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride * static_cast<int>(sizeof(float)), pointer);
+    void Vao::Connect(unsigned int index, int size, int stride, int start) const {
+        glVertexAttribPointer(
+                index, size, GL_FLOAT, GL_FALSE,
+                stride * static_cast<int>(sizeof(float)),
+                (void *) (start * sizeof(float)));
         glEnableVertexAttribArray(index);
     }
 

@@ -13,9 +13,14 @@ public:
         shader = Mn::Shader::FromFiles("shader/basic.vs", "shader/basic.fs");
 
         std::vector<float> vertices{
-                -0.5f, -0.5f, 0.0f, // left
-                0.5f, -0.5f, 0.0f,  // right
-                0.0f, 0.5f, 0.0f    // top
+                // first triangle
+                -0.9f, -0.5f, 0.0f,  // left
+                -0.0f, -0.5f, 0.0f,  // right
+                -0.45f, 0.5f, 0.0f,  // top
+                // second triangle
+                0.0f, -0.5f, 0.0f,  // left
+                0.9f, -0.5f, 0.0f,  // right
+                0.45f, 0.5f, 0.0f   // top
         };
         vbo = Mn::Vbo::FromData(vertices);
 
@@ -35,7 +40,7 @@ public:
     void Render() {
         glClear(GL_COLOR_BUFFER_BIT);
         shader.Use();
-        vao.Draw(GL_TRIANGLES, 0, 3);
+        vao.Draw(GL_TRIANGLES, 0, 6);
     }
 
 private:

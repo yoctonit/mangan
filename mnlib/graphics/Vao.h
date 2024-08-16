@@ -20,7 +20,7 @@ namespace Mn {
 
         void Debug(const std::string &msg) const;
 
-        void Connect(unsigned int index, int size, int stride, const void *pointer) const;
+        void Connect(unsigned int index, int size, int stride, int start) const;
 
         void Draw(GLenum mode, int first, int count) const;
 

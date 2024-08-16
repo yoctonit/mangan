@@ -2,6 +2,10 @@
 file(COPY
         shader/basic.vs
         shader/basic.fs
+        shader/basic-yellow.fs
+        shader/basic-color.fs
+        shader/basic-pos-color-attr.vs
+        shader/basic-pos-color-attr.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 
@@ -16,3 +20,18 @@ target_link_libraries(joey-ex-2-2-triangle-indexed PRIVATE Mn::Engine)
 
 add_executable(joey-ex-2-2-triangle-indexed-refactored ex-2-2-triangle-indexed-refactored.cpp)
 target_link_libraries(joey-ex-2-2-triangle-indexed-refactored PRIVATE Mn::Engine)
+
+add_executable(joey-ex-2-3-triangle-exercise-1 ex-2-3-triangle-exercise-1.cpp)
+target_link_libraries(joey-ex-2-3-triangle-exercise-1 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-2-4-triangle-exercise-2 ex-2-4-triangle-exercise-2.cpp)
+target_link_libraries(joey-ex-2-4-triangle-exercise-2 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-2-5-triangle-exercise-3 ex-2-5-triangle-exercise-3.cpp)
+target_link_libraries(joey-ex-2-5-triangle-exercise-3 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-3-1-shaders-uniform ex-3-1-shaders-uniform.cpp)
+target_link_libraries(joey-ex-3-1-shaders-uniform PRIVATE Mn::Engine)
+
+add_executable(joey-ex-3-2-shaders-interpolation ex-3-2-shaders-interpolation.cpp)
+target_link_libraries(joey-ex-3-2-shaders-interpolation PRIVATE Mn::Engine)

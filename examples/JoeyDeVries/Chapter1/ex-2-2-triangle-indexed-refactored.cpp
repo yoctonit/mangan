@@ -27,7 +27,7 @@ public:
         vao.Create();
         vbo = Mn::Vbo::FromData(vertices);
         ebo = Mn::Ebo::FromData(indices);
-        vao.Connect(0, 3, 3, nullptr);
+        vao.Connect(0, 3, 3, 0);
 
         // uncomment this call to draw in wireframe polygons.
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
