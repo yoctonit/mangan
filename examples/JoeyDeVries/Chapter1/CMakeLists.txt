@@ -6,8 +6,11 @@ file(COPY
         shader/basic-color.fs
         shader/basic-pos-color-attr.vs
         shader/basic-pos-color-attr.fs
+        shader/basic-pos-color-attr-upside-down.vs
+        shader/basic-pos-color-attr-offset.vs
+        shader/exercise-3-6.vs
+        shader/exercise-3-6.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
-
 
 add_executable(joey-ex-2-1-triangle ex-2-1-triangle.cpp)
 target_link_libraries(joey-ex-2-1-triangle PRIVATE Mn::Engine)
@@ -35,3 +38,12 @@ target_link_libraries(joey-ex-3-1-shaders-uniform PRIVATE Mn::Engine)
 
 add_executable(joey-ex-3-2-shaders-interpolation ex-3-2-shaders-interpolation.cpp)
 target_link_libraries(joey-ex-3-2-shaders-interpolation PRIVATE Mn::Engine)
+
+add_executable(joey-ex-3-4-triangle-upside-down ex-3-4-triangle-exercise-1.cpp)
+target_link_libraries(joey-ex-3-4-triangle-upside-down PRIVATE Mn::Engine)
+
+add_executable(joey-ex-3-5-triangle-offset ex-3-5-triangle-exercise-2.cpp)
+target_link_libraries(joey-ex-3-5-triangle-offset PRIVATE Mn::Engine)
+
+add_executable(joey-ex-3-6-triangle-exercise-3 ex-3-6-triangle-exercise-3.cpp)
+target_link_libraries(joey-ex-3-6-triangle-exercise-3 PRIVATE Mn::Engine)
