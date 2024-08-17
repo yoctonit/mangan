@@ -25,6 +25,15 @@ namespace Mn {
         m_id = 0;
     }
 
+    int Shader::Locate(const std::string &uniformName) const {
+        return glGetUniformLocation(m_id, uniformName.c_str());
+//        int variableRef = glGetUniformLocation(m_id, uniformName.c_str());
+//        if (variableRef == -1) {
+//            std::cerr << "Uniform variable " << uniformName << " not found.\n";
+//        }
+//        return variableRef;
+    }
+
     void Shader::Debug(const std::string &msg) const {
         std::cout << msg << " has id " << m_id << "\n";
     }

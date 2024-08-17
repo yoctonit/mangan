@@ -13,11 +13,13 @@ namespace Mn {
                 const std::string &fragmentShaderFile
         );
 
-        [[nodiscard]] GLuint Id() const;
+        [[nodiscard]] unsigned int Id() const;
 
         void Use() const;
 
         void Release();
+
+        [[nodiscard]] int Locate(const std::string &uniformName) const;
 
         void Debug(const std::string &msg) const;
 

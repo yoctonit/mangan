@@ -3,6 +3,7 @@
 #include "graphics/Shader.h"
 #include "graphics/Vbo.h"
 #include "graphics/Vao.h"
+#include "graphics/Uniform.h"
 
 
 class TriangleOffset {
@@ -15,8 +16,9 @@ public:
                 "shader/basic-pos-color-attr.fs"
         );
         shader.Use();
-        xOffsetLocation = glGetUniformLocation(shader.Id(), "xOffset");
-        yOffsetLocation = glGetUniformLocation(shader.Id(), "yOffset");
+
+        xOffsetUniform.Create(shader.Locate("xOffset"), Mn::Uniform::Type::Float);
+        yOffsetUniform.Create(shader.Locate("yOffset"), Mn::Uniform::Type::Float);
 
         std::vector<float> vertices{
                 // positions       // colors
@@ -55,6 +57,8 @@ public:
             yOffset -= 0.01f;
             if (yOffset < -1.0f) yOffset = -1.0f;
         }
+        xOffsetUniform = xOffset;
+        yOffsetUniform = yOffset;
     }
 
     [[nodiscard]] bool IsRunning() const {
@@ -63,8 +67,8 @@ public:
 
     void Render() const {
         glClear(GL_COLOR_BUFFER_BIT);
-        glUniform1f(xOffsetLocation, xOffset);
-        glUniform1f(yOffsetLocation, yOffset);
+        xOffsetUniform.Upload();
+        yOffsetUniform.Upload();
         vao.Draw(GL_TRIANGLES, 0, 3);
     }
 
@@ -72,8 +76,8 @@ private:
     Mn::Shader shader{};
     Mn::Vbo vbo{};
     Mn::Vao vao{};
-    int xOffsetLocation{};
-    int yOffsetLocation{};
+    Mn::Uniform xOffsetUniform{};
+    Mn::Uniform yOffsetUniform{};
     float xOffset{};
     float yOffset{};
     bool runScene{true};

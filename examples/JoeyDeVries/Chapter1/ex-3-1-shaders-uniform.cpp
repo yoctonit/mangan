@@ -4,6 +4,7 @@
 #include "graphics/Shader.h"
 #include "graphics/Vbo.h"
 #include "graphics/Vao.h"
+#include "graphics/Uniform.h"
 
 
 class ShaderUniform {
@@ -14,7 +15,8 @@ public:
         shader = Mn::Shader::FromFiles(
                 "shader/basic.vs",
                 "shader/basic-color.fs");
-        vertexColorLocation = glGetUniformLocation(shader.Id(), "ourColor");
+        // vertexColorLocation = glGetUniformLocation(shader.Id(), "ourColor");
+        ourColor.Create(shader.Locate("ourColor"), Mn::Uniform::Type::Vec4);
 
         std::vector<float> vertices{
                 -0.5f, -0.5f, 0.0f, // left
@@ -39,6 +41,7 @@ public:
         }
 
         time += 0.01f;
+        ourColor = glm::vec4(0.0f, std::sin(time) / 2.0f + 0.5f, 0.0f, 1.0f);
     }
 
     [[nodiscard]] bool IsRunning() const {
@@ -47,10 +50,10 @@ public:
 
     void Render() const {
         glClear(GL_COLOR_BUFFER_BIT);
-        shader.Use();
 
-        auto greenValue = static_cast<float>(std::sin(time) / 2.0 + 0.5);
-        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+        shader.Use();
+        ourColor.Upload();
+        // glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
         vao.Draw(GL_TRIANGLES, 0, 3);
     }
@@ -59,7 +62,8 @@ private:
     Mn::Shader shader{};
     Mn::Vbo vbo{};
     Mn::Vao vao{};
-    int vertexColorLocation;
+    Mn::Uniform ourColor{};
+    // int vertexColorLocation;
     float time{};
     bool runScene{true};
 };

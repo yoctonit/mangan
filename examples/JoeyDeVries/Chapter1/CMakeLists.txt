@@ -10,7 +10,15 @@ file(COPY
         shader/basic-pos-color-attr-offset.vs
         shader/exercise-3-6.vs
         shader/exercise-3-6.fs
+        shader/texture.vs
+        shader/texture.fs
+        shader/texture-combined.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
+
+file(COPY
+        ../images/container.jpg
+        ../images/awesomeface.png
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
 
 add_executable(joey-ex-2-1-triangle ex-2-1-triangle.cpp)
 target_link_libraries(joey-ex-2-1-triangle PRIVATE Mn::Engine)
@@ -39,11 +47,17 @@ target_link_libraries(joey-ex-3-1-shaders-uniform PRIVATE Mn::Engine)
 add_executable(joey-ex-3-2-shaders-interpolation ex-3-2-shaders-interpolation.cpp)
 target_link_libraries(joey-ex-3-2-shaders-interpolation PRIVATE Mn::Engine)
 
-add_executable(joey-ex-3-4-triangle-upside-down ex-3-4-triangle-exercise-1.cpp)
-target_link_libraries(joey-ex-3-4-triangle-upside-down PRIVATE Mn::Engine)
+add_executable(joey-ex-3-4-triangle-exercise-1 ex-3-4-triangle-exercise-1.cpp)
+target_link_libraries(joey-ex-3-4-triangle-exercise-1 PRIVATE Mn::Engine)
 
-add_executable(joey-ex-3-5-triangle-offset ex-3-5-triangle-exercise-2.cpp)
-target_link_libraries(joey-ex-3-5-triangle-offset PRIVATE Mn::Engine)
+add_executable(joey-ex-3-5-triangle-exercise-2 ex-3-5-triangle-exercise-2.cpp)
+target_link_libraries(joey-ex-3-5-triangle-exercise-2 PRIVATE Mn::Engine)
 
 add_executable(joey-ex-3-6-triangle-exercise-3 ex-3-6-triangle-exercise-3.cpp)
 target_link_libraries(joey-ex-3-6-triangle-exercise-3 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-4-1-textures ex-4-1-textures.cpp)
+target_link_libraries(joey-ex-4-1-textures PRIVATE Mn::Engine)
+
+add_executable(joey-ex-4-2-textures-combined ex-4-2-textures-combined.cpp)
+target_link_libraries(joey-ex-4-2-textures-combined PRIVATE Mn::Engine)

@@ -9,12 +9,12 @@
 namespace Mn {
 
     template<class T>
-    void ShowStaticScene(Window & window) {
+    void ShowStaticScene(Window &window) {
         T scene;
         auto &input = Window::GetInput();
 
-        scene.Render();
-        window.Display();
+//        scene.Render();
+//        window.Display();
 
         bool runScene = true;
         while (window.IsOpen() && runScene) {
@@ -25,15 +25,18 @@ namespace Mn {
             if (input.IsClickedKey(MN_KEY_ESCAPE)) {
                 runScene = false;
             }
+
+            scene.Render();
+            window.Display();
         }
     }
 
     template<class T>
-    void ShowStaticScene(T &scene, Window & window) {
+    void ShowStaticScene(T &scene, Window &window) {
         auto &input = Window::GetInput();
 
-        scene.Render();
-        window.Display();
+//        scene.Render();
+//        window.Display();
 
         bool runScene = true;
         while (window.IsOpen() && runScene) {
@@ -44,11 +47,14 @@ namespace Mn {
             if (input.IsClickedKey(MN_KEY_ESCAPE)) {
                 runScene = false;
             }
+
+            scene.Render();
+            window.Display();
         }
     }
 
     template<class T>
-    void ShowScene(Window & window) {
+    void ShowScene(Window &window) {
         T scene;
         auto &input = Window::GetInput();
 
@@ -64,7 +70,7 @@ namespace Mn {
     }
 
     template<class T>
-    void ShowScene(T &scene, Window & window) {
+    void ShowScene(T &scene, Window &window) {
         auto &input = Window::GetInput();
 
         while (window.IsOpen() && scene.IsRunning()) {
