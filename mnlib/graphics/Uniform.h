@@ -10,41 +10,33 @@
 
 namespace Mn {
 
-
-//    struct Sampler {
-//        unsigned int textureRef;
-//        int textureUnit;
-//    };
-
-
     class Uniform {
     public:
         enum class Type {
-            Undefined, Bool, Int, Float, Vec2, Vec3, Vec4, Mat4x4 //, Sampler2D
+            Undefined, Bool, Int, Float, Vec2, Vec3, Vec4, Mat4x4
         };
 
         Uniform();
 
-        Uniform(int location, Type type);
+//        Uniform(int location, Type type);
+
+//        Uniform(GLuint programRef, const std::string &variableName);
 
         void Create(int location, Type type);
 
-//    Uniform(GLuint programRef, const std::string &variableName);
-
-//    Uniform(GLuint programRef, const std::string &variableName, bool data);
+        Uniform &operator=(bool data);
 
         Uniform &operator=(int data);
 
         Uniform &operator=(float data);
 
-//    Uniform(GLuint programRef, const std::string &variableName, glm::vec2 data);
+        Uniform &operator=(glm::vec2 data);
 
         Uniform &operator=(glm::vec3 data);
 
         Uniform &operator=(glm::vec4 data);
-//    Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4 data);
 
-//    Uniform(GLuint programRef, const std::string &variableName, unsigned int textureRef, int textureUnit);
+        Uniform &operator=(glm::mat4x4 data);
 
         void Upload() const;
 
@@ -63,11 +55,9 @@ namespace Mn {
             glm::vec3 m_dataVec3;
             glm::vec4 m_dataVec4;
             glm::mat4x4 m_dataMat4x4;
-//            Sampler m_dataSampler;
         } m_data{};
 
         [[nodiscard]] std::string TypeName() const;
-
     };
 
 }

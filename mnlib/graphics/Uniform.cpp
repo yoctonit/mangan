@@ -6,31 +6,31 @@ namespace Mn {
 
     Uniform::Uniform() = default;
 
-    Uniform::Uniform(int location, Type type) {
-        m_location = location;
-        m_type = type;
-    }
+//    Uniform::Uniform(int location, Type type) {
+//        m_location = location;
+//        m_type = type;
+//    }
+
+//Uniform::Uniform(GLuint programRef, const std::string &variableName) {
+//    m_location = locate(programRef, variableName);
+//}
+//
 
     void Uniform::Create(int location, Type type) {
         m_location = location;
         m_type = type;
     }
 
-//Uniform::Uniform(GLuint programRef, const std::string &variableName) {
-//    m_location = locate(programRef, variableName);
-//}
-//
-//Uniform::Uniform(GLuint programRef, const std::string &variableName, bool data) {
-//    m_location = locate(programRef, variableName);
-//    m_type = Type::Bool;
-//    m_data.m_dataBool = data;
-//}
-//
-//Uniform::Uniform(GLuint programRef, const std::string &variableName, int data) {
-//    m_location = locate(programRef, variableName);
-//    m_type = Type::Int;
-//    m_data.m_dataInt = data;
-//}
+    Uniform &Uniform::operator=(bool data) {
+        if (m_type != Type::Bool) {
+            std::cerr << "Uniform assignment invalid type: expected " << TypeName() << ", got bool\n";
+            return *this;
+        }
+
+        m_data.m_dataBool = data;
+        return *this;
+    }
+
     Uniform &Uniform::operator=(int data) {
         if (m_type != Type::Int) {
             std::cerr << "Uniform assignment invalid type: expected " << TypeName() << ", got int\n";
@@ -50,11 +50,16 @@ namespace Mn {
         m_data.m_dataFloat = data;
         return *this;
     }
-//Uniform::Uniform(GLuint programRef, const std::string &variableName, glm::vec2 data) {
-//    m_location = locate(programRef, variableName);
-//    m_type = Type::Vec2;
-//    m_data.m_dataVec2 = data;
-//}
+
+    Uniform &Uniform::operator=(glm::vec2 data) {
+        if (m_type != Type::Vec2) {
+            std::cerr << "Uniform assignment invalid type: expected " << TypeName() << ", got vec2\n";
+            return *this;
+        }
+
+        m_data.m_dataVec2 = data;
+        return *this;
+    }
 
     Uniform &Uniform::operator=(glm::vec3 data) {
         if (m_type != Type::Vec3) {
@@ -76,29 +81,15 @@ namespace Mn {
         return *this;
     }
 
-//Uniform::Uniform(GLuint programRef, const std::string &variableName, glm::mat4x4 data) {
-//    m_location = locate(programRef, variableName);
-//    m_type = Type::Mat4x4;
-//    m_data.m_dataMat4x4 = data;
-//}
-//
-//Uniform::Uniform(GLuint programRef, const std::string &variableName, unsigned int textureRef, int textureUnit) {
-//    m_location = locate(programRef, variableName);
-//    m_type = Type::Sampler2D;
-//    m_data.m_dataVec2 = glm::vec2(
-//            static_cast<float>(textureRef),
-//            static_cast<float>(textureUnit)
-//    );
-//}
+    Uniform &Uniform::operator=(glm::mat4x4 data) {
+        if (m_type != Type::Mat4x4) {
+            std::cerr << "Uniform assignment invalid type: expected " << TypeName() << ", got mat4x4\n";
+            return *this;
+        }
 
-// get and store reference for program variable with given name
-//GLint Uniform::locate(GLuint programRef, const std::string &variableName) {
-//    m_location = glGetUniformLocation(programRef, variableName.c_str());
-//    if (m_location == -1) {
-//        std::cerr << "Uniform variable " << variableName << " not found.\n";
-//    }
-//    return m_location;
-//}
+        m_data.m_dataMat4x4 = data;
+        return *this;
+    }
 
     void Uniform::Upload() const {
         if (m_location == -1) {
@@ -128,14 +119,6 @@ namespace Mn {
             case Type::Mat4x4:
                 glUniformMatrix4fv(m_location, 1, GL_FALSE, glm::value_ptr(m_data.m_dataMat4x4));
                 break;
-//            case Type::Sampler2D:
-//                // activate texture unit
-//                glActiveTexture(GL_TEXTURE0 + m_data.m_dataSampler.textureUnit);
-//                // associate texture object reference to currently active texture unit
-//                glBindTexture(GL_TEXTURE_2D, m_data.m_dataSampler.textureRef);
-//                // upload texture unit number (0...15) to uniform variable in shader
-//                glUniform1i(m_location, m_data.m_dataSampler.textureUnit);
-//                break;
             default:
                 std::cerr << "Uniform variable could not be uploaded: unknown type\n";
         }
@@ -198,10 +181,6 @@ namespace Mn {
                           << m_data.m_dataMat4x4[3][2] << ", "
                           << m_data.m_dataMat4x4[3][3] << "\n";
                 break;
-//            case Type::Sampler2D:
-//                std::cout << "texture: " << m_data.m_dataSampler.textureRef
-//                          << "unit: " << m_data.m_dataSampler.textureUnit << "\n";
-//                break;
             default:
                 std::cout << "undefined\n";
         }
@@ -233,9 +212,6 @@ namespace Mn {
             case Type::Mat4x4:
                 typeName = "mat4x4";
                 break;
-//            case Type::Sampler2D:
-//                typeName = "sampler2D";
-//                break;
             default:
                 typeName = "undefined";
         }

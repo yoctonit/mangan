@@ -13,6 +13,10 @@ file(COPY
         shader/texture.vs
         shader/texture.fs
         shader/texture-combined.fs
+        shader/exercise-4-3.fs
+        shader/exercise-4-6.fs
+        shader/transform.vs
+        shader/transform.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -61,3 +65,18 @@ target_link_libraries(joey-ex-4-1-textures PRIVATE Mn::Engine)
 
 add_executable(joey-ex-4-2-textures-combined ex-4-2-textures-combined.cpp)
 target_link_libraries(joey-ex-4-2-textures-combined PRIVATE Mn::Engine)
+
+add_executable(joey-ex-4-3-textures-exercise-1 ex-4-3-textures-exercise-1.cpp)
+target_link_libraries(joey-ex-4-3-textures-exercise-1 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-4-4-textures-exercise-2 ex-4-4-textures-exercise-2.cpp)
+target_link_libraries(joey-ex-4-4-textures-exercise-2 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-4-5-textures-exercise-3 ex-4-5-textures-exercise-3.cpp)
+target_link_libraries(joey-ex-4-5-textures-exercise-3 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-4-6-textures-exercise-4 ex-4-6-textures-exercise-4.cpp)
+target_link_libraries(joey-ex-4-6-textures-exercise-4 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-5-1-transformations ex-5-1-transformations.cpp)
+target_link_libraries(joey-ex-5-1-transformations PRIVATE Mn::Engine)

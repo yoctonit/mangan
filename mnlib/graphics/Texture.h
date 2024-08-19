@@ -25,6 +25,8 @@ namespace Mn {
 
         // static void Deactivate();
 
+        void SetParameters(int magFilter, int minFilter, int wrap) const;
+
         void Release();
 
         void Debug(const std::string &msg) const;

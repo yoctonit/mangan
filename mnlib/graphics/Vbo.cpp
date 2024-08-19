@@ -14,7 +14,7 @@ namespace Mn {
                 type
         );
 
-        std::cout << "Created GPU buffer with id " << buffer.m_id << "\n";
+        std::cout << "Created Vbo buffer with id " << buffer.m_id << "\n";
         return buffer;
     }
 

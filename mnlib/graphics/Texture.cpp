@@ -51,7 +51,7 @@ namespace Mn {
         float borderColor[4]{1.0f, 1.0f, 1.0f, 1.0f};
         glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
-        glBindTexture(GL_TEXTURE_2D, 0);
+        // glBindTexture(GL_TEXTURE_2D, 0);
 
         stbi_image_free(data);
 
@@ -146,6 +146,20 @@ namespace Mn {
 //        static void Deactivate() {
 //            glBindTexture(GL_TEXTURE_2D, 0);
 //        }
+
+    void Texture::SetParameters(int magFilter, int minFilter, int wrap) const {
+        // glBindTexture(GL_TEXTURE_2D, m_id);
+
+        // specify technique for magnifying/minifying textures
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+
+        // specify what happens to texture coordinates outside range [0, 1]
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap);
+
+        // glBindTexture(GL_TEXTURE_2D, 0);
+    }
 
     void Texture::Release() {
         if (m_id == 0) {
