@@ -80,3 +80,9 @@ target_link_libraries(joey-ex-4-6-textures-exercise-4 PRIVATE Mn::Engine)
 
 add_executable(joey-ex-5-1-transformations ex-5-1-transformations.cpp)
 target_link_libraries(joey-ex-5-1-transformations PRIVATE Mn::Engine)
+
+add_executable(joey-ex-5-2-transformations-exercise-1 ex-5-2-transformations-exercise-1.cpp)
+target_link_libraries(joey-ex-5-2-transformations-exercise-1 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-5-3-transformations-exercise-2 ex-5-3-transformations-exercise-2.cpp)
+target_link_libraries(joey-ex-5-3-transformations-exercise-2 PRIVATE Mn::Engine)
