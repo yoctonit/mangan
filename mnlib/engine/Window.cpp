@@ -64,6 +64,11 @@ namespace Mn {
         glfwSwapBuffers(window_);
     }
 
+    void Window::CaptureCursor() const {
+        // tell GLFW to capture our mouse
+        glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+
     bool Window::IsOpen() const {
         auto shouldClose = static_cast<bool>(glfwWindowShouldClose(window_));
         return !shouldClose;
@@ -116,6 +121,7 @@ namespace Mn {
         glfwSetKeyCallback(window_, KeyCallback);
         glfwSetMouseButtonCallback(window_, MouseCallback);
         glfwSetCursorPosCallback(window_, MousePositionCallback);
+        glfwSetScrollCallback(window_, MouseScrollCallback);
     }
 
     void Window::LoadOpenGlExtensions() {
@@ -149,6 +155,10 @@ namespace Mn {
 
     void Window::MousePositionCallback(GLFWwindow *window, double x_pos, double y_pos) {
         input_.OnMouseMove_((float) x_pos, (float) y_pos);
+    }
+
+    void Window::MouseScrollCallback(GLFWwindow* window, double x_offset, double y_offset) {
+        input_.OnMouseScroll_((float) x_offset, (float) y_offset);
     }
 
     void Window::PollEvents() {

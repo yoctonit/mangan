@@ -13,7 +13,10 @@ namespace Mn {
 
     struct MousePosition {
         float x, y;
-        float window_size_x, window_size_y;
+    };
+
+    struct MouseScroll {
+        float x, y;
     };
 
     class Input {
@@ -28,9 +31,13 @@ namespace Mn {
 
         [[nodiscard]] MousePosition GetMousePosition() const;
 
+        [[nodiscard]] MousePosition GetMouseRelativePosition() const;
+
+        [[nodiscard]] MouseScroll GetMouseScroll() const;
+
         void Update();
 
-        bool GetEvent(Event & event);
+        bool GetEvent(Event &event);
 
     private:
         Input();
@@ -45,9 +52,14 @@ namespace Mn {
 
         void OnMouseMove_(float x_pos, float y_pos);
 
+        void OnMouseScroll_(float x_offset, float y_offset);
+
         void SetWindowSize_(int x_size, int y_size);
 
         MousePosition position_{};
+        mutable MouseScroll offset_{};
+        float window_size_x{};
+        float window_size_y{};
 
         std::vector<bool> key_previous_state_;
         std::vector<bool> key_pressed_;

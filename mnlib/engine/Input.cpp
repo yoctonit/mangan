@@ -23,6 +23,21 @@ namespace Mn {
         return position_;
     }
 
+    MousePosition Input::GetMouseRelativePosition() const {
+        MousePosition p{};
+        p.x = position_.x / window_size_x;
+        p.y = position_.y / window_size_y;
+        return p;
+    }
+
+    MouseScroll Input::GetMouseScroll() const {
+        MouseScroll tmp = offset_;
+        // reset detected scroll
+        offset_.x = 0.0f;
+        offset_.y = 0.0f;
+        return tmp;
+    }
+
     void Input::Update() {
         for (int i = 0; i < MN_KEY_LAST; i += 1) {
             key_clicked_[i] = (!key_previous_state_[i]) && key_pressed_[i];
@@ -75,12 +90,17 @@ namespace Mn {
 
     void Input::OnMouseMove_(float x_pos, float y_pos) {
         position_.x = x_pos;
-        position_.y = position_.window_size_y - y_pos;
+        position_.y = window_size_y - y_pos;
+    }
+
+    void Input::OnMouseScroll_(float x_offset, float y_offset) {
+        offset_.x = x_offset;
+        offset_.y = y_offset;
     }
 
     void Input::SetWindowSize_(int x_size, int y_size) {
-        position_.window_size_x = static_cast<float>(x_size);
-        position_.window_size_y = static_cast<float>(y_size);
+        window_size_x = static_cast<float>(x_size);
+        window_size_y = static_cast<float>(y_size);
     }
 
 }

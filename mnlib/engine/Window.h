@@ -28,6 +28,8 @@ namespace Mn {
 
         void Display() const;
 
+        void CaptureCursor() const;
+
         [[nodiscard]] bool IsOpen() const;
 
         [[nodiscard]] int Width() const;
@@ -50,6 +52,8 @@ namespace Mn {
         static void MouseCallback(GLFWwindow *window, int button, int action, int mods);
 
         static void MousePositionCallback(GLFWwindow *window, double x_pos, double y_pos);
+
+        static void MouseScrollCallback(GLFWwindow* window, double x_offset, double y_offset);
 
         void CreateGlfwWindow();
 

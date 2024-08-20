@@ -99,3 +99,12 @@ target_link_libraries(joey-ex-6-3-coordinate-systems-multiple PRIVATE Mn::Engine
 
 add_executable(joey-ex-6-4-coordinate-systems-exercise-3 ex-6-4-coordinate-systems-exercise-3.cpp)
 target_link_libraries(joey-ex-6-4-coordinate-systems-exercise-3 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-7-1-camera-circle ex-7-1-camera-circle.cpp)
+target_link_libraries(joey-ex-7-1-camera-circle PRIVATE Mn::Engine)
+
+add_executable(joey-ex-7-2-camera-walk ex-7-2-camera-walk.cpp)
+target_link_libraries(joey-ex-7-2-camera-walk PRIVATE Mn::Engine)
+
+add_executable(joey-ex-7-3-camera-zoom ex-7-3-camera-zoom.cpp)
+target_link_libraries(joey-ex-7-3-camera-zoom PRIVATE Mn::Engine)
