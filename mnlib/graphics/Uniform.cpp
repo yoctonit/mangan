@@ -6,10 +6,10 @@ namespace Mn {
 
     Uniform::Uniform() = default;
 
-//    Uniform::Uniform(int location, Type type) {
-//        m_location = location;
-//        m_type = type;
-//    }
+    Uniform::Uniform(int location, Type type) {
+        m_location = location;
+        m_type = type;
+    }
 
 //Uniform::Uniform(GLuint programRef, const std::string &variableName) {
 //    m_location = locate(programRef, variableName);

@@ -17,6 +17,7 @@ file(COPY
         shader/exercise-4-6.fs
         shader/transform.vs
         shader/transform.fs
+        shader/coordinate-systems.vs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -86,3 +87,15 @@ target_link_libraries(joey-ex-5-2-transformations-exercise-1 PRIVATE Mn::Engine)
 
 add_executable(joey-ex-5-3-transformations-exercise-2 ex-5-3-transformations-exercise-2.cpp)
 target_link_libraries(joey-ex-5-3-transformations-exercise-2 PRIVATE Mn::Engine)
+
+add_executable(joey-ex-6-1-coordinate-systems ex-6-1-coordinate-systems.cpp)
+target_link_libraries(joey-ex-6-1-coordinate-systems PRIVATE Mn::Engine)
+
+add_executable(joey-ex-6-2-coordinate-systems-depth ex-6-2-coordinate-systems-depth.cpp)
+target_link_libraries(joey-ex-6-2-coordinate-systems-depth PRIVATE Mn::Engine)
+
+add_executable(joey-ex-6-3-coordinate-systems-multiple ex-6-3-coordinate-systems-multiple.cpp)
+target_link_libraries(joey-ex-6-3-coordinate-systems-multiple PRIVATE Mn::Engine)
+
+add_executable(joey-ex-6-4-coordinate-systems-exercise-3 ex-6-4-coordinate-systems-exercise-3.cpp)
+target_link_libraries(joey-ex-6-4-coordinate-systems-exercise-3 PRIVATE Mn::Engine)

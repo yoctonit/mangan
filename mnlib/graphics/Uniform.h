@@ -18,7 +18,7 @@ namespace Mn {
 
         Uniform();
 
-//        Uniform(int location, Type type);
+        Uniform(int location, Type type);
 
 //        Uniform(GLuint programRef, const std::string &variableName);
 
