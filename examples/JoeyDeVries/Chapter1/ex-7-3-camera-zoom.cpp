@@ -145,32 +145,38 @@ public:
         }
 
         // camera
-        auto xpos = input.GetMousePosition().x;
-        auto ypos = input.GetMousePosition().y;
-
-        if (input.IsClickedButton(MN_MOUSE_BUTTON_LEFT)) {
-            auto rp = input.GetMouseRelativePosition();
-            std::cout << "(" << xpos << ", " << ypos << ")\n";
-            std::cout << "(" << rp.x << ", " << rp.y << ")\n";
-            firstMouse = false;
-        }
-
-        if (firstMouse) {
-            lastX = xpos;
-            lastY = ypos;
-            // std::cout << "first pos (" << xpos << ", " << ypos << ")\n";
-            // firstMouse = false;
-        }
-
-        float xoffset = xpos - lastX;
-        // float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-        float yoffset = ypos - lastY; // reversed since y-coordinates go from bottom to top
-        lastX = xpos;
-        lastY = ypos;
+//        auto xpos = input.GetMousePosition().x;
+//        auto ypos = input.GetMousePosition().y;
+//
+//        if (input.IsClickedButton(MN_MOUSE_BUTTON_LEFT)) {
+//            auto rp = input.GetMouseRelativePosition();
+//            std::cout << "(" << xpos << ", " << ypos << ")\n";
+//            std::cout << "(" << rp.x << ", " << rp.y << ")\n";
+//            firstMouse = false;
+//        }
+//
+//        if (firstMouse) {
+//            lastX = xpos;
+//            lastY = ypos;
+//            // std::cout << "first pos (" << xpos << ", " << ypos << ")\n";
+//            // firstMouse = false;
+//        }
+//
+//        float xoffset = xpos - lastX;
+//        // float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+//        float yoffset = ypos - lastY; // reversed since y-coordinates go from bottom to top
+//        lastX = xpos;
+//        lastY = ypos;
+//
+//        float sensitivity = 0.1f; // change this value to your liking
+//        xoffset *= sensitivity;
+//        yoffset *= sensitivity;
+        auto offset = input.GetMouseOffset();
+//        std::cout << "(" << offset.x << ", " << offset.y << ")\n";
 
         float sensitivity = 0.1f; // change this value to your liking
-        xoffset *= sensitivity;
-        yoffset *= sensitivity;
+        float xoffset = sensitivity * offset.x;
+        float yoffset = sensitivity * offset.y;
 
         yaw += xoffset;
         pitch += yoffset;
@@ -261,13 +267,14 @@ private:
     glm::vec3 cameraUp{};
 
     bool firstMouse{true};
+    float lastX{};
+    float lastY{};
+
     // yaw is initialized to -90.0 degrees since a yaw of 0.0 results
     // in a direction vector pointing to the right,
     // so we initially rotate a bit to the left.
     float yaw{-90.0f};
     float pitch{0.0f};
-    float lastX{};
-    float lastY{};
     float fov{45.0f};
 
     // timing
@@ -280,7 +287,7 @@ private:
 
 int main() {
     Mn::Window wnd(SCR_WIDTH, SCR_HEIGHT, "Hello Coordinate Systems");
-    // wnd.CaptureCursor();
+    wnd.CaptureCursor();
     Mn::ShowScene<CoordinateSystems>(wnd);
     return 0;
 }

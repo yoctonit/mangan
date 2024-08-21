@@ -33,6 +33,10 @@ namespace Mn {
 
         [[nodiscard]] MousePosition GetMouseRelativePosition() const;
 
+        [[nodiscard]] MousePosition GetMouseOffset() const;
+
+        // [[nodiscard]] MousePosition GetMouseRelativeOffset() const;
+
         [[nodiscard]] MouseScroll GetMouseScroll() const;
 
         void Update();
@@ -60,6 +64,12 @@ namespace Mn {
         mutable MouseScroll offset_{};
         float window_size_x{};
         float window_size_y{};
+        float previous_position_x{};
+        float previous_position_y{};
+        float current_position_x{};
+        float current_position_y{};
+        bool firstUpdateCall{true};
+        bool mouseMoved{false};
 
         std::vector<bool> key_previous_state_;
         std::vector<bool> key_pressed_;

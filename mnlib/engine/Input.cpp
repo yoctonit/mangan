@@ -30,6 +30,13 @@ namespace Mn {
         return p;
     }
 
+    MousePosition Input::GetMouseOffset() const {
+        return {
+                current_position_x - previous_position_x,
+                current_position_y - previous_position_y
+        };
+    }
+
     MouseScroll Input::GetMouseScroll() const {
         MouseScroll tmp = offset_;
         // reset detected scroll
@@ -47,6 +54,36 @@ namespace Mn {
         for (int i = 0; i < MN_MOUSE_BUTTON_LAST; i += 1) {
             button_clicked_[i] = (!button_previous_state_[i]) && button_pressed_[i];
             button_previous_state_[i] = button_pressed_[i];
+        }
+
+//        if (!mouseMoved) {
+//            previous_position_x = current_position_x = position_.x;
+//            previous_position_y = current_position_y = position_.y;
+//        } else {
+//            if (firstUpdateCall) {
+//                previous_position_x = current_position_x = position_.x;
+//                previous_position_y = current_position_y = position_.y;
+//                firstUpdateCall = false;
+//            } else {
+//                previous_position_x = current_position_x;
+//                previous_position_y = current_position_y;
+//                current_position_x = position_.x;
+//                current_position_y = position_.y;
+//            }
+//        }
+        // rewrite of above logic so that most executed case be first checked
+        if (mouseMoved && !firstUpdateCall) {
+            previous_position_x = current_position_x;
+            previous_position_y = current_position_y;
+            current_position_x = position_.x;
+            current_position_y = position_.y;
+        } else if (mouseMoved) { // mouseMoved && firstUpdateCall
+            previous_position_x = current_position_x = position_.x;
+            previous_position_y = current_position_y = position_.y;
+            firstUpdateCall = false;
+        } else { // !mouseMoved
+            previous_position_x = current_position_x = position_.x;
+            previous_position_y = current_position_y = position_.y;
         }
 
         current_event_pos_ = last_event_pos_ = 0;
@@ -89,6 +126,9 @@ namespace Mn {
     }
 
     void Input::OnMouseMove_(float x_pos, float y_pos) {
+        if (!mouseMoved) {
+            mouseMoved = true;
+        }
         position_.x = x_pos;
         position_.y = window_size_y - y_pos;
     }
