@@ -108,3 +108,12 @@ target_link_libraries(joey-ex-7-2-camera-walk PRIVATE Mn::Engine)
 
 add_executable(joey-ex-7-3-camera-zoom ex-7-3-camera-zoom.cpp)
 target_link_libraries(joey-ex-7-3-camera-zoom PRIVATE Mn::Engine)
+
+add_executable(joey-ex-7-4-camera-class ex-7-4-camera-class.cpp)
+target_link_libraries(joey-ex-7-4-camera-class PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-7-5-camera-exercise-1 ex-7-5-camera-exercise-1.cpp)
+target_link_libraries(joey-ex-7-5-camera-exercise-1 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-7-6-camera-exercise-2 ex-7-6-camera-exercise-2.cpp)
+target_link_libraries(joey-ex-7-6-camera-exercise-2 PRIVATE Mn::Engine PRIVATE Mn::Joey)
