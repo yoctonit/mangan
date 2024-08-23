@@ -41,7 +41,8 @@ glm::mat4 calculate_lookAt_matrix(glm::vec3 position, glm::vec3 target, glm::vec
     rotation[2][2] = z_axis.z;
 
     // Return lookAt matrix as combination of translation and rotation matrix
-    return rotation * translation; // Remember to read from right to left (first translation then rotation)
+    // Remember to read from right to left (first translation then rotation)
+    return rotation * translation;
 }
 
 class CoordinateSystems {
