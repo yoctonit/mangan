@@ -12,7 +12,18 @@ file(COPY
         shader/exercise-3.fs
         shader/exercise-4.vs
         shader/exercise-4.fs
+        shader/materials.fs
+        shader/light_cube_exercise_1.fs
+        shader/lighting_maps.vs
+        shader/lighting_maps.fs
+        shader/lighting_maps_specular.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
+
+file(COPY
+        ../images/container2.png
+        ../images/container2_specular.png
+        ../images/container2_specular_colored.png
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
 
 add_executable(joey-ex-1-1-colors ex-1-1-colors.cpp)
 target_link_libraries(joey-ex-1-1-colors PRIVATE Mn::Engine PRIVATE Mn::Joey)
@@ -34,3 +45,18 @@ target_link_libraries(joey-ex-2-5-lighting-exercise-3 PRIVATE Mn::Engine PRIVATE
 
 add_executable(joey-ex-2-6-lighting-exercise-4 ex-2-6-lighting-exercise-4.cpp)
 target_link_libraries(joey-ex-2-6-lighting-exercise-4 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-3-1-materials ex-3-1-materials.cpp)
+target_link_libraries(joey-ex-3-1-materials PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-3-2-materials-exercise-1 ex-3-2-materials-exercise-1.cpp)
+target_link_libraries(joey-ex-3-2-materials-exercise-1 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-3-3-materials-exercise-2 ex-3-3-materials-exercise-2.cpp)
+target_link_libraries(joey-ex-3-3-materials-exercise-2 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-4-1-lighting-maps ex-4-1-lighting-maps.cpp)
+target_link_libraries(joey-ex-4-1-lighting-maps PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-4-2-lighting-maps-specular ex-4-2-lighting-maps-specular.cpp)
+target_link_libraries(joey-ex-4-2-lighting-maps-specular PRIVATE Mn::Engine PRIVATE Mn::Joey)
