@@ -17,12 +17,15 @@ file(COPY
         shader/lighting_maps.vs
         shader/lighting_maps.fs
         shader/lighting_maps_specular.fs
+        shader/exercise-4-3.fs
+        shader/exercise-4-4.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
         ../images/container2.png
         ../images/container2_specular.png
         ../images/container2_specular_colored.png
+        ../images/matrix.jpg
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
 
 add_executable(joey-ex-1-1-colors ex-1-1-colors.cpp)
@@ -60,3 +63,9 @@ target_link_libraries(joey-ex-4-1-lighting-maps PRIVATE Mn::Engine PRIVATE Mn::J
 
 add_executable(joey-ex-4-2-lighting-maps-specular ex-4-2-lighting-maps-specular.cpp)
 target_link_libraries(joey-ex-4-2-lighting-maps-specular PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-4-3-exercise-2 ex-4-3-exercise-2.cpp)
+target_link_libraries(joey-ex-4-3-exercise-2 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-4-4-exercise-4 ex-4-4-exercise-4.cpp)
+target_link_libraries(joey-ex-4-4-exercise-4 PRIVATE Mn::Engine PRIVATE Mn::Joey)

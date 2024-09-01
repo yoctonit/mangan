@@ -6,8 +6,6 @@
 #include "graphics/Uniform.h"
 #include "graphics/Texture.h"
 #include "Camera.h"
-#include "geometry/Icosahedron.h"
-#include "geometry/Box.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -15,59 +13,50 @@
 const int SCR_WIDTH = 800;
 const int SCR_HEIGHT = 600;
 
-std::vector<float> flatten(const std::vector<glm::vec3> &attributeList) {
-    std::vector<float> data;
-    for (auto &p: attributeList) {
-        data.push_back(p.x);
-        data.push_back(p.y);
-        data.push_back(p.z);
-    }
-    return data;
-}
-
 std::vector<float> cubeGeometry() {
     return {
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-            0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-            0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-            0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-            -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+            // positions          // normals           // texture coords
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+            0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+            -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
 
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 
-            -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 
-            -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
 
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-            0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
     };
 }
 
@@ -76,8 +65,7 @@ class LightSimpleColors {
 private:
     Mn::Shader lightingShader{};
     Mn::Shader lightCubeShader{};
-    Mn::Vbo vbo1{};
-    Mn::Vbo vbo2{};
+    Mn::Vbo vbo{};
     Mn::Vao cubeVao{};
     Mn::Vao lightCubeVao{};
 
@@ -86,9 +74,9 @@ private:
     Mn::Uniform viewUniform{};
     Mn::Uniform projectionUniform{};
 
-    Mn::Uniform materialAmbientUniform;
     Mn::Uniform materialDiffuseUniform;
     Mn::Uniform materialSpecularUniform;
+    Mn::Uniform materialEmissionUniform;
     Mn::Uniform materialShininessUniform;
 
     Mn::Uniform lightPosUniform;
@@ -104,11 +92,14 @@ private:
     Mn::Uniform lightViewUniform{};
     Mn::Uniform lightProjectionUniform{};
 
+    Mn::Texture diffuseMap{};
+    Mn::Texture specularMap{};
+    Mn::Texture emissionMap{};
+
     Camera camera{glm::vec3(0.0f, 0.0f, 3.0f)};
 
     // lighting
     glm::vec3 lightPos{1.2f, 1.0f, 2.0f};
-    int nv{};
 
     // timing
     float time{};
@@ -125,8 +116,8 @@ public:
         glEnable(GL_DEPTH_TEST);
 
         lightingShader = Mn::Shader::FromFiles(
-                "shader/basic_lighting_specular.vs",
-                "shader/materials.fs"
+                "shader/lighting_maps.vs",
+                "shader/exercise-4-4.fs"
         );
         // uniforms for lightingShader
         modelUniform.Create(
@@ -142,17 +133,17 @@ public:
                 Mn::Uniform::Type::Mat4x4
         );
 
-        materialAmbientUniform.Create(
-                lightingShader.Locate("material.ambient"),
-                Mn::Uniform::Type::Vec3
-        );
         materialDiffuseUniform.Create(
                 lightingShader.Locate("material.diffuse"),
-                Mn::Uniform::Type::Vec3
+                Mn::Uniform::Type::Int
         );
         materialSpecularUniform.Create(
                 lightingShader.Locate("material.specular"),
-                Mn::Uniform::Type::Vec3
+                Mn::Uniform::Type::Int
+        );
+        materialEmissionUniform.Create(
+                lightingShader.Locate("material.emission"),
+                Mn::Uniform::Type::Int
         );
         materialShininessUniform.Create(
                 lightingShader.Locate("material.shininess"),
@@ -206,29 +197,20 @@ public:
 
         cubeVao.Create();
 
-        Mn::Icosahedron icosahedron;
-        icosahedron.Create(1.0f, 3);
-
-        Mn::Box box;
-        box.Create(3.0f, 1.0f, 0.5f);
-
-        auto transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        transform = glm::translate(transform, glm::vec3(1.5f, -0.5f, 0.0f));
-        box.ApplyMatrix(transform);
-
-        icosahedron.Merge(box);
-
-        nv = icosahedron.VertexCount();
-        vbo1 = Mn::Vbo::FromData(icosahedron.Data(Mn::Geometry::Type::PositionsAndNormals));
-        // vbo1 = Mn::Vbo::FromData(box.Data(Mn::Geometry::Type::PositionsAndNormals));
+        vbo = Mn::Vbo::FromData(cubeGeometry());
         // position attribute
-        cubeVao.Connect(0, 3, 6, 0);
+        cubeVao.Connect(0, 3, 8, 0);
         // normal attribute
-        cubeVao.Connect(1, 3, 6, 3);
+        cubeVao.Connect(1, 3, 8, 3);
+        // texture attribute
+        cubeVao.Connect(2, 2, 8, 6);
 
         lightCubeVao.Create();
-        vbo2 = Mn::Vbo::FromData(cubeGeometry());
-        lightCubeVao.Connect(0, 3, 6, 0);
+        lightCubeVao.Connect(0, 3, 8, 0);
+
+        diffuseMap = Mn::Texture::FromImage("images/container2.png");
+        specularMap = Mn::Texture::FromImage("images/container2_specular.png");
+        emissionMap = Mn::Texture::FromImage("images/matrix.jpg");
     }
 
     ~LightSimpleColors() {
@@ -236,8 +218,7 @@ public:
         lightCubeShader.Release();
         cubeVao.Release();
         lightCubeVao.Release();
-        vbo1.Release();
-        vbo2.Release();
+        vbo.Release();
     }
 
     void Update(const Mn::Input &input) {
@@ -301,26 +282,17 @@ public:
         projectionUniform = projection;
         lightProjectionUniform = projection;
 
-        // http://devernay.free.fr/cours/opengl/materials.html
-        // cyan plastic
-        materialAmbientUniform = glm::vec3(0.0f, 0.1f, 0.06f);
-        materialDiffuseUniform = glm::vec3(0.0f, 0.50980392f, 0.50980392f);
-        materialSpecularUniform = glm::vec3(0.50196078f, 0.50196078f, 0.50196078f);
-        materialShininessUniform = 0.25f * 128.0f;
-
-        // white rubber
-//        materialAmbientUniform = glm::vec3(0.05f, 0.05f, 0.05f);
-//        materialDiffuseUniform = glm::vec3(0.5f, 0.5f, 0.5f);
-//        materialSpecularUniform = glm::vec3(0.7f, 0.7f, 0.7f);
-//        materialShininessUniform = 0.78125f * 128.0f;
+        materialDiffuseUniform = 0;
+        materialSpecularUniform = 1;
+        materialEmissionUniform = 2;
+        materialShininessUniform = 64.0f;
 
         lightPos.x = 1.0f + std::sin(time) * 2.0f;
         lightPos.y = std::sin(time / 2.0f) * 1.0f;
         lightPosUniform = lightPos;
 
-        // note that all light colors are set at full intensity
-        lightAmbientUniform = glm::vec3(1.0f, 1.0f, 1.0f);
-        lightDiffuseUniform = glm::vec3(1.0f, 1.0f, 1.0f);
+        lightAmbientUniform = glm::vec3(0.2f, 0.2f, 0.2f);
+        lightDiffuseUniform = glm::vec3(0.5f, 0.5f, 0.5f);
         lightSpecularUniform = glm::vec3(1.0f, 1.0f, 1.0f);
 
         viewPosUniform = camera.Position;
@@ -339,9 +311,9 @@ public:
         viewUniform.Upload();
         projectionUniform.Upload();
 
-        materialAmbientUniform.Upload();
         materialDiffuseUniform.Upload();
         materialSpecularUniform.Upload();
+        materialEmissionUniform.Upload();
         materialShininessUniform.Upload();
 
         lightPosUniform.Upload();
@@ -351,7 +323,12 @@ public:
 
         viewPosUniform.Upload();
 
-        cubeVao.Draw(GL_TRIANGLES, 0, nv);
+        // bind diffuse and specular maps
+        diffuseMap.Activate(0);
+        specularMap.Activate(1);
+        emissionMap.Activate(2);
+
+        cubeVao.Draw(GL_TRIANGLES, 0, 36);
 
         lightCubeShader.Use();
         lightModelUniform.Upload();

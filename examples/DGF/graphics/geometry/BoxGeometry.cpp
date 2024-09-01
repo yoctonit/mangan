@@ -57,7 +57,7 @@ BoxGeometry::BoxGeometry(float width, float height, float depth) {
     };
     std::vector<GLfloat> uvData = Geometry::flatten(uvList);
 
-    std::vector<glm::vec2> normalList{
+    std::vector<glm::vec3> normalList{
             N1, N1, N1, N1, N1, N1, N2, N2, N2, N2, N2, N2,
             N3, N3, N3, N3, N3, N3, N4, N4, N4, N4, N4, N4,
             N5, N5, N5, N5, N5, N5, N6, N6, N6, N6, N6, N6

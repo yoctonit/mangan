@@ -6,7 +6,6 @@ namespace Mn {
 
     void Icosahedron::Create(float radius, int levelOfRecursion) {
         mRadius = radius;
-        mLevelOfRecursion = levelOfRecursion;
 
         const float X = .525731112119133606;
         const float Z = .850650808352039932;
@@ -34,22 +33,12 @@ namespace Mn {
                     base_vertices[indices[i + 0]],
                     base_vertices[indices[i + 1]],
                     base_vertices[indices[i + 2]],
-                    mLevelOfRecursion
+                    levelOfRecursion
             );
         }
-    }
 
-    [[nodiscard]] const std::vector<glm::vec3> &Icosahedron::Vertices() const {
-        return mVertices;
-    }
-
-    [[nodiscard]] const std::vector<glm::vec3> &Icosahedron::Normals() const {
-        return mNormals;
-    }
-
-    [[nodiscard]] int Icosahedron::numberOfVertices() const {
-        // 20 faces divided to 4 faces mLevelOfRecursion times, times 3 vertices
-        return 20 * static_cast<int>(std::pow(4, mLevelOfRecursion)) * 3;
+        // 20 faces divided to 4 faces levelOfRecursion times, times 3 vertices
+        mVertexCount = 20 * static_cast<int>(std::pow(4, levelOfRecursion)) * 3;
     }
 
     void Icosahedron::Subdivide(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, int levelOfRecursion) {

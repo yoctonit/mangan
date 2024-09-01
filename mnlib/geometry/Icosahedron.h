@@ -2,27 +2,21 @@
 #define INCLUDED_MN_GEOMETRY_ICOSAHEDRON_H
 
 #include <vector>
-#include <cmath>
 #include <glm/vec3.hpp>
+#include "Geometry.h"
 
 namespace Mn {
 
-    class Icosahedron {
+    class Icosahedron : public Geometry {
     public:
         void Create(float radius = 1.0f, int levelOfRecursion = 3);
 
-        [[nodiscard]] const std::vector<glm::vec3> &Vertices() const;
-
-        [[nodiscard]] const std::vector<glm::vec3> &Normals() const;
-
-        [[nodiscard]] int numberOfVertices() const;
+// TexCoords? http://vterrain.org/Textures/spherical.html
+// https://stackoverflow.com/questions/5674149/3d-coordinates-on-a-sphere-to-latitude-and-longitude
+// http://blog.coredumping.com/subdivision-of-icosahedrons/
 
     private:
         float mRadius{};
-        int mLevelOfRecursion{};
-
-        std::vector<glm::vec3> mVertices;
-        std::vector<glm::vec3> mNormals;
 
         void Subdivide(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, int lor);
     };
