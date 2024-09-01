@@ -9,6 +9,8 @@ namespace Mn {
 
     class Icosahedron : public Geometry {
     public:
+        explicit Icosahedron(float radius = 1.0f, int levelOfRecursion = 3);
+
         void Create(float radius = 1.0f, int levelOfRecursion = 3);
 
 // TexCoords? http://vterrain.org/Textures/spherical.html

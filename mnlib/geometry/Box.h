@@ -7,6 +7,8 @@ namespace Mn {
 
     class Box : public Geometry {
     public:
+        explicit Box(float width = 1.0f, float height = 1.0f, float depth = 1.0f);
+
         void Create(float width = 1.0f, float height = 1.0f, float depth = 1.0f);
     };
 

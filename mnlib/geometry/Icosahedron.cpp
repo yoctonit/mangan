@@ -4,6 +4,10 @@
 
 namespace Mn {
 
+    Icosahedron::Icosahedron(float radius, int levelOfRecursion) {
+        Create(radius, levelOfRecursion);
+    }
+
     void Icosahedron::Create(float radius, int levelOfRecursion) {
         mRadius = radius;
 

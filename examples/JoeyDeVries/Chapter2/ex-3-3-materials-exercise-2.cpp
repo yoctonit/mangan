@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "geometry/Icosahedron.h"
 #include "geometry/Box.h"
+#include "geometry/Plane.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -207,16 +208,19 @@ public:
         cubeVao.Create();
 
         Mn::Icosahedron icosahedron;
-        icosahedron.Create(1.0f, 3);
 
-        Mn::Box box;
-        box.Create(3.0f, 1.0f, 0.5f);
+        Mn::Box box(2.0f, 0.5f, 0.5f);
 
         auto transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         transform = glm::translate(transform, glm::vec3(1.5f, -0.5f, 0.0f));
         box.ApplyMatrix(transform);
 
+        Mn::Plane plane(10.0f, 10.f);
+        transform = glm::mat4(1.0f);
+        plane.ApplyMatrix(glm::rotate(transform, -3.14f /2.0f, glm::vec3(1.0f, 0.0f, 0.0f)));
+
         icosahedron.Merge(box);
+        icosahedron.Merge(plane);
 
         nv = icosahedron.VertexCount();
         vbo1 = Mn::Vbo::FromData(icosahedron.Data(Mn::Geometry::Type::PositionsAndNormals));

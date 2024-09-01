@@ -2,6 +2,9 @@
 #include "Box.h"
 
 namespace Mn {
+    Box::Box(float width, float height, float depth) {
+        Create(width, height, depth);
+    }
 
     void Box::Create(float width, float height, float depth) {
         // corners of a cube
