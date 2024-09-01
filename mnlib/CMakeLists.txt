@@ -5,6 +5,8 @@ add_library(engine
         graphics/Uniform.cpp graphics/Texture.cpp
         geometry/Geometry.cpp geometry/Box.cpp geometry/Icosahedron.cpp
         geometry/Surface.cpp geometry/Plane.cpp
+        material/Material.cpp material/BasicMvpColor.cpp
+        material/BasicLighting.cpp
 )
 
 target_link_libraries(engine PRIVATE glfw)

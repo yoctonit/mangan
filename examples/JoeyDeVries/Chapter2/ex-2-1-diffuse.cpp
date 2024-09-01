@@ -100,8 +100,8 @@ public:
         glEnable(GL_DEPTH_TEST);
 
         lightingShader = Mn::Shader::FromFiles(
-                "shader/basic_lighting.vs",
-                "shader/basic_lighting.fs"
+                "shader/basic_lighting_1.vs",
+                "shader/basic_lighting_1.fs"
         );
         modelUniform.Create(
                 lightingShader.Locate("model"),
