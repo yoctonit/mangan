@@ -18,9 +18,7 @@ namespace Mn {
 // http://blog.coredumping.com/subdivision-of-icosahedrons/
 
     private:
-        float mRadius{};
-
-        void Subdivide(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, int lor);
+        void Subdivide(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, int lor, float radius);
     };
 
 }

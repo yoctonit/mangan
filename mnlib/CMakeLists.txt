@@ -4,14 +4,14 @@ add_library(engine
         graphics/Vao.cpp graphics/Ebo.cpp
         graphics/Uniform.cpp graphics/Texture.cpp
         geometry/Geometry.cpp geometry/Box.cpp geometry/Icosahedron.cpp
-        geometry/Surface.cpp geometry/Plane.cpp
-        material/Material.cpp material/BasicMvpColor.cpp
-        material/BasicLighting.cpp
+        geometry/Surface.cpp geometry/Plane.cpp geometry/Polygon.cpp
+        graphics/Material.cpp
+        graphics/Mesh.cpp
 )
 
 target_link_libraries(engine PRIVATE glfw)
 target_link_libraries(engine PUBLIC glad_4_3)
-# in files in graphics folder are dependent on glm and stb
+# files in graphics folder are dependent on glm and stb
 # consider splitting engine library into components: core, ...
 target_link_libraries(engine PUBLIC glm::glm)
 target_link_libraries(engine PUBLIC nothings::stb)

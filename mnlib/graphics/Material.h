@@ -1,5 +1,5 @@
-#ifndef INCLUDED_MN_MATERIAL_MATERIAL_H
-#define INCLUDED_MN_MATERIAL_MATERIAL_H
+#ifndef INCLUDED_MN_GRAPHICS_MATERIAL_H
+#define INCLUDED_MN_GRAPHICS_MATERIAL_H
 
 #include <map>
 #include <string>
@@ -16,7 +16,7 @@ namespace Mn {
 
         void AddUniform(const std::string &name, Uniform::Type type);
 
-        [[nodiscard]] Uniform &GetUniform(const std::string &name);
+        // [[nodiscard]] Uniform &GetUniform(const std::string &name);
 
         Uniform &operator[](const std::string &name);
 
@@ -24,13 +24,22 @@ namespace Mn {
 
         void Upload() const;
 
+        [[nodiscard]] int DrawStyle() const;
+
+        void DrawStyle(int drawStyle);
+
     protected:
         Mn::Shader mShader{};
+        int mDrawStyle{GL_TRIANGLES};
 
         // Store Uniform objects, indexed by name of associated variable in shader.
         std::map<std::string, Uniform> mUniforms;
     };
 
+    Material BasicMvpColorMaterial();
+
+    Material BasicLightingMaterial();
+
 }
 
-#endif //INCLUDED_MN_MATERIAL_MATERIAL_H
+#endif //INCLUDED_MN_GRAPHICS_MATERIAL_H

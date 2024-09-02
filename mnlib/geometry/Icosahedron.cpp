@@ -1,5 +1,4 @@
 #include "Icosahedron.h"
-#include <vector>
 #include <glm/glm.hpp>
 
 namespace Mn {
@@ -9,7 +8,6 @@ namespace Mn {
     }
 
     void Icosahedron::Create(float radius, int levelOfRecursion) {
-        mRadius = radius;
 
         const float X = .525731112119133606;
         const float Z = .850650808352039932;
@@ -37,7 +35,8 @@ namespace Mn {
                     base_vertices[indices[i + 0]],
                     base_vertices[indices[i + 1]],
                     base_vertices[indices[i + 2]],
-                    levelOfRecursion
+                    levelOfRecursion,
+                    radius
             );
         }
 
@@ -45,11 +44,11 @@ namespace Mn {
         mVertexCount = 20 * static_cast<int>(std::pow(4, levelOfRecursion)) * 3;
     }
 
-    void Icosahedron::Subdivide(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, int levelOfRecursion) {
+    void Icosahedron::Subdivide(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3, int levelOfRecursion, float radius) {
         if (levelOfRecursion == 0) {
-            mVertices.push_back(mRadius * v1);
-            mVertices.push_back(mRadius * v2);
-            mVertices.push_back(mRadius * v3);
+            mVertices.push_back(radius * v1);
+            mVertices.push_back(radius * v2);
+            mVertices.push_back(radius * v3);
 
             mNormals.push_back(v1);
             mNormals.push_back(v2);
@@ -62,10 +61,10 @@ namespace Mn {
         glm::vec3 v23 = glm::normalize(0.5f * (v2 + v3));
         glm::vec3 v31 = glm::normalize(0.5f * (v3 + v1));
 
-        Subdivide(v1, v12, v31, levelOfRecursion - 1);
-        Subdivide(v2, v23, v12, levelOfRecursion - 1);
-        Subdivide(v3, v31, v23, levelOfRecursion - 1);
-        Subdivide(v12, v23, v31, levelOfRecursion - 1);
+        Subdivide(v1, v12, v31, levelOfRecursion - 1, radius);
+        Subdivide(v2, v23, v12, levelOfRecursion - 1, radius);
+        Subdivide(v3, v31, v23, levelOfRecursion - 1, radius);
+        Subdivide(v12, v23, v31, levelOfRecursion - 1, radius);
     }
 
 }
