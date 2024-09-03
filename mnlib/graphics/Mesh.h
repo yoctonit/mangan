@@ -11,20 +11,20 @@ namespace Mn {
 
     class Mesh {
     public:
-        void Create(Geometry g, Material m);
+        void Create(Material m);
 
-        void Create(Geometry g, Geometry::Type t, Material m);
+        void Create(const Geometry &geom, Geometry::Type t, Material m);
 
         void Release();
 
-        void ConnectBuffer(Geometry::Type type);
+        void ConnectBuffer(const Geometry &geom, Geometry::Type type);
 
         void Draw() const;
 
         Material material;
 
     private:
-        Geometry mGeometry;
+        int mVertexCount{};
         Vao mVao;
         std::vector<Vbo> mBuffers;
     };

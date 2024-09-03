@@ -21,6 +21,8 @@ namespace Mn {
 
         [[nodiscard]] int Locate(const std::string &uniformName) const;
 
+        [[nodiscard]] int LocateAttribute(const std::string &attributeName) const;
+
         void Debug(const std::string &msg) const;
 
     private:

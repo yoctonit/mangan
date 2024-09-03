@@ -26,10 +26,18 @@ namespace Mn {
     }
 
     int Shader::Locate(const std::string &uniformName) const {
-//        return glGetUniformLocation(m_id, uniformName.c_str());
+        // return glGetUniformLocation(m_id, uniformName.c_str());
         int variableRef = glGetUniformLocation(m_id, uniformName.c_str());
         if (variableRef == -1) {
             std::cerr << "Uniform variable " << uniformName << " not found.\n";
+        }
+        return variableRef;
+    }
+
+    [[nodiscard]] int Shader::LocateAttribute(const std::string &attributeName) const {
+        int variableRef = glGetAttribLocation(m_id, attributeName.c_str());
+        if (variableRef == -1) {
+            std::cerr << "Attribute " << attributeName << " not found.\n";
         }
         return variableRef;
     }

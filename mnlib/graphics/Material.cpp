@@ -16,13 +16,6 @@ namespace Mn {
         mUniforms[name] = Uniform(mShader.Locate(name), type);
     }
 
-//    Uniform &Material::GetUniform(const std::string &name) {
-//        if (!HasUniform(name)) {
-//            std::cerr << "No uniform " << name << " in material.\n";
-//        }
-//        return mUniforms[name];
-//    }
-
     Uniform &Material::operator[](const std::string &name) {
 //        if (!HasUniform(name)) {
 //            std::cerr << "No uniform " << name << " in material.\n";
@@ -32,6 +25,31 @@ namespace Mn {
 
     bool Material::HasUniform(const std::string &name) const {
         return mUniforms.find(name) != mUniforms.end();
+    }
+
+    void Material::AddAttribute(int location, Attribute::DataType dataType, AttributeType type) {
+        std::string defaultName = AttributeTypeName(type);
+        mAttributes[defaultName] = Attribute(location, dataType);
+    }
+
+    void Material::AddAttribute(const std::string &name, Attribute::DataType dataType, AttributeType type) {
+        std::string defaultName = AttributeTypeName(type);
+        mAttributes[defaultName] = Attribute(mShader.LocateAttribute(name), dataType);
+    }
+
+    void Material::AddAttribute(const std::string &name, Attribute::DataType dataType) {
+        mAttributes[name] = Attribute(mShader.LocateAttribute(name), dataType);
+    }
+
+    int Material::Location(AttributeType type) const {
+        std::string defaultName = AttributeTypeName(type);
+        auto attr = mAttributes.at(defaultName);
+        return attr.Location();
+    }
+
+    int  Material::Location(const std::string &attributeName) const {
+        auto attr = mAttributes.at(attributeName);
+        return attr.Location();
     }
 
     void Material::Upload() const {
@@ -47,6 +65,25 @@ namespace Mn {
 
     void Material::DrawStyle(int drawStyle) {
         mDrawStyle = drawStyle;
+    }
+
+    std::string Material::AttributeTypeName(AttributeType type) {
+        std::string defaultName;
+        switch (type) {
+            case AttributeType::Position:
+                defaultName = "position";
+                break;
+            case AttributeType::Normal:
+                defaultName = "normal";
+                break;
+            case AttributeType::TexCoord:
+                defaultName = "texCoord";
+                break;
+            case AttributeType::Color:
+                defaultName = "color";
+                break;
+        }
+        return defaultName;
     }
 
 
@@ -65,6 +102,8 @@ namespace Mn {
         material.AddUniform("uView", Uniform::Type::Mat4x4);
         material.AddUniform("uProjection", Uniform::Type::Mat4x4);
         material.AddUniform("uColor", Uniform::Type::Vec3);
+
+        material.AddAttribute(0, Attribute::DataType::Vec3, Material::AttributeType::Position);
 
         return material;
     }
@@ -91,6 +130,9 @@ namespace Mn {
         material.AddUniform("uLight.ambient", Uniform::Type::Vec3);
         material.AddUniform("uLight.diffuse", Uniform::Type::Vec3);
         material.AddUniform("uLight.specular", Uniform::Type::Vec3);
+
+        material.AddAttribute(0, Attribute::DataType::Vec3, Material::AttributeType::Position);
+        material.AddAttribute(1, Attribute::DataType::Vec3, Material::AttributeType::Normal);
 
         return material;
     }

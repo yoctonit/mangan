@@ -4,23 +4,36 @@
 #include <map>
 #include <string>
 #include "../graphics/Shader.h"
+#include "../graphics/Attribute.h"
 #include "../graphics/Uniform.h"
 
 namespace Mn {
 
     class Material {
     public:
+        enum class AttributeType {
+            Position, Normal, TexCoord, Color
+        };
+
         void Create(const std::string &vsFile, const std::string &fsFile);
 
         void Release();
 
         void AddUniform(const std::string &name, Uniform::Type type);
 
-        // [[nodiscard]] Uniform &GetUniform(const std::string &name);
-
         Uniform &operator[](const std::string &name);
 
         [[nodiscard]] bool HasUniform(const std::string &name) const;
+
+        void AddAttribute(int location, Attribute::DataType dataType, AttributeType type);
+
+        void AddAttribute(const std::string &name, Attribute::DataType dataType, AttributeType type);
+
+        void AddAttribute(const std::string &name, Attribute::DataType dataType);
+
+        [[nodiscard]] int Location(AttributeType type) const;
+
+        [[nodiscard]] int Location(const std::string &attributeName) const;
 
         void Upload() const;
 
@@ -34,6 +47,12 @@ namespace Mn {
 
         // Store Uniform objects, indexed by name of associated variable in shader.
         std::map<std::string, Uniform> mUniforms;
+
+        // Store Attribute objects, indexed by predefined AttributeType
+        // or by name of the associated variable in shader.
+        std::map<std::string, Attribute> mAttributes;
+
+        static std::string AttributeTypeName(AttributeType type);
     };
 
     Material BasicMvpColorMaterial();

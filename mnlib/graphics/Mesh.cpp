@@ -4,17 +4,15 @@
 
 namespace Mn {
 
-    void Mesh::Create(Geometry g, Material m) {
-        mGeometry = std::move(g);
+    void Mesh::Create(Material m) {
         material = std::move(m);
         mVao.Create();
     }
 
-    void Mesh::Create(Geometry g, Geometry::Type t, Material m) {
-        mGeometry = std::move(g);
+    void Mesh::Create(const Geometry &geom, Geometry::Type t, Material m) {
         material = std::move(m);
         mVao.Create();
-        ConnectBuffer(t);
+        ConnectBuffer(geom, t);
     }
 
     void Mesh::Release() {
@@ -25,45 +23,49 @@ namespace Mn {
         }
     }
 
-    void Mesh::ConnectBuffer(Geometry::Type type) {
+    void Mesh::ConnectBuffer(const Geometry &geom, Geometry::Type type) {
         Vbo buffer;
-        buffer = Mn::Vbo::FromData(mGeometry.Data(type));
+        buffer = Mn::Vbo::FromData(geom.Data(type));
         mBuffers.push_back(buffer);
+        mVertexCount = geom.VertexCount();
 
-        // TODO: Get indexes from material
         switch (type) {
             case Geometry::Type::Positions:
-                mVao.Connect(0, 3, 3, 0); // position attribute
+                mVao.Connect(material.Location(Material::AttributeType::Position), 3, 3, 0);
                 break;
             case Geometry::Type::Normals:
-                mVao.Connect(0, 3, 3, 0); // normal attribute
+                mVao.Connect(material.Location(Material::AttributeType::Normal), 3, 3, 0);
                 break;
             case Geometry::Type::TexCoords:
-                mVao.Connect(0, 2, 2, 0); // texture coordinates attribute
+                mVao.Connect(material.Location(Material::AttributeType::TexCoord), 2, 2,
+                             0);
                 break;
             case Geometry::Type::PositionsAndNormals:
-                mVao.Connect(0, 3, 6, 0); // position attribute
-                mVao.Connect(1, 3, 6, 3); // normal attribute
+                mVao.Connect(material.Location(Material::AttributeType::Position), 3, 6, 0);
+                mVao.Connect(material.Location(Material::AttributeType::Normal), 3, 6, 3);
                 break;
             case Geometry::Type::PositionsAndTexCoords:
-                mVao.Connect(0, 3, 5, 0); // position attribute
-                mVao.Connect(1, 2, 5, 3); // texture coordinates attribute
+                mVao.Connect(material.Location(Material::AttributeType::Position), 3, 5, 0);
+                mVao.Connect(material.Location(Material::AttributeType::TexCoord), 2, 5,
+                             3);
                 break;
             case Geometry::Type::NormalsAndTexCoords:
-                mVao.Connect(0, 3, 5, 0); // normal attribute
-                mVao.Connect(1, 2, 5, 3); // texture coordinates attribute
+                mVao.Connect(material.Location(Material::AttributeType::Normal), 3, 5, 0);
+                mVao.Connect(material.Location(Material::AttributeType::TexCoord), 2, 5,
+                             3);
                 break;
             case Geometry::Type::PositionsNormalsAndTexCoords:
-                mVao.Connect(0, 3, 8, 0); // position attribute
-                mVao.Connect(1, 3, 8, 3); // normal attribute
-                mVao.Connect(2, 2, 8, 6); // texture coordinates attribute
+                mVao.Connect(material.Location(Material::AttributeType::Position), 3, 8, 0);
+                mVao.Connect(material.Location(Material::AttributeType::Normal), 3, 8, 3);
+                mVao.Connect(material.Location(Material::AttributeType::TexCoord), 2, 8,
+                             6);
                 break;
         }
     }
 
     void Mesh::Draw() const {
         material.Upload();
-        mVao.Draw(material.DrawStyle(), 0, mGeometry.VertexCount());
+        mVao.Draw(material.DrawStyle(), 0, mVertexCount);
     }
 
 }
