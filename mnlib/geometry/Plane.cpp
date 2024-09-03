@@ -8,10 +8,10 @@ namespace Mn {
             -width / 2.0f, width / 2.0f, widthSegments,
             -height / 2.0f, height / 2.0f, heightSegments
     ) {
-        CalculateSurface();
+        CalculateSurface(Equation());
     }
 
-    glm::vec3 Plane::SurfaceEquation(float u, float v) {
+    glm::vec3 Plane::Equation::operator()(float u, float v) const {
         return glm::vec3{u, v, 0.0f};
     }
 }

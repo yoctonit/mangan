@@ -8,15 +8,18 @@ namespace Mn {
             m_uStart{uStart}, m_uEnd{uEnd}, m_uResolution{uResolution},
             m_vStart{vStart}, m_vEnd{vEnd}, m_vResolution{vResolution} {}
 
-    void Surface::CalculateSurface() {
+    void Surface::CalculateSurface(const SurfaceEquation &surfaceEquation) {
         auto positions = getPoints(
                 m_uStart, m_uEnd, m_uResolution,
-                m_vStart, m_vEnd, m_vResolution
+                m_vStart, m_vEnd, m_vResolution,
+                surfaceEquation
         );
 
         auto vertexNormals = getNormals(
                 m_uStart, m_uEnd, m_uResolution,
-                m_vStart, m_vEnd, m_vResolution);
+                m_vStart, m_vEnd, m_vResolution,
+                surfaceEquation
+        );
 
         auto uvs = getUVs(m_uResolution, m_vResolution);
 
@@ -69,7 +72,8 @@ namespace Mn {
 
     std::vector<std::vector<glm::vec3>> Surface::getPoints(
             float uStart, float uEnd, int uResolution,
-            float vStart, float vEnd, int vResolution
+            float vStart, float vEnd, int vResolution,
+            const SurfaceEquation &surfaceEquation
     ) {
         std::vector<std::vector<glm::vec3>> points(uResolution + 1);
         for (auto &col: points) {
@@ -83,7 +87,7 @@ namespace Mn {
             for (int vIndex = 0; vIndex < vResolution + 1; vIndex++) {
                 float u = uStart + static_cast<float>(uIndex) * deltaU;
                 float v = vStart + static_cast<float>(vIndex) * deltaV;
-                points[uIndex][vIndex] = SurfaceEquation(u, v);
+                points[uIndex][vIndex] = surfaceEquation(u, v);
             }
         }
 
@@ -92,7 +96,8 @@ namespace Mn {
 
     std::vector<std::vector<glm::vec3>> Surface::getNormals(
             float uStart, float uEnd, int uResolution,
-            float vStart, float vEnd, int vResolution
+            float vStart, float vEnd, int vResolution,
+            const SurfaceEquation &surfaceEquation
     ) {
         std::vector<std::vector<glm::vec3>> normals(uResolution + 1);
         for (auto &col: normals) {
@@ -107,9 +112,9 @@ namespace Mn {
                 float u = uStart + static_cast<float>(uIndex) * deltaU;
                 float v = vStart + static_cast<float>(vIndex) * deltaV;
                 float h = 0.0001;
-                glm::vec3 P0 = SurfaceEquation(u, v);
-                glm::vec3 P1 = SurfaceEquation(u + h, v);
-                glm::vec3 P2 = SurfaceEquation(u, v + h);
+                glm::vec3 P0 = surfaceEquation(u, v);
+                glm::vec3 P1 = surfaceEquation(u + h, v);
+                glm::vec3 P2 = surfaceEquation(u, v + h);
                 normals[uIndex][vIndex] = Geometry::CalculateNormal(P0, P1, P2);
             }
         }

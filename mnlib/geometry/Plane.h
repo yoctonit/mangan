@@ -13,7 +13,10 @@ namespace Mn {
         );
 
     private:
-        glm::vec3 SurfaceEquation(float u, float v) override;
+        class Equation: public SurfaceEquation {
+        public:
+            glm::vec3 operator()(float u, float v) const override;
+        };
     };
 
 }

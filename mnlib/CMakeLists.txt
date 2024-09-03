@@ -5,6 +5,7 @@ add_library(engine
         graphics/Uniform.cpp graphics/Texture.cpp
         geometry/Geometry.cpp geometry/Box.cpp geometry/Icosahedron.cpp
         geometry/Surface.cpp geometry/Plane.cpp geometry/Polygon.cpp
+        geometry/Rectangle.cpp geometry/Hexagon.cpp geometry/Ellipsoid.cpp
         graphics/Material.cpp
         graphics/Mesh.cpp
 )

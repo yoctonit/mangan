@@ -61,7 +61,6 @@ namespace Mn {
         }
     }
 
-    // TODO: Get draw type from material
     void Mesh::Draw() const {
         material.Upload();
         mVao.Draw(material.DrawStyle(), 0, mGeometry.VertexCount());
