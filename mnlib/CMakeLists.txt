@@ -6,6 +6,8 @@ add_library(engine
         geometry/Geometry.cpp geometry/Box.cpp geometry/Icosahedron.cpp
         geometry/Surface.cpp geometry/Plane.cpp geometry/Polygon.cpp
         geometry/Rectangle.cpp geometry/Hexagon.cpp geometry/Ellipsoid.cpp
+        geometry/Cylindrical.cpp geometry/Cylinder.cpp geometry/Cone.cpp
+        geometry/Prism.cpp geometry/Pyramid.cpp geometry/Sphere.cpp
         graphics/Material.cpp
         graphics/Mesh.cpp
 )

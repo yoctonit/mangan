@@ -23,6 +23,7 @@ file(COPY
         shader/basic_color.fs
         shader/basic_lighting.vs
         shader/basic_lighting.fs
+        shader/directional_light.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -73,3 +74,6 @@ target_link_libraries(joey-ex-4-3-exercise-2 PRIVATE Mn::Engine PRIVATE Mn::Joey
 
 add_executable(joey-ex-4-4-exercise-4 ex-4-4-exercise-4.cpp)
 target_link_libraries(joey-ex-4-4-exercise-4 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-5-1-directional-light ex-5-1-directional-light.cpp)
+target_link_libraries(joey-ex-5-1-directional-light PRIVATE Mn::Engine PRIVATE Mn::Joey)

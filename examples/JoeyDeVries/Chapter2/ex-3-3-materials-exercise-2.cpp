@@ -6,6 +6,7 @@
 #include "geometry/Polygon.h"
 #include "geometry/Rectangle.h"
 #include "geometry/Ellipsoid.h"
+#include "geometry/Sphere.h"
 #include "graphics/Material.h"
 #include "graphics/Mesh.h"
 
@@ -54,15 +55,19 @@ public:
         Mn::Rectangle rectangle(0.2f, 5.0f);
         rectangle.ApplyMatrix(glm::rotate(glm::mat4(1.0f), -3.14f / 4.0f, glm::vec3(0.0f, 0.0f, -1.0f)));
 
-        Mn::Ellipsoid ellipsoid(2.0, 0.5f, 0.5f, 64, 64);
+        Mn::Ellipsoid ellipsoid(2.0, 0.5f, 0.5f, 16, 16);
 //        Mn::Ellipsoid ellipsoid;
         ellipsoid.ApplyMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(1.5f, 1.5f, 0.0f)));
+
+        Mn::Sphere cylinder;
+        cylinder.ApplyMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(-1.5f, 1.5f, 0.0f)));
 
         Mn::Icosahedron icosahedron;
         icosahedron.Merge(plane);
         icosahedron.Merge(polygon);
         icosahedron.Merge(rectangle);
         icosahedron.Merge(ellipsoid);
+        icosahedron.Merge(cylinder);
 
         object.Create(icosahedron, Mn::Geometry::Type::PositionsAndNormals, Mn::BasicLightingMaterial());
 

@@ -5,5 +5,11 @@ Geometry
         Hexagon
     Rectangle
     Surface
-        Plane
+        Cylindrical
+            Cone
+            Cylinder
+            Prism
+            Pyramid
         Ellipsoid
+            Sphere
+        Plane
