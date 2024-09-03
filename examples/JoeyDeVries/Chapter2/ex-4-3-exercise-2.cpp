@@ -114,7 +114,7 @@ public:
         glEnable(GL_DEPTH_TEST);
 
         lightingShader = Mn::Shader::FromFiles(
-                "shader/lighting_maps.vs",
+                "shader/lighting_maps_1.vs",
                 "shader/exercise-4-3.fs"
         );
         // uniforms for lightingShader

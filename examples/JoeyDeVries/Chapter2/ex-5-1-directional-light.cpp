@@ -35,7 +35,7 @@ public:
         glEnable(GL_DEPTH_TEST);
 
         shader = Mn::Shader::FromFiles(
-                "shader/lighting_maps.vs",
+                "shader/lighting_maps_1.vs",
                 "shader/directional_light.fs"
         );
         texture1Uniform.Create(shader.Locate("texture1"), Mn::Uniform::Type::Int);

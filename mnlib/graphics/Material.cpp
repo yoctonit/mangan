@@ -47,7 +47,7 @@ namespace Mn {
         return attr.Location();
     }
 
-    int  Material::Location(const std::string &attributeName) const {
+    int Material::Location(const std::string &attributeName) const {
         auto attr = mAttributes.at(attributeName);
         return attr.Location();
     }
@@ -137,4 +137,32 @@ namespace Mn {
         return material;
     }
 
+    Material LightingMapsMaterial() {
+        Material material;
+        material.Create(
+                "shader/lighting_maps.vs",
+                "shader/lighting_maps.fs"
+        );
+
+        material.AddUniform("uModel", Uniform::Type::Mat4x4);
+        material.AddUniform("uView", Uniform::Type::Mat4x4);
+        material.AddUniform("uProjection", Uniform::Type::Mat4x4);
+
+        material.AddUniform("uViewPosition", Uniform::Type::Vec3);
+
+        material.AddUniform("uMaterial.diffuse", Uniform::Type::Int);
+        material.AddUniform("uMaterial.specular", Uniform::Type::Int);
+        material.AddUniform("uMaterial.shininess", Uniform::Type::Float);
+
+        material.AddUniform("uLight.position", Uniform::Type::Vec3);
+        material.AddUniform("uLight.ambient", Uniform::Type::Vec3);
+        material.AddUniform("uLight.diffuse", Uniform::Type::Vec3);
+        material.AddUniform("uLight.specular", Uniform::Type::Vec3);
+
+        material.AddAttribute(0, Attribute::DataType::Vec3, Material::AttributeType::Position);
+        material.AddAttribute(1, Attribute::DataType::Vec3, Material::AttributeType::Normal);
+        material.AddAttribute(2, Attribute::DataType::Vec2, Material::AttributeType::TexCoord);
+
+        return material;
+    }
 }

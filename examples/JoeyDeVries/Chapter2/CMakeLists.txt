@@ -14,8 +14,8 @@ file(COPY
         shader/exercise-4.fs
         shader/materials.fs
         shader/light_cube_exercise_1.fs
-        shader/lighting_maps.vs
-        shader/lighting_maps.fs
+        shader/lighting_maps_1.vs
+        shader/lighting_maps_1.fs
         shader/lighting_maps_specular.fs
         shader/exercise-4-3.fs
         shader/exercise-4-4.fs
@@ -24,6 +24,8 @@ file(COPY
         shader/basic_lighting.vs
         shader/basic_lighting.fs
         shader/directional_light.fs
+        shader/lighting_maps.vs
+        shader/lighting_maps.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY

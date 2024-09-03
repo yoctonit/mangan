@@ -59,6 +59,8 @@ namespace Mn {
 
     Material BasicLightingMaterial();
 
+    Material LightingMapsMaterial();
+
 }
 
 #endif //INCLUDED_MN_GRAPHICS_MATERIAL_H
