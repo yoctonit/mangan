@@ -4,6 +4,7 @@
 #include <vector>
 #include "../geometry/Geometry.h"
 #include "Material.h"
+#include "RenderSettings.h"
 #include "Vao.h"
 #include "Vbo.h"
 
@@ -22,6 +23,9 @@ namespace Mn {
         void Draw() const;
 
         Material material;
+
+        // Store OpenGL render settings
+        RenderSettings renderSettings;
 
     private:
         int mVertexCount{};

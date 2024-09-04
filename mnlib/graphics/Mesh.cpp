@@ -64,6 +64,7 @@ namespace Mn {
     }
 
     void Mesh::Draw() const {
+        renderSettings.Apply();
         material.Upload();
         mVao.Draw(material.DrawStyle(), 0, mVertexCount);
     }

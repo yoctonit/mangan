@@ -70,6 +70,7 @@ public:
         icosahedron.Merge(cylinder);
 
         object.Create(icosahedron, Mn::Geometry::Type::PositionsAndNormals, Mn::BasicLightingMaterial());
+        // object.renderSettings.Set(Mn::RenderSettings::Type::Wireframe, true);
 
         lightCube.Create(
                 Mn::Box(0.05f, 0.05f, 0.05f),

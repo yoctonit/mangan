@@ -3,6 +3,7 @@ add_library(engine
         graphics/Shader.cpp graphics/Vbo.cpp
         graphics/Vao.cpp graphics/Ebo.cpp
         graphics/Attribute.cpp graphics/Uniform.cpp graphics/Texture.cpp
+        graphics/RenderSettings.cpp
         geometry/Geometry.cpp geometry/Box.cpp geometry/Icosahedron.cpp
         geometry/Surface.cpp geometry/Plane.cpp geometry/Polygon.cpp
         geometry/Rectangle.cpp geometry/Hexagon.cpp geometry/Ellipsoid.cpp
