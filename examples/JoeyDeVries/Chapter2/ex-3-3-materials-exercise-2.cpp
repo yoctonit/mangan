@@ -19,18 +19,19 @@ const int SCR_HEIGHT = 600;
 
 class ExampleMeshes {
 private:
-    Mn::Mesh object{};
-    Mn::Mesh lightCube{};
+    Mn::Mesh mPlane{};
+    Mn::Mesh mObject{};
+    Mn::Mesh mLightBulb{};
 
-    Camera camera{glm::vec3(0.0f, 0.0f, 3.0f)};
+    Camera mCamera{glm::vec3(0.0f, 0.0f, 3.0f)};
 
     // lighting
-    glm::vec3 lightPos{1.2f, 1.0f, 2.0f};
+    glm::vec3 mLightPosition{1.2f, 1.0f, 2.0f};
 
     // timing
-    float time{};
-    float deltaTime{};    // time between current frame and last frame
-    float lastFrame{};
+    float mTime{};
+    float mDeltaTime{};    // mTime between current frame and last frame
+    float mPreviousTime{};
 
     bool runScene{true};
 
@@ -40,129 +41,98 @@ public:
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glEnable(GL_DEPTH_TEST);
 
-        // create mesh objects
-        Mn::Plane plane(10.0f, 10.f);
-        auto transform = glm::mat4(1.0f);
-        transform = glm::translate(transform, glm::vec3(0.0f, -0.9f, 0.0f));
-        transform = glm::rotate(transform, -3.14f / 2.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-        plane.ApplyMatrix(transform);
+        // create mesh mPlane
+        Mn::Plane planeGeometry(10.0f, 10.f);
+        auto transform = glm::rotate(glm::mat4(1.0f), -3.14f / 2.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+        planeGeometry.ApplyMatrix(transform);
+        mPlane.Create(planeGeometry, Mn::Geometry::Type::PositionsAndNormals, Mn::BasicLightingMaterial());
+        mPlane.renderSettings.Set(Mn::RenderSettings::Type::DoubleSide, true);
 
-        Mn::Polygon polygon(3, 2.0f);
-//        transform = glm::mat4(1.0f);
-//        transform = glm::rotate(transform, -3.14f / 2.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-//        polygon.ApplyMatrix(transform);
+        // create mesh mObject
+        Mn::Ellipsoid objectGeometry(2.0, 0.5f, 0.5f, 16, 16);
+        objectGeometry.ApplyMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(1.5f, 1.5f, 0.0f)));
+        mObject.Create(objectGeometry, Mn::Geometry::Type::PositionsAndNormals, Mn::BasicLightingMaterial());
+        // mObject.renderSettings.Set(Mn::RenderSettings::Type::Wireframe, true);
 
-        Mn::Rectangle rectangle(0.2f, 5.0f);
-        rectangle.ApplyMatrix(glm::rotate(glm::mat4(1.0f), -3.14f / 4.0f, glm::vec3(0.0f, 0.0f, -1.0f)));
-
-        Mn::Ellipsoid ellipsoid(2.0, 0.5f, 0.5f, 16, 16);
-//        Mn::Ellipsoid ellipsoid;
-        ellipsoid.ApplyMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(1.5f, 1.5f, 0.0f)));
-
-        Mn::Sphere cylinder;
-        cylinder.ApplyMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(-1.5f, 1.5f, 0.0f)));
-
-        Mn::Icosahedron icosahedron;
-        icosahedron.Merge(plane);
-        icosahedron.Merge(polygon);
-        icosahedron.Merge(rectangle);
-        icosahedron.Merge(ellipsoid);
-        icosahedron.Merge(cylinder);
-
-        object.Create(icosahedron, Mn::Geometry::Type::PositionsAndNormals, Mn::BasicLightingMaterial());
-        // object.renderSettings.Set(Mn::RenderSettings::Type::Wireframe, true);
-
-        lightCube.Create(
+        // create mesh mLightBulb
+        mLightBulb.Create(
                 Mn::Box(0.05f, 0.05f, 0.05f),
                 Mn::Geometry::Type::Positions,
                 Mn::BasicMvpColorMaterial()
         );
-        lightCube.material["uColor"] = glm::vec3(1.0f, 1.0f, 1.0f);
+        mLightBulb.material["uColor"] = glm::vec3(1.0f, 1.0f, 1.0f);
     }
 
     ~ExampleMeshes() {
-        object.Release();
-        lightCube.Release();
+        mPlane.Release();
+        mObject.Release();
+        mLightBulb.Release();
     }
 
     void Update(const Mn::Input &input) {
-        // per-frame time logic
-        // --------------------
-        time += 0.016f;
-        deltaTime = time - lastFrame;
-        lastFrame = time;
+        // per-frame mTime logic
+        mTime += 0.016f;
+        mDeltaTime = mTime - mPreviousTime;
+        mPreviousTime = mTime;
 
-        // process input
-        // -------------
-        if (input.IsClickedKey(MN_KEY_ESCAPE)) {
-            runScene = false;
-        }
+        // update light position
+        mLightPosition.x = 1.0f + std::sin(mTime) * 2.0f;
+        mLightPosition.y = std::sin(mTime / 2.0f) * 1.0f;
 
-        if (input.IsPressedKey(MN_KEY_W)) {
-            camera.ProcessKeyboard(Camera::Movement::Forward, deltaTime);
-        }
-        if (input.IsPressedKey(MN_KEY_S)) {
-            camera.ProcessKeyboard(Camera::Movement::Backward, deltaTime);
-        }
-        if (input.IsPressedKey(MN_KEY_A)) {
-            camera.ProcessKeyboard(Camera::Movement::Left, deltaTime);
-        }
-        if (input.IsPressedKey(MN_KEY_D)) {
-            camera.ProcessKeyboard(Camera::Movement::Right, deltaTime);
-        }
-        if (input.IsPressedKey(MN_KEY_R)) {
-            camera.Position.y += 0.01f;
-        }
-        if (input.IsPressedKey(MN_KEY_F)) {
-            camera.Position.y -= 0.01f;
-        }
+        ProcessInput(input);
 
-        auto mouseOffset = input.GetMouseOffset();
-        camera.ProcessMouseMovement(mouseOffset.x, mouseOffset.y);
-
-        auto scrollOffset = input.GetMouseScroll();
-        camera.ProcessMouseScroll(scrollOffset.y);
-        // -------------
-
-        // world transformation
-        // object model
         auto model = glm::mat4(1.0f);
-        object.material["uModel"] = model;
-
-        // light model
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, lightPos);
-        // model = glm::scale(model, glm::vec3(0.1f)); // a smaller cube
-        lightCube.material["uModel"] = model;
-
-        auto view = camera.GetViewMatrix();
-        object.material["uView"] = view;
-        lightCube.material["uView"] = view;
-
+        auto view = mCamera.GetViewMatrix();
         auto projection = glm::perspective(
-                glm::radians(camera.Zoom),
+                glm::radians(mCamera.Zoom),
                 (float) SCR_WIDTH / (float) SCR_HEIGHT,
-                0.1f, 100.0f);
-        object.material["uProjection"] = projection;
-        lightCube.material["uProjection"] = projection;
+                0.1f, 100.0f
+        );
 
-        // http://devernay.free.fr/cours/opengl/materials.html
-        // cyan plastic
-        object.material["uMaterial.ambient"] = glm::vec3(0.0f, 0.1f, 0.06f);
-        object.material["uMaterial.diffuse"] = glm::vec3(0.0f, 0.50980392f, 0.50980392f);
-        object.material["uMaterial.specular"] = glm::vec3(0.50196078f, 0.50196078f, 0.50196078f);
-        object.material["uMaterial.shininess"] = 0.25f * 128.0f;
+        // mPlane transformations
+        mPlane.material["uModel"] = model;
+        mPlane.material["uView"] = view;
+        mPlane.material["uProjection"] = projection;
 
-        lightPos.x = 1.0f + std::sin(time) * 2.0f;
-        lightPos.y = std::sin(time / 2.0f) * 1.0f;
-        object.material["uLight.position"] = lightPos;
+        // mPlane material and lighting
+        // white rubber (http://devernay.free.fr/cours/opengl/materials.html)
+        mPlane.material["uMaterial.ambient"] = glm::vec3(0.05f, 0.05f, 0.05f);
+        mPlane.material["uMaterial.diffuse"] = glm::vec3(0.5f, 0.5f, 0.5f);
+        mPlane.material["uMaterial.specular"] = glm::vec3(0.7f, 0.7f, 0.7f);
+        mPlane.material["uMaterial.shininess"] = 0.78125f * 128.0f;
 
+        mPlane.material["uLight.position"] = mLightPosition;
         // note that all light colors are set at full intensity
-        object.material["uLight.ambient"] = glm::vec3(1.0f, 1.0f, 1.0f);
-        object.material["uLight.diffuse"] = glm::vec3(1.0f, 1.0f, 1.0f);
-        object.material["uLight.specular"] = glm::vec3(1.0f, 1.0f, 1.0f);
+        mPlane.material["uLight.ambient"] = glm::vec3(1.0f, 1.0f, 1.0f);
+        mPlane.material["uLight.diffuse"] = glm::vec3(1.0f, 1.0f, 1.0f);
+        mPlane.material["uLight.specular"] = glm::vec3(1.0f, 1.0f, 1.0f);
 
-        object.material["uViewPosition"] = camera.Position;
+        mPlane.material["uViewPosition"] = mCamera.Position;
+
+        // mObject transformations
+        mObject.material["uModel"] = model;
+        mObject.material["uView"] = view;
+        mObject.material["uProjection"] = projection;
+
+        // mObject material and lighting
+        // cyan plastic (http://devernay.free.fr/cours/opengl/materials.html)
+        mObject.material["uMaterial.ambient"] = glm::vec3(0.0f, 0.1f, 0.06f);
+        mObject.material["uMaterial.diffuse"] = glm::vec3(0.0f, 0.50980392f, 0.50980392f);
+        mObject.material["uMaterial.specular"] = glm::vec3(0.50196078f, 0.50196078f, 0.50196078f);
+        mObject.material["uMaterial.shininess"] = 0.25f * 128.0f;
+
+        mObject.material["uLight.position"] = mLightPosition;
+        // note that all light colors are set at full intensity
+        mObject.material["uLight.ambient"] = glm::vec3(1.0f, 1.0f, 1.0f);
+        mObject.material["uLight.diffuse"] = glm::vec3(1.0f, 1.0f, 1.0f);
+        mObject.material["uLight.specular"] = glm::vec3(1.0f, 1.0f, 1.0f);
+
+        mObject.material["uViewPosition"] = mCamera.Position;
+
+        // mLightBulb transformations
+        mLightBulb.material["uModel"] = glm::translate(glm::mat4(1.0f), mLightPosition);
+        mLightBulb.material["uView"] = view;
+        mLightBulb.material["uProjection"] = projection;
     }
 
     [[nodiscard]] bool IsRunning() const {
@@ -171,8 +141,41 @@ public:
 
     void Render() const {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        object.Draw();
-        lightCube.Draw();
+        mPlane.Draw();
+        mObject.Draw();
+        mLightBulb.Draw();
+    }
+
+private:
+    void ProcessInput(const Mn::Input &input) {
+        if (input.IsClickedKey(MN_KEY_ESCAPE)) {
+            runScene = false;
+        }
+
+        if (input.IsPressedKey(MN_KEY_W)) {
+            mCamera.ProcessKeyboard(Camera::Movement::Forward, mDeltaTime);
+        }
+        if (input.IsPressedKey(MN_KEY_S)) {
+            mCamera.ProcessKeyboard(Camera::Movement::Backward, mDeltaTime);
+        }
+        if (input.IsPressedKey(MN_KEY_A)) {
+            mCamera.ProcessKeyboard(Camera::Movement::Left, mDeltaTime);
+        }
+        if (input.IsPressedKey(MN_KEY_D)) {
+            mCamera.ProcessKeyboard(Camera::Movement::Right, mDeltaTime);
+        }
+        if (input.IsPressedKey(MN_KEY_R)) {
+            mCamera.Position.y += 0.01f;
+        }
+        if (input.IsPressedKey(MN_KEY_F)) {
+            mCamera.Position.y -= 0.01f;
+        }
+
+        auto mouseOffset = input.GetMouseOffset();
+        mCamera.ProcessMouseMovement(mouseOffset.x, mouseOffset.y);
+
+        auto scrollOffset = input.GetMouseScroll();
+        mCamera.ProcessMouseScroll(scrollOffset.y);
     }
 };
 

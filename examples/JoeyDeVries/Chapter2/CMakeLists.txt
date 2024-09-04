@@ -26,6 +26,9 @@ file(COPY
         shader/directional_light.fs
         shader/lighting_maps.vs
         shader/lighting_maps.fs
+        shader/point_light.fs
+        shader/flashlight.fs
+        shader/flashlight_soft.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -79,3 +82,12 @@ target_link_libraries(joey-ex-4-4-exercise-4 PRIVATE Mn::Engine PRIVATE Mn::Joey
 
 add_executable(joey-ex-5-1-directional-light ex-5-1-directional-light.cpp)
 target_link_libraries(joey-ex-5-1-directional-light PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-5-2-point-light ex-5-2-point-light.cpp)
+target_link_libraries(joey-ex-5-2-point-light PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-5-3-flashlight ex-5-3-flashlight.cpp)
+target_link_libraries(joey-ex-5-3-flashlight PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-5-4-flashlight-soft ex-5-4-flashlight-soft.cpp)
+target_link_libraries(joey-ex-5-4-flashlight-soft PRIVATE Mn::Engine PRIVATE Mn::Joey)
