@@ -50,7 +50,7 @@ public:
 
         // create mesh mObject
         Mn::Ellipsoid objectGeometry(2.0, 0.5f, 0.5f, 16, 16);
-        objectGeometry.ApplyMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(1.5f, 1.5f, 0.0f)));
+        objectGeometry.ApplyMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.0f)));
         mObject.Create(objectGeometry, Mn::Geometry::Type::PositionsAndNormals, Mn::BasicLightingMaterial());
         // mObject.renderSettings.Set(Mn::RenderSettings::Type::Wireframe, true);
 
