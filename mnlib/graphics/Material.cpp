@@ -3,13 +3,14 @@
 namespace Mn {
 
     void Material::Create(const std::string &vsFile, const std::string &fsFile) {
-        mShader = Shader::FromFiles(vsFile, fsFile);
+//        mShader = Shader::FromFiles(vsFile, fsFile);
+        mShader = {vsFile, fsFile};
     }
 
 //    void Material::Create() {}
 
     void Material::Release() {
-        mShader.Release();
+        // mShader.Release();
     }
 
     void Material::AddUniform(const std::string &name, Uniform::Type type) {

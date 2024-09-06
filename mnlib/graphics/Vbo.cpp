@@ -14,7 +14,7 @@ namespace Mn {
                 type
         );
 
-        std::cout << "Created Vbo buffer with id " << buffer.m_id << "\n";
+        std::cout << "Created VBO with id " << buffer.m_id << "\n";
         return buffer;
     }
 
@@ -32,7 +32,7 @@ namespace Mn {
             return;
         }
 
-        std::cout << "Deleted Vbo buffer with id " << m_id << "\n";
+        std::cout << "Deleted VBO with id " << m_id << "\n";
         glDeleteBuffers(1, &m_id);
         m_id = 0;
     }

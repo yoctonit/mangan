@@ -1,63 +1,113 @@
 #include <fstream>
-#include <sstream>
 #include <iostream>
+#include <sstream>
+#include <tuple> // for std::ignore
 #include <vector>
 
 #include "Shader.h"
 
 namespace Mn {
 
-    unsigned int Shader::Id() const {
-        return m_id;
-    }
+    std::unordered_map<unsigned int, int> Shader::mRefCnt{};
 
-    void Shader::Use() const {
-        glUseProgram(m_id);
-    }
+    Shader::Shader() = default;
 
-    void Shader::Release() {
-        if (m_id == 0) {
-            std::cerr << "Error: Trying to release null shader\n";
-            return;
-        }
-        std::cout << "Deleted Shader with id " << m_id << "\n";
-        glDeleteProgram(m_id);
-        m_id = 0;
-    }
-
-    int Shader::Locate(const std::string &uniformName) const {
-        // return glGetUniformLocation(m_id, uniformName.c_str());
-        int variableRef = glGetUniformLocation(m_id, uniformName.c_str());
-        if (variableRef == -1) {
-            std::cerr << "Uniform variable " << uniformName << " not found.\n";
-        }
-        return variableRef;
-    }
-
-    [[nodiscard]] int Shader::LocateAttribute(const std::string &attributeName) const {
-        int variableRef = glGetAttribLocation(m_id, attributeName.c_str());
-        if (variableRef == -1) {
-            std::cerr << "Attribute " << attributeName << " not found.\n";
-        }
-        return variableRef;
-    }
-
-    void Shader::Debug(const std::string &msg) const {
-        std::cout << msg << " has id " << m_id << "\n";
-    }
-
-    Shader Shader::FromFiles(const std::string &vertexShaderFile, const std::string &fragmentShaderFile) {
+    Shader::Shader(
+            const std::string &vertexShaderFile,
+            const std::string &fragmentShaderFile
+    ) {
         std::string vertexShaderSource = LoadFile(vertexShaderFile);
         unsigned int vertexShaderId = Compile(vertexShaderSource, GL_VERTEX_SHADER);
 
         std::string fragmentShaderSource = LoadFile(fragmentShaderFile);
         unsigned int fragmentShaderId = Compile(fragmentShaderSource, GL_FRAGMENT_SHADER);
 
-        Shader shader;
-        shader.m_id = Link(vertexShaderId, fragmentShaderId);
-        std::cout << "Created Shader with id " << shader.m_id << "\n";
-        return shader;
+        mId = Link(vertexShaderId, fragmentShaderId);
+        IncRef();
+        std::cout << "Created Shader with id " << mId << "\n";
     }
+
+    Shader::~Shader() {
+        int refCnt = DecRef();
+        if (refCnt == 0) {
+            glDeleteProgram(mId);
+            std::cout << "Deleted Shader with id " << mId << "\n";
+        }
+    }
+
+    // copy constructor
+    Shader::Shader(const Shader &other) {
+        mId = other.mId;
+        IncRef();
+    }
+
+    // copy assignment operator (by convention, always return *this)
+    Shader &Shader::operator=(const Shader &other) {
+        // protect against invalid self-assignment
+        if (this == &other) {
+            std::cout << "Shader self assignment detected.\n";
+            return *this;
+        }
+        // already reference counted id
+        if (mId == other.mId) {
+            std::cout << "Shader assignment with id detected.\n";
+            return *this;
+        }
+        if (mId != 0) {
+            std::ignore = DecRef();
+        }
+        mId = other.mId;
+        IncRef();
+        return *this;
+    }
+
+    unsigned int Shader::Id() const {
+        return mId;
+    }
+
+    void Shader::Use() const {
+        glUseProgram(mId);
+    }
+
+    int Shader::Locate(const std::string &name) const {
+        int uniformRef = glGetUniformLocation(mId, name.c_str());
+        if (uniformRef != -1) {
+            return uniformRef;
+        }
+
+        int attributeRef = glGetAttribLocation(mId, name.c_str());
+        if (attributeRef != -1) {
+            return attributeRef;
+        }
+
+        std::cerr << "Uniform/attribute " << name << " not found.\n";
+        return -1;
+    }
+
+//    [[nodiscard]] int Shader::LocateAttribute(const std::string &attributeName) const {
+//        int variableRef = glGetAttribLocation(mId, attributeName.c_str());
+//        if (variableRef == -1) {
+//            std::cerr << "Attribute " << attributeName << " not found.\n";
+//        }
+//        return variableRef;
+//    }
+
+    void Shader::Debug(const std::string &msg) const {
+        std::cout << msg << " has id " << mId << "\n";
+    }
+
+//    Shader Shader::FromFiles(const std::string &vertexShaderFile, const std::string &fragmentShaderFile) {
+//        std::string vertexShaderSource = LoadFile(vertexShaderFile);
+//        unsigned int vertexShaderId = Compile(vertexShaderSource, GL_VERTEX_SHADER);
+//
+//        std::string fragmentShaderSource = LoadFile(fragmentShaderFile);
+//        unsigned int fragmentShaderId = Compile(fragmentShaderSource, GL_FRAGMENT_SHADER);
+//
+//        Shader shader;
+//        shader.mId = Link(vertexShaderId, fragmentShaderId);
+//        std::cout << "Created Shader with id " << shader.mId << "\n";
+//        return shader;
+//    }
 
     unsigned int Shader::Compile(const std::string &shaderSource, GLenum shaderType) {
         unsigned int shaderId = glCreateShader(shaderType);
@@ -164,6 +214,40 @@ namespace Mn {
 
         fileStream.close();
         return str.str();
+    }
+
+    void Shader::IncRef() const {
+        // objects with mId = 0 are 'empty' (non-initialized) objects,
+        // so don't note their existence in mRefCnt map
+        if (mId == 0) {
+            return;
+        }
+        mRefCnt[mId]++;
+    }
+
+    [[nodiscard]] int Shader::DecRef() const {
+        if (mId == 0) {
+            // should not happen
+            std::cerr << "Called DecRef with mId = 0\n";
+            return -1;
+        }
+        mRefCnt[mId]--;
+        if (mRefCnt[mId] == 0) {
+            mRefCnt.erase(mId);
+            return 0;
+        }
+        return mRefCnt[mId];
+    }
+
+    void Shader::DebugRefCnt() {
+        if (mRefCnt.empty()) {
+            std::cout << "RefCnt: <empty>\n";
+            return;
+        }
+        std::cout << "RefCnt:\n";
+        for (auto &refCnt: mRefCnt) {
+            std::cout << "Id " << refCnt.first << " (cnt=" << refCnt.second << ")\n";
+        }
     }
 
 }

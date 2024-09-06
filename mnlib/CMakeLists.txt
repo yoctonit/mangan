@@ -25,3 +25,5 @@ target_include_directories(engine PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 add_library(Mn::Engine ALIAS engine)
 
 #add_library(engine engine/Action.cpp engine/Engine.cpp engine/Input.cpp engine/Scene.cpp engine/vec2.cpp engine/Window.cpp)
+
+add_executable(ref-cnt-test test/RefCntTest.cpp)

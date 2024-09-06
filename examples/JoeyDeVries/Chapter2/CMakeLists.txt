@@ -29,6 +29,7 @@ file(COPY
         shader/point_light.fs
         shader/flashlight.fs
         shader/flashlight_soft.fs
+        shader/multiple_lights.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -91,3 +92,6 @@ target_link_libraries(joey-ex-5-3-flashlight PRIVATE Mn::Engine PRIVATE Mn::Joey
 
 add_executable(joey-ex-5-4-flashlight-soft ex-5-4-flashlight-soft.cpp)
 target_link_libraries(joey-ex-5-4-flashlight-soft PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-6-1-multiple-lights ex-6-1-multiple-lights.cpp)
+target_link_libraries(joey-ex-6-1-multiple-lights PRIVATE Mn::Engine PRIVATE Mn::Joey)
