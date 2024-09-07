@@ -1,3 +1,5 @@
+#include <iostream>
+#include <tuple> // for std::ignore
 #include "Vbo.h"
 
 namespace Mn {

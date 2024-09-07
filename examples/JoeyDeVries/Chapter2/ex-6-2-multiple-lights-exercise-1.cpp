@@ -421,14 +421,12 @@ public:
         lightCubeVao.Connect(0, 3, 8, 0);
 
         // load and create a texture
-        tex1 = Mn::Texture::FromImage("images/container2.png");
-        tex2 = Mn::Texture::FromImage("images/container2_specular.png");
+        tex1 = Mn::Texture("images/container2.png");
+        tex2 = Mn::Texture("images/container2_specular.png");
     }
 
-    ~CoordinateSystems() {
-        tex1.Release();
-        tex2.Release();
-    }
+//    ~CoordinateSystems() {
+//    }
 
     void Update(const Mn::Input &input) {
         if (input.IsClickedKey(MN_KEY_ESCAPE)) {

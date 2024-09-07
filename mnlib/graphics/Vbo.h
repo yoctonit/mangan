@@ -2,7 +2,6 @@
 #define INCLUDED_MN_GRAPHICS_VBO_H
 
 #include <glad/glad.h>
-#include <iostream>
 #include <string>
 #include <unordered_map>
 #include <vector>

@@ -3,13 +3,24 @@
 
 #include <glad/glad.h>
 #include <string>
+#include <unordered_map>
 
 
 namespace Mn {
 
     class Texture {
     public:
-        static Texture FromImage(const std::string &fileName);
+//        static Texture FromImage(const std::string &fileName);
+
+        Texture();
+
+        explicit Texture(const std::string &fileName);
+
+        ~Texture();
+
+        Texture(const Texture &other);
+
+        Texture &operator=(const Texture &other);
 
         // Texture(int width, int height, int magFilter, int minFilter, int wrap);
 
@@ -27,14 +38,23 @@ namespace Mn {
 
         void SetParameters(int magFilter, int minFilter, int wrap) const;
 
-        void Release();
-
         void Debug(const std::string &msg) const;
 
+        static void DebugRefCnt();
+
     private:
-        unsigned int m_id{};
-        int m_width{};
-        int m_height{};
+        unsigned int mId{};
+        int mWidth{};
+        int mHeight{};
+
+        //////////////////////
+        // Reference count map
+        //////////////////////
+        static std::unordered_map<unsigned int, int> mRefCnt;
+
+        void IncRef() const;
+
+        [[nodiscard]] int DecRef() const;
     };
 
 }

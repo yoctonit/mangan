@@ -1,4 +1,5 @@
 #include <iostream>
+#include <tuple> // for std::ignore
 #include "Texture.h"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -7,15 +8,69 @@
 
 namespace Mn {
 
-    Texture Texture::FromImage(const std::string &fileName) {
-        Texture tex;
+    std::unordered_map<unsigned int, int> Texture::mRefCnt{};
 
+//    Texture Texture::FromImage(const std::string &fileName) {
+//        Texture tex;
+//
+//        // load image
+//        // prevents inverted images
+//        stbi_set_flip_vertically_on_load(true);
+//
+//        int nrChannels;
+//        unsigned char *data = stbi_load(fileName.c_str(), &tex.mWidth, &tex.mHeight, &nrChannels, 0);
+//
+//        int format = GL_RGBA;
+//        if (nrChannels == 3) {
+//            format = GL_RGB;
+//        }
+//
+//        if (data == nullptr) {
+//            std::cerr << "Failed to load texture " << fileName << std::endl;
+//            return tex;
+//        }
+//
+//        // create texture object
+//        glGenTextures(1, &tex.mId);
+//
+//        // specify texture used by the following functions
+//        glBindTexture(GL_TEXTURE_2D, tex.mId);
+//
+//        // send pixel data to texture buffer
+//        glTexImage2D(GL_TEXTURE_2D, 0, format, tex.mWidth, tex.mHeight, 0, format, GL_UNSIGNED_BYTE, data);
+//
+//        // generate mipmap image from uploaded pixel data
+//        glGenerateMipmap(GL_TEXTURE_2D);
+//
+//        // specify technique for magnifying/minifying textures
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+//
+//        // specify what happens to texture coordinates outside range [0, 1]
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//
+//        // set default border color to white; important for rendering shadows
+//        float borderColor[4]{1.0f, 1.0f, 1.0f, 1.0f};
+//        glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+//
+//        // glBindTexture(GL_TEXTURE_2D, 0);
+//
+//        stbi_image_free(data);
+//        IncRef();
+//        std::cout << "Created texture " << fileName << " with id " << tex.mId << "\n";
+//        return tex;
+//    }
+
+    Texture::Texture() = default;
+
+    Texture::Texture(const std::string &fileName) {
         // load image
         // prevents inverted images
         stbi_set_flip_vertically_on_load(true);
 
         int nrChannels;
-        unsigned char *data = stbi_load(fileName.c_str(), &tex.m_width, &tex.m_height, &nrChannels, 0);
+        unsigned char *data = stbi_load(fileName.c_str(), &mWidth, &mHeight, &nrChannels, 0);
 
         int format = GL_RGBA;
         if (nrChannels == 3) {
@@ -24,17 +79,20 @@ namespace Mn {
 
         if (data == nullptr) {
             std::cerr << "Failed to load texture " << fileName << std::endl;
-            return tex;
+            mId = 0;
+            mWidth = 0;
+            mHeight = 0;
+            return;
         }
 
         // create texture object
-        glGenTextures(1, &tex.m_id);
+        glGenTextures(1, &mId);
 
         // specify texture used by the following functions
-        glBindTexture(GL_TEXTURE_2D, tex.m_id);
+        glBindTexture(GL_TEXTURE_2D, mId);
 
         // send pixel data to texture buffer
-        glTexImage2D(GL_TEXTURE_2D, 0, format, tex.m_width, tex.m_height, 0, format, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, data);
 
         // generate mipmap image from uploaded pixel data
         glGenerateMipmap(GL_TEXTURE_2D);
@@ -54,24 +112,61 @@ namespace Mn {
         // glBindTexture(GL_TEXTURE_2D, 0);
 
         stbi_image_free(data);
+        IncRef();
+        std::cout << "Created texture " << fileName << " with id " << mId << "\n";
+    }
 
-        std::cout << "Created texture " << fileName << " with id " << tex.m_id << "\n";
-        return tex;
+    Texture::~Texture() {
+        int refCnt = DecRef();
+        if (refCnt == 0) {
+            glDeleteTextures(1, &mId);
+            std::cout << "Deleted texture with id " << mId << "\n";
+        }
+    }
+
+    // copy constructor
+    Texture::Texture(const Texture &other) {
+        mId = other.mId;
+        mWidth = other.mWidth;
+        mHeight = other.mHeight;
+        IncRef();
+    }
+
+    // copy assignment operator (by convention, always return *this)
+    Texture &Texture::operator=(const Texture &other) {
+        // protect against invalid self-assignment
+        if (this == &other) {
+            std::cout << "Texture self assignment detected.\n";
+            return *this;
+        }
+        // already reference counted id
+        if (mId == other.mId) {
+            std::cout << "Texture assignment with same id detected.\n";
+            return *this;
+        }
+        if (mId != 0) {
+            std::ignore = DecRef();
+        }
+        mId = other.mId;
+        mWidth = other.mWidth;
+        mHeight = other.mHeight;
+        IncRef();
+        return *this;
     }
 
 // generate an empty texture - used by RenderTarget class
 //    Texture::Texture(int width, int height, int magFilter, int minFilter, int wrap) {
-//        m_width = width;
-//        m_height = height;
+//        mWidth = width;
+//        mHeight = height;
 //
 //        // create texture object
-//        glGenTextures(1, &m_id);
+//        glGenTextures(1, &mId);
 //
 //        // specify texture used by the following functions
-//        glBindTexture(GL_TEXTURE_2D, m_id);
+//        glBindTexture(GL_TEXTURE_2D, mId);
 //
 //        // reserve buffer for pixel data
-//        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+//        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mWidth, mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 //
 //        // generate mipmap image from uploaded pixel data
 //        glGenerateMipmap(GL_TEXTURE_2D);
@@ -90,21 +185,21 @@ namespace Mn {
 //
 //        glBindTexture(GL_TEXTURE_2D, 0);
 //
-//        std::cout << "Created empty texture (v1) of size " << m_width << " x " << m_height << "\n";
+//        std::cout << "Created empty texture (v1) of size " << mWidth << " x " << mHeight << "\n";
 //    }
 
 //    Texture::Texture(int width, int height) {
-//        m_width = width;
-//        m_height = height;
+//        mWidth = width;
+//        mHeight = height;
 //
 //        // create texture object
-//        glGenTextures(1, &m_id);
+//        glGenTextures(1, &mId);
 //
 //        // specify texture used by the following functions
-//        glBindTexture(GL_TEXTURE_2D, m_id);
+//        glBindTexture(GL_TEXTURE_2D, mId);
 //
 //        // reserve buffer for pixel data
-//        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+//        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mWidth, mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 //
 //        // generate mipmap image from uploaded pixel data
 //        glGenerateMipmap(GL_TEXTURE_2D);
@@ -123,24 +218,24 @@ namespace Mn {
 //
 //        glBindTexture(GL_TEXTURE_2D, 0);
 //
-//        std::cout << "Created empty texture of size " << m_width << " x " << m_height << "\n";
+//        std::cout << "Created empty texture of size " << mWidth << " x " << mHeight << "\n";
 //    }
 
     [[nodiscard]] GLuint Texture::Id() const {
-        return m_id;
+        return mId;
     }
 
     [[nodiscard]] int Texture::Width() const {
-        return m_width;
+        return mWidth;
     }
 
     [[nodiscard]] int Texture::Height() const {
-        return m_height;
+        return mHeight;
     }
 
     void Texture::Activate(int textureUnit) const {
         glActiveTexture(GL_TEXTURE0 + textureUnit);
-        glBindTexture(GL_TEXTURE_2D, m_id);
+        glBindTexture(GL_TEXTURE_2D, mId);
     }
 
 //        static void Deactivate() {
@@ -148,7 +243,7 @@ namespace Mn {
 //        }
 
     void Texture::SetParameters(int magFilter, int minFilter, int wrap) const {
-        // glBindTexture(GL_TEXTURE_2D, m_id);
+        // glBindTexture(GL_TEXTURE_2D, mId);
 
         // specify technique for magnifying/minifying textures
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
@@ -161,19 +256,44 @@ namespace Mn {
         // glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    void Texture::Release() {
-        if (m_id == 0) {
-            std::cerr << "Error: Trying to release null texture\n";
-            return;
-        }
-        std::cout << "Deleted texture with id " << m_id << "\n";
-        glDeleteTextures(1, &m_id);
-        m_id = 0;
+    void Texture::Debug(const std::string &msg) const {
+        std::cout << msg << "(" << mWidth << ", " << mHeight << ") has id " << mId << "\n";
     }
 
-    void Texture::Debug(const std::string &msg) const {
-        std::cout << msg << "(" << m_width << ", " << m_height << ") has id " << m_id << "\n";
+    void Texture::IncRef() const {
+        // objects with mId = 0 are 'empty' (non-initialized) objects,
+        // so don't note their existence in mRefCnt map
+        if (mId == 0) {
+            return;
+        }
+        mRefCnt[mId]++;
     }
+
+    [[nodiscard]] int Texture::DecRef() const {
+        if (mId == 0) {
+            // should not happen
+            std::cerr << "Texture: called DecRef with mId = 0\n";
+            return -1;
+        }
+        mRefCnt[mId]--;
+        if (mRefCnt[mId] == 0) {
+            mRefCnt.erase(mId);
+            return 0;
+        }
+        return mRefCnt[mId];
+    }
+
+    void Texture::DebugRefCnt() {
+        if (mRefCnt.empty()) {
+            std::cout << "RefCnt: <empty>\n";
+            return;
+        }
+        std::cout << "RefCnt:\n";
+        for (auto &refCnt: mRefCnt) {
+            std::cout << "Id " << refCnt.first << " (cnt=" << refCnt.second << ")\n";
+        }
+    }
+
 
 //        [[nodiscard]] std::vector<unsigned char> get_color_array() const {
 //            std::vector<unsigned char> pixels(_width *_height*4);
