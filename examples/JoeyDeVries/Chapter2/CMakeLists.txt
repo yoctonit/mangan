@@ -95,3 +95,6 @@ target_link_libraries(joey-ex-5-4-flashlight-soft PRIVATE Mn::Engine PRIVATE Mn:
 
 add_executable(joey-ex-6-1-multiple-lights ex-6-1-multiple-lights.cpp)
 target_link_libraries(joey-ex-6-1-multiple-lights PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-6-2-multiple-lights-exercise-1 ex-6-2-multiple-lights-exercise-1.cpp)
+target_link_libraries(joey-ex-6-2-multiple-lights-exercise-1 PRIVATE Mn::Engine PRIVATE Mn::Joey)
