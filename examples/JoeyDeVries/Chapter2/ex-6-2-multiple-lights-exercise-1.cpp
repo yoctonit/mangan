@@ -425,9 +425,6 @@ public:
         tex2 = Mn::Texture("images/container2_specular.png");
     }
 
-//    ~CoordinateSystems() {
-//    }
-
     void Update(const Mn::Input &input) {
         if (input.IsClickedKey(MN_KEY_ESCAPE)) {
             runScene = false;

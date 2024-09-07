@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "../geometry/Geometry.h"
-#include "Material.h"
+#include "ShaderInfo.h"
 #include "RenderSettings.h"
 #include "Vao.h"
 #include "Vbo.h"
@@ -12,23 +12,28 @@ namespace Mn {
 
     class Mesh {
     public:
-        void Create(Material m);
+        Mesh();
 
-        void Create(const Geometry &geom, Geometry::Type t, Material m);
+        explicit Mesh(const ShaderInfo &shaderInfo);
 
-        void Release();
+        Mesh(const Geometry &geom, Geometry::Type type, const ShaderInfo &shaderInfo);
 
         void ConnectBuffer(const Geometry &geom, Geometry::Type type);
 
+        // [[nodiscard]] int DrawStyle() const;
+
+        void DrawStyle(int drawStyle);
+
         void Draw() const;
 
-        Material material;
+        ShaderInfo material;
 
         // Store OpenGL render settings
         RenderSettings renderSettings;
 
     private:
         int mVertexCount{};
+        int mDrawStyle{GL_TRIANGLES};
         Vao mVao;
         std::vector<Vbo> mBuffers;
     };

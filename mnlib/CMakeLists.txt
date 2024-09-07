@@ -9,7 +9,7 @@ add_library(engine
         geometry/Rectangle.cpp geometry/Hexagon.cpp geometry/Ellipsoid.cpp
         geometry/Cylindrical.cpp geometry/Cylinder.cpp geometry/Cone.cpp
         geometry/Prism.cpp geometry/Pyramid.cpp geometry/Sphere.cpp
-        graphics/Material.cpp
+        graphics/ShaderInfo.cpp
         graphics/Mesh.cpp
 )
 
