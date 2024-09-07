@@ -245,7 +245,7 @@ public:
 //        dirLightAmbientUniform = glm::vec3( 0.05f, 0.05f, 0.1f);
 //        dirLightDiffuseUniform = glm::vec3( 0.2f, 0.2f, 0.7f);
 //        dirLightSpecularUniform = glm::vec3(0.7f, 0.7f, 0.7f);
-          // HORROR SCENE
+        // HORROR SCENE
 //        dirLightDirectionUniform = glm::vec3(-0.2f, -1.0f, -0.3f);
 //        dirLightAmbientUniform = glm::vec3(0.0f, 0.0f, 0.0f);
 //        dirLightDiffuseUniform = glm::vec3(0.05f, 0.05f, 0.05f);
@@ -406,7 +406,8 @@ public:
                 -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
                 -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
         };
-        vbo = Mn::Vbo::FromData(vertices);
+        // vbo = Mn::Vbo::FromData(vertices);
+        vbo = Mn::Vbo{vertices};
 
         // position attribute
         vao.Connect(0, 3, 8, 0);
@@ -427,7 +428,6 @@ public:
     ~CoordinateSystems() {
         tex1.Release();
         tex2.Release();
-        vbo.Release();
     }
 
     void Update(const Mn::Input &input) {

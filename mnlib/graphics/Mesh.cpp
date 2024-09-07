@@ -19,13 +19,13 @@ namespace Mn {
         material.Release();
         // mVao.Release();
         for (auto &buffer: mBuffers) {
-            buffer.Release();
+            // buffer.Release();
         }
     }
 
     void Mesh::ConnectBuffer(const Geometry &geom, Geometry::Type type) {
         Vbo buffer;
-        buffer = Mn::Vbo::FromData(geom.Data(type));
+        buffer = Mn::Vbo(geom.Data(type));
         mBuffers.push_back(buffer);
         mVertexCount = geom.VertexCount();
 

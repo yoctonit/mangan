@@ -4,24 +4,44 @@
 #include <glad/glad.h>
 #include <iostream>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace Mn {
 
     class Vbo {
     public:
-        static Vbo FromData(const std::vector<float> &data, GLenum type = GL_STATIC_DRAW);
+        // static Vbo FromData(const std::vector<float> &data, GLenum type = GL_STATIC_DRAW);
+
+        Vbo();
+
+        explicit Vbo(const std::vector<float> &data, GLenum type = GL_STATIC_DRAW);
+
+        ~Vbo();
+
+        Vbo(const Vbo &other);
+
+        Vbo &operator=(const Vbo &other);
 
         [[nodiscard]] unsigned int Id() const;
 
         void Activate() const;
 
-        void Release();
-
         void Debug(const std::string &msg) const;
 
+        static void DebugRefCnt();
+
     private:
-        unsigned int m_id{};
+        unsigned int mId{};
+
+        //////////////////////
+        // Reference count map
+        //////////////////////
+        static std::unordered_map<unsigned int, int> mRefCnt;
+
+        void IncRef() const;
+
+        [[nodiscard]] int DecRef() const;
     };
 
 }
