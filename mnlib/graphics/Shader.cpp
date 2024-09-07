@@ -50,7 +50,7 @@ namespace Mn {
         }
         // already reference counted id
         if (mId == other.mId) {
-            std::cout << "Shader assignment with id detected.\n";
+            std::cout << "Shader assignment with same id detected.\n";
             return *this;
         }
         if (mId != 0) {
@@ -228,7 +228,7 @@ namespace Mn {
     [[nodiscard]] int Shader::DecRef() const {
         if (mId == 0) {
             // should not happen
-            std::cerr << "Called DecRef with mId = 0\n";
+            std::cerr << "Shader: called DecRef with mId = 0\n";
             return -1;
         }
         mRefCnt[mId]--;

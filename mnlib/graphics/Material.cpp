@@ -35,11 +35,11 @@ namespace Mn {
 
     void Material::AddAttribute(const std::string &name, Attribute::DataType dataType, AttributeType type) {
         std::string defaultName = AttributeTypeName(type);
-        mAttributes[defaultName] = Attribute(mShader.LocateAttribute(name), dataType);
+        mAttributes[defaultName] = Attribute(mShader.Locate(name), dataType);
     }
 
     void Material::AddAttribute(const std::string &name, Attribute::DataType dataType) {
-        mAttributes[name] = Attribute(mShader.LocateAttribute(name), dataType);
+        mAttributes[name] = Attribute(mShader.Locate(name), dataType);
     }
 
     int Material::Location(AttributeType type) const {

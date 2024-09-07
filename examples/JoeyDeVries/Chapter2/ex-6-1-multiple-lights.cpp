@@ -350,8 +350,6 @@ public:
         tex1.Release();
         tex2.Release();
         vbo.Release();
-        vao.Release();
-        lightCubeVao.Release();
     }
 
     void Update(const Mn::Input &input) {

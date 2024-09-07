@@ -1,6 +1,6 @@
 //
 // Created by ivan on 29.4.2020..
-//
+// https://stackoverflow.com/questions/440144/in-opengl-is-there-a-way-to-get-a-list-of-all-uniforms-attribs-used-by-a-shade
 
 #include "program_parser.h"
 #include <iostream>

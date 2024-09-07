@@ -4,30 +4,47 @@
 #include <glad/glad.h>
 #include <iostream>
 #include <string>
-
+#include <unordered_map>
 
 namespace Mn {
 
     class Vao {
     public:
+        explicit Vao(bool allocate = false);
+
         void Create();
+
+        ~Vao();
+
+        Vao(const Vao &other);
+
+        Vao &operator=(const Vao &other);
 
         [[nodiscard]] unsigned int Id() const;
 
         void Activate() const;
 
-        void Release();
-
-        void Debug(const std::string &msg) const;
-
         void Connect(unsigned int index, int size, int stride, int start) const;
 
         void Draw(GLenum mode, int first, int count) const;
 
-        void Draw(GLenum mode, int count, GLenum type, const void * indices) const;
+        void Draw(GLenum mode, int count, GLenum type, const void *indices) const;
+
+        void Debug(const std::string &msg) const;
+
+        static void DebugRefCnt();
 
     private:
-        unsigned int m_id{};
+        unsigned int mId{};
+
+        //////////////////////
+        // Reference count map
+        //////////////////////
+        static std::unordered_map<unsigned int, int> mRefCnt;
+
+        void IncRef() const;
+
+        [[nodiscard]] int DecRef() const;
     };
 
 }

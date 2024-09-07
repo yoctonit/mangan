@@ -17,7 +17,7 @@ namespace Mn {
 
     void Mesh::Release() {
         material.Release();
-        mVao.Release();
+        // mVao.Release();
         for (auto &buffer: mBuffers) {
             buffer.Release();
         }
