@@ -154,64 +154,16 @@ namespace Mn {
 
     ShaderInfo BasicMvpColorShader() {
         ShaderInfo material{"shader/basic_mvp.vs", "shader/basic_color.fs"};
-
-//        material.AddUniform("uModel", Uniform::Type::Mat4x4);
-//        material.AddUniform("uView", Uniform::Type::Mat4x4);
-//        material.AddUniform("uProjection", Uniform::Type::Mat4x4);
-//        material.AddUniform("uColor", Uniform::Type::Vec3);
-
-//        material.AddAttribute(0, Attribute::DataType::Vec3, ShaderInfo::AttributeType::Position);
-
         return material;
     }
 
     ShaderInfo BasicLightingShader() {
         ShaderInfo material{"shader/basic_lighting.vs", "shader/basic_lighting.fs"};
-
-//        material.AddUniform("uModel", Uniform::Type::Mat4x4);
-//        material.AddUniform("uView", Uniform::Type::Mat4x4);
-//        material.AddUniform("uProjection", Uniform::Type::Mat4x4);
-//
-//        material.AddUniform("uViewPosition", Uniform::Type::Vec3);
-//
-//        material.AddUniform("uMaterial.ambient", Uniform::Type::Vec3);
-//        material.AddUniform("uMaterial.diffuse", Uniform::Type::Vec3);
-//        material.AddUniform("uMaterial.specular", Uniform::Type::Vec3);
-//        material.AddUniform("uMaterial.shininess", Uniform::Type::Float);
-//
-//        material.AddUniform("uLight.position", Uniform::Type::Vec3);
-//        material.AddUniform("uLight.ambient", Uniform::Type::Vec3);
-//        material.AddUniform("uLight.diffuse", Uniform::Type::Vec3);
-//        material.AddUniform("uLight.specular", Uniform::Type::Vec3);
-//
-//        material.AddAttribute(0, Attribute::DataType::Vec3, ShaderInfo::AttributeType::Position);
-//        material.AddAttribute(1, Attribute::DataType::Vec3, ShaderInfo::AttributeType::Normal);
-
         return material;
     }
 
     ShaderInfo LightingMapsShader() {
         ShaderInfo material{"shader/lighting_maps.vs", "shader/lighting_maps.fs"};
-
-//        material.AddUniform("uModel", Uniform::Type::Mat4x4);
-//        material.AddUniform("uView", Uniform::Type::Mat4x4);
-//        material.AddUniform("uProjection", Uniform::Type::Mat4x4);
-//
-//        material.AddUniform("uViewPosition", Uniform::Type::Vec3);
-//
-//        material.AddUniform("uMaterial.diffuse", Uniform::Type::Int);
-//        material.AddUniform("uMaterial.specular", Uniform::Type::Int);
-//        material.AddUniform("uMaterial.shininess", Uniform::Type::Float);
-//
-//        material.AddUniform("uLight.position", Uniform::Type::Vec3);
-//        material.AddUniform("uLight.ambient", Uniform::Type::Vec3);
-//        material.AddUniform("uLight.diffuse", Uniform::Type::Vec3);
-//        material.AddUniform("uLight.specular", Uniform::Type::Vec3);
-
-//        material.AddAttribute(0, Attribute::DataType::Vec3, ShaderInfo::AttributeType::Position);
-//        material.AddAttribute(1, Attribute::DataType::Vec3, ShaderInfo::AttributeType::Normal);
-//        material.AddAttribute(2, Attribute::DataType::Vec2, ShaderInfo::AttributeType::TexCoord);
-
         return material;
     }
 }

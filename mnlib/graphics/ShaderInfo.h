@@ -56,6 +56,11 @@ namespace Mn {
         // or by name of the associated variable in shader.
         std::unordered_map<std::string, Attribute> mAttributes;
 
+        // std::string mPositionAttributeName;
+        // std::string mNormalAttributeName;
+        // std::string mTexCoordAttributeName;
+        // std::string mColorAttributeName;
+
         static std::string AttributeTypeName(AttributeType type);
 
         void ParseUniforms();
