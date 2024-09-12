@@ -12,6 +12,10 @@ namespace Mn {
     }
 
     void Vao::Create() {
+        if (mId != 0) {
+            std::cerr << "Vao object already allocated (has id " << mId << ")\n";
+            return;
+        }
         glGenVertexArrays(1, &mId);
         glBindVertexArray(mId);
         IncRef();
@@ -61,6 +65,15 @@ namespace Mn {
     }
 
     void Vao::Connect(unsigned int index, int size, int stride, int start) const {
+        glVertexAttribPointer(
+                index, size, GL_FLOAT, GL_FALSE,
+                stride * static_cast<int>(sizeof(float)),
+                (void *) (start * sizeof(float)));
+        glEnableVertexAttribArray(index);
+    }
+
+    void Vao::Connect(const Vbo &vbo, unsigned int index, int size, int stride, int start) const {
+        glBindBuffer(GL_ARRAY_BUFFER, vbo.Id());
         glVertexAttribPointer(
                 index, size, GL_FLOAT, GL_FALSE,
                 stride * static_cast<int>(sizeof(float)),

@@ -10,6 +10,7 @@ add_library(engine
         geometry/Cylindrical.cpp geometry/Cylinder.cpp geometry/Cone.cpp
         geometry/Prism.cpp geometry/Pyramid.cpp geometry/Sphere.cpp
         graphics/ShaderInfo.cpp
+        graphics/Connection.cpp graphics/VboInfo.cpp
         graphics/Mesh.cpp
 )
 

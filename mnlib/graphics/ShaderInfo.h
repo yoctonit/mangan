@@ -21,17 +21,9 @@ namespace Mn {
 
         ShaderInfo(const std::string &vsFile, const std::string &fsFile);
 
-        // void AddUniform(const std::string &name, int type);
-
         Uniform &operator[](const std::string &name);
 
         [[nodiscard]] bool HasUniform(const std::string &name) const;
-
-//        void AddAttribute(int location, Attribute::DataType dataType, AttributeType type);
-//
-//        void AddAttribute(const std::string &name, Attribute::DataType dataType, AttributeType type);
-//
-//        void AddAttribute(const std::string &name, Attribute::DataType dataType);
 
         [[nodiscard]] int Location(AttributeType type) const;
 
@@ -39,21 +31,15 @@ namespace Mn {
 
         void Upload() const;
 
-        // [[nodiscard]] int DrawStyle() const;
-
-        // void DrawStyle(int drawStyle);
-
         void Debug() const;
 
     private:
         Mn::Shader mShader{};
-        // int mDrawStyle{GL_TRIANGLES};
 
         // Store Uniform objects, indexed by name of associated variable in shader.
         std::unordered_map<std::string, Uniform> mUniforms;
 
-        // Store Attribute objects, indexed by predefined AttributeType
-        // or by name of the associated variable in shader.
+        // Store Attribute objects, indexed by name of the associated variable in shader.
         std::unordered_map<std::string, Attribute> mAttributes;
 
         // std::string mPositionAttributeName;

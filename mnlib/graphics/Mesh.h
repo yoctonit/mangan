@@ -1,12 +1,11 @@
 #ifndef INCLUDED_MN_GRAPHICS_MESH_H
 #define INCLUDED_MN_GRAPHICS_MESH_H
 
-#include <vector>
-#include "../geometry/Geometry.h"
+#include <map>
 #include "ShaderInfo.h"
+#include "Connection.h"
 #include "RenderSettings.h"
-#include "Vao.h"
-#include "Vbo.h"
+#include "Texture.h"
 
 namespace Mn {
 
@@ -14,13 +13,9 @@ namespace Mn {
     public:
         Mesh();
 
-        explicit Mesh(const ShaderInfo &shaderInfo);
+        Mesh(ShaderInfo shaderInfo, Connection connection);
 
-        Mesh(const Geometry &geom, Geometry::Type type, const ShaderInfo &shaderInfo);
-
-        void ConnectBuffer(const Geometry &geom, Geometry::Type type);
-
-        // [[nodiscard]] int DrawStyle() const;
+        void AddTexture(const Texture &tex, int unit);
 
         void DrawStyle(int drawStyle);
 
@@ -28,14 +23,12 @@ namespace Mn {
 
         ShaderInfo material;
 
-        // Store OpenGL render settings
-        RenderSettings renderSettings;
+        RenderSettings renderSettings; // OpenGL render settings
 
     private:
-        int mVertexCount{};
         int mDrawStyle{GL_TRIANGLES};
-        Vao mVao;
-        std::vector<Vbo> mBuffers;
+        Connection mConnection;
+        std::map<int, Texture> mTextures;
     };
 
 }

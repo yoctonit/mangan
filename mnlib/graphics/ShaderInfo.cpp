@@ -16,10 +16,6 @@ namespace Mn {
         ParseAttributes();
     }
 
-//    void ShaderInfo::AddUniform(const std::string &name, int type) {
-//        mUniforms[name] = Uniform(mShader.Locate(name), type);
-//    }
-
     Uniform &ShaderInfo::operator[](const std::string &name) {
 //        if (!HasUniform(name)) {
 //            std::cerr << "No uniform " << name << " in shader.\n";
@@ -30,20 +26,6 @@ namespace Mn {
     bool ShaderInfo::HasUniform(const std::string &name) const {
         return mUniforms.find(name) != mUniforms.end();
     }
-
-//    void ShaderInfo::AddAttribute(int location, Attribute::DataType dataType, AttributeType type) {
-//        std::string defaultName = AttributeTypeName(type);
-//        mAttributes[defaultName] = Attribute(location, dataType);
-//    }
-//
-//    void ShaderInfo::AddAttribute(const std::string &name, Attribute::DataType dataType, AttributeType type) {
-//        std::string defaultName = AttributeTypeName(type);
-//        mAttributes[defaultName] = Attribute(mShader.Locate(name), dataType);
-//    }
-//
-//    void ShaderInfo::AddAttribute(const std::string &name, Attribute::DataType dataType) {
-//        mAttributes[name] = Attribute(mShader.Locate(name), dataType);
-//    }
 
     int ShaderInfo::Location(AttributeType type) const {
         std::string defaultName = AttributeTypeName(type);
@@ -62,14 +44,6 @@ namespace Mn {
             uniform.Upload();
         }
     }
-
-//    int ShaderInfo::DrawStyle() const {
-//        return mDrawStyle;
-//    }
-//
-//    void ShaderInfo::DrawStyle(int drawStyle) {
-//        mDrawStyle = drawStyle;
-//    }
 
     void ShaderInfo::ParseUniforms() {
         int numberOfUniforms;

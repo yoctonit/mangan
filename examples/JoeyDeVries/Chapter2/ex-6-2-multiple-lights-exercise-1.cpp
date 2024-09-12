@@ -1,9 +1,8 @@
 #include <vector>
 #include "engine/Run.h"
 #include "graphics/ShaderInfo.h"
-#include "graphics/Vbo.h"
-#include "graphics/Vao.h"
-#include "graphics/Uniform.h"
+// #include "graphics/VboInfo.h"
+#include "graphics/Connection.h"
 #include "graphics/Texture.h"
 #include "graphics/Mesh.h"
 #include "geometry/Box.h"
@@ -22,9 +21,6 @@ private:
 
     Mn::ShaderInfo lightCubeShader{};
     std::vector<Mn::Mesh> lightCubes;
-
-    Mn::Texture tex1{};
-    Mn::Texture tex2{};
 
     std::vector<glm::vec3> cubePositions;
     std::vector<glm::vec3> pointLightPositions;
@@ -361,29 +357,32 @@ public:
                 "shader/lighting_maps_1.vs",
                 "shader/multiple_lights.fs"
         };
+
+        Mn::VboInfo buffer(Mn::Box(),Mn::Geometry::Type::PositionsNormalsAndTexCoords);
+        Mn::Connection objectConnection;
+        objectConnection.ConnectBuffer(buffer, Mn::Geometry::Type::PositionsNormalsAndTexCoords, objectShader);
+
+        Mn::Mesh obj(objectShader, objectConnection);
+        obj.AddTexture(Mn::Texture("images/container2.png"), 0);
+        obj.AddTexture(Mn::Texture("images/container2_specular.png"), 1);
+
         for (unsigned int i = 0; i < 10; i++) {
-            objects.emplace_back(
-                    Mn::Box(),
-                    Mn::Geometry::Type::PositionsNormalsAndTexCoords,
-                    objectShader
-            );
+            objects.push_back(obj);
         }
 
         lightCubeShader = {
                 "shader/colors.vs",
                 "shader/light_cube_exercise_1.fs"
         };
-        for (unsigned int i = 0; i < 4; i++) {
-            lightCubes.emplace_back(
-                    Mn::Box(),
-                    Mn::Geometry::Type::Positions,
-                    lightCubeShader
-            );
-        }
+        Mn::Connection lightCubeConnection;
+        lightCubeConnection.ConnectBuffer(buffer.Buffer(), buffer.ElementCount(),
+                                          lightCubeShader.Location(Mn::ShaderInfo::AttributeType::Position),
+                                          3, 8, 0);
+        Mn::Mesh lightCube(lightCubeShader, lightCubeConnection);
 
-        // load and create a texture
-        tex1 = Mn::Texture("images/container2.png");
-        tex2 = Mn::Texture("images/container2_specular.png");
+        for (unsigned int i = 0; i < 4; i++) {
+            lightCubes.push_back(lightCube);
+        }
     }
 
     void Update(const Mn::Input &input) {
@@ -501,9 +500,6 @@ public:
 
     void Render() const {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        tex1.Activate(0);
-        tex2.Activate(1);
 
         // draw box objects
         objectShader.Upload();

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include "Vbo.h"
 
 namespace Mn {
 
@@ -25,6 +26,8 @@ namespace Mn {
         void Activate() const;
 
         void Connect(unsigned int index, int size, int stride, int start) const;
+
+        void Connect(const Vbo &vbo, unsigned int index, int size, int stride, int start) const;
 
         void Draw(GLenum mode, int first, int count) const;
 
