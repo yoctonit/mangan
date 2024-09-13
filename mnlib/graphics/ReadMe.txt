@@ -3,7 +3,7 @@ Core Classes
 These 5 classes are reference counted. So acquisition and releasing of OpenGL resources is automatic.
 Shader
 Vbo
-Ebo (TODO Add RefCnt)
+Ebo
 Vao
 Texture
 

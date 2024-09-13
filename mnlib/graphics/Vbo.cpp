@@ -27,7 +27,6 @@ namespace Mn {
             glDeleteBuffers(1, &mId);
             std::cout << "Deleted VBO with id " << mId << "\n";
         }
-
     }
 
     // copy constructor
