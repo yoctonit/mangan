@@ -1,12 +1,11 @@
 #ifndef INCLUDED_MN_GRAPHICS_CONNECTION_H
 #define INCLUDED_MN_GRAPHICS_CONNECTION_H
 
-//#include <glad/glad.h>
-#include <string>
 #include <map>
+#include <string>
 #include "ShaderInfo.h"
 #include "Vao.h"
-#include "VboInfo.h"
+#include "Buffer.h"
 #include "../geometry/Geometry.h"
 
 
@@ -24,9 +23,9 @@ namespace Mn {
 
         void ConnectBuffer(const Vbo &vbo, int vertexCount, unsigned int index, int size, int stride, int start);
 
-        void ConnectBuffer(const VboInfo &buffer, Geometry::Type type, const ShaderInfo &shaderInfo);
+        void ConnectBuffer(const Buffer &buffer, Geometry::Type type, const ShaderInfo &shaderInfo);
 
-        void ConnectBuffer(const VboInfo &vboInfo, unsigned int index, int size, int stride, int start);
+        void ConnectBuffer(const Buffer &buffer, unsigned int index, int size, int stride, int start);
 
         void SetVertexCount(int vertexCount);
 
@@ -34,9 +33,7 @@ namespace Mn {
 
         void Activate() const;
 
-//        [[nodiscard]] const Vao &GetVao() const;
-
-        // void Connect(unsigned int index, int size, int stride, int start) const;
+        [[nodiscard]] const Vao &GetVao() const;
 
         void Draw(GLenum mode) const;
 
@@ -51,7 +48,7 @@ namespace Mn {
         // Buffers connected with Connection, indexed by buffer id
         std::map<unsigned int, Mn::Vbo> mBuffers;
 
-        void AddBuffer(const Vbo &vbo);
+        void AddVbo(const Vbo &vbo);
     };
 
 }

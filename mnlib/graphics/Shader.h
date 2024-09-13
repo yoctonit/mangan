@@ -9,11 +9,6 @@ namespace Mn {
 
     class Shader {
     public:
-//        static Shader FromFiles(
-//                const std::string &vertexShaderFile,
-//                const std::string &fragmentShaderFile
-//        );
-
         Shader();
 
         Shader(
@@ -32,8 +27,6 @@ namespace Mn {
         void Use() const;
 
         [[nodiscard]] int Locate(const std::string &name) const;
-
-        // [[nodiscard]] int LocateAttribute(const std::string &attributeName) const;
 
         void Debug(const std::string &msg) const;
 

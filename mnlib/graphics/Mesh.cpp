@@ -22,6 +22,10 @@ namespace Mn {
         mDrawStyle = drawStyle;
     }
 
+    Connection& Mesh::GetConnection() {
+        return mConnection;
+    }
+
     void Mesh::Draw() const {
         renderSettings.Apply();
 

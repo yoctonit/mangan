@@ -6,23 +6,6 @@ namespace Mn {
 
     std::unordered_map<unsigned int, int> Vbo::mRefCnt{};
 
-//    Vbo Vbo::FromData(const std::vector<float> &data, GLenum type) {
-//        Vbo buffer;
-//
-//        glGenBuffers(1, &buffer.mId);
-//        glBindBuffer(GL_ARRAY_BUFFER, buffer.mId);
-//        glBufferData(
-//                GL_ARRAY_BUFFER,
-//                static_cast<GLsizeiptr>(data.size() * sizeof(float)),
-//                data.data(),
-//                type
-//        );
-//        buffer.IncRef();
-//
-//        std::cout << "Created VBO with id " << buffer.mId << "\n";
-//        return buffer;
-//    }
-
     Vbo::Vbo() = default;
 
     Vbo::Vbo(const std::vector<float> &data, GLenum type) {

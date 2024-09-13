@@ -10,21 +10,19 @@ namespace Mn {
 
     class Texture {
     public:
-//        static Texture FromImage(const std::string &fileName);
-
         Texture();
 
         explicit Texture(const std::string &fileName);
+
+        // Texture(int width, int height, int magFilter, int minFilter, int wrap);
+
+        // Texture(int width, int height);
 
         ~Texture();
 
         Texture(const Texture &other);
 
         Texture &operator=(const Texture &other);
-
-        // Texture(int width, int height, int magFilter, int minFilter, int wrap);
-
-        // Texture(int width, int height);
 
         [[nodiscard]] unsigned int Id() const;
 

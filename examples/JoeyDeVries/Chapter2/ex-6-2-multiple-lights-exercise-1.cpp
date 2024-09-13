@@ -1,7 +1,7 @@
 #include <vector>
 #include "engine/Run.h"
 #include "graphics/ShaderInfo.h"
-// #include "graphics/VboInfo.h"
+// #include "graphics/Buffer.h"
 #include "graphics/Connection.h"
 #include "graphics/Texture.h"
 #include "graphics/Mesh.h"
@@ -358,7 +358,7 @@ public:
                 "shader/multiple_lights.fs"
         };
 
-        Mn::VboInfo buffer(Mn::Box(),Mn::Geometry::Type::PositionsNormalsAndTexCoords);
+        Mn::Buffer buffer(Mn::Box(),Mn::Geometry::Type::PositionsNormalsAndTexCoords);
         Mn::Connection objectConnection;
         objectConnection.ConnectBuffer(buffer, Mn::Geometry::Type::PositionsNormalsAndTexCoords, objectShader);
 
@@ -375,7 +375,7 @@ public:
                 "shader/light_cube_exercise_1.fs"
         };
         Mn::Connection lightCubeConnection;
-        lightCubeConnection.ConnectBuffer(buffer.Buffer(), buffer.ElementCount(),
+        lightCubeConnection.ConnectBuffer(buffer.GetVbo(), buffer.ElementCount(),
                                           lightCubeShader.Location(Mn::ShaderInfo::AttributeType::Position),
                                           3, 8, 0);
         Mn::Mesh lightCube(lightCubeShader, lightCubeConnection);

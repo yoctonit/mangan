@@ -1,17 +1,16 @@
 add_library(engine
         engine/Input.cpp engine/Window.cpp engine/Run.h
-        graphics/Shader.cpp graphics/Vbo.cpp
-        graphics/Vao.cpp graphics/Ebo.cpp
-        graphics/Attribute.cpp graphics/Uniform.cpp graphics/Texture.cpp
+        graphics/Shader.cpp graphics/Vbo.cpp graphics/Ebo.cpp
+        graphics/Vao.cpp graphics/Texture.cpp
+        graphics/Attribute.cpp graphics/Uniform.cpp
         graphics/RenderSettings.cpp
         geometry/Geometry.cpp geometry/Box.cpp geometry/Icosahedron.cpp
         geometry/Surface.cpp geometry/Plane.cpp geometry/Polygon.cpp
         geometry/Rectangle.cpp geometry/Hexagon.cpp geometry/Ellipsoid.cpp
         geometry/Cylindrical.cpp geometry/Cylinder.cpp geometry/Cone.cpp
         geometry/Prism.cpp geometry/Pyramid.cpp geometry/Sphere.cpp
-        graphics/ShaderInfo.cpp
-        graphics/Connection.cpp graphics/VboInfo.cpp
-        graphics/Mesh.cpp
+        graphics/ShaderInfo.cpp graphics/Connection.cpp
+        graphics/Buffer.cpp graphics/Mesh.cpp
 )
 
 target_link_libraries(engine PRIVATE glfw)

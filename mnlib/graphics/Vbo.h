@@ -10,8 +10,6 @@ namespace Mn {
 
     class Vbo {
     public:
-        // static Vbo FromData(const std::vector<float> &data, GLenum type = GL_STATIC_DRAW);
-
         Vbo();
 
         explicit Vbo(const std::vector<float> &data, GLenum type = GL_STATIC_DRAW);

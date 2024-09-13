@@ -1,33 +1,33 @@
 #include <iostream>
-#include "VboInfo.h"
+#include "Buffer.h"
 
 namespace Mn {
 
-    VboInfo::VboInfo() = default;
+    Buffer::Buffer() = default;
 
-    VboInfo::VboInfo(const Vbo &vbo, int elementCount)
+    Buffer::Buffer(const Vbo &vbo, int elementCount)
             : mVbo(vbo), mElementCount(elementCount) {}
 
-    VboInfo::VboInfo(const std::vector<float> &data, int elementCount, GLenum type) {
+    Buffer::Buffer(const std::vector<float> &data, int elementCount, GLenum type) {
         mVbo = Vbo(data, type);
         mElementCount = elementCount;
-        std::cout << "VboInfo: created VBO with id " << mVbo.Id() << "\n";
+        std::cout << "Buffer: created VBO with id " << mVbo.Id() << "\n";
     }
 
-    VboInfo::VboInfo(const Geometry &geom, Geometry::Type type) {
+    Buffer::Buffer(const Geometry &geom, Geometry::Type type) {
         mVbo = Mn::Vbo(geom.Data(type));
         mElementCount = geom.VertexCount();
     }
 
-    const Vbo &VboInfo::Buffer() const {
+    const Vbo &Buffer::GetVbo() const {
         return mVbo;
     }
 
-    int VboInfo::ElementCount() const {
+    int Buffer::ElementCount() const {
         return mElementCount;
     }
 
-    void VboInfo::Debug(const std::string &msg) const {
+    void Buffer::Debug(const std::string &msg) const {
         std::cout << msg << " has buffer with id " << mVbo.Id()
                   << " which contains data for " << mElementCount << " elements\n";
     }

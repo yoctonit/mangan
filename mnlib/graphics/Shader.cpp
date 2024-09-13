@@ -84,30 +84,9 @@ namespace Mn {
         return -1;
     }
 
-//    [[nodiscard]] int Shader::LocateAttribute(const std::string &attributeName) const {
-//        int variableRef = glGetAttribLocation(mId, attributeName.c_str());
-//        if (variableRef == -1) {
-//            std::cerr << "Attribute " << attributeName << " not found.\n";
-//        }
-//        return variableRef;
-//    }
-
     void Shader::Debug(const std::string &msg) const {
         std::cout << msg << " has id " << mId << "\n";
     }
-
-//    Shader Shader::FromFiles(const std::string &vertexShaderFile, const std::string &fragmentShaderFile) {
-//        std::string vertexShaderSource = LoadFile(vertexShaderFile);
-//        unsigned int vertexShaderId = Compile(vertexShaderSource, GL_VERTEX_SHADER);
-//
-//        std::string fragmentShaderSource = LoadFile(fragmentShaderFile);
-//        unsigned int fragmentShaderId = Compile(fragmentShaderSource, GL_FRAGMENT_SHADER);
-//
-//        Shader shader;
-//        shader.mId = Link(vertexShaderId, fragmentShaderId);
-//        std::cout << "Created Shader with id " << shader.mId << "\n";
-//        return shader;
-//    }
 
     unsigned int Shader::Compile(const std::string &shaderSource, GLenum shaderType) {
         unsigned int shaderId = glCreateShader(shaderType);

@@ -19,6 +19,8 @@ namespace Mn {
 
         void DrawStyle(int drawStyle);
 
+        Connection& GetConnection();
+
         void Draw() const;
 
         ShaderInfo material;

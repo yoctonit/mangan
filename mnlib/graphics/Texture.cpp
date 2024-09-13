@@ -10,58 +10,6 @@ namespace Mn {
 
     std::unordered_map<unsigned int, int> Texture::mRefCnt{};
 
-//    Texture Texture::FromImage(const std::string &fileName) {
-//        Texture tex;
-//
-//        // load image
-//        // prevents inverted images
-//        stbi_set_flip_vertically_on_load(true);
-//
-//        int nrChannels;
-//        unsigned char *data = stbi_load(fileName.c_str(), &tex.mWidth, &tex.mHeight, &nrChannels, 0);
-//
-//        int format = GL_RGBA;
-//        if (nrChannels == 3) {
-//            format = GL_RGB;
-//        }
-//
-//        if (data == nullptr) {
-//            std::cerr << "Failed to load texture " << fileName << std::endl;
-//            return tex;
-//        }
-//
-//        // create texture object
-//        glGenTextures(1, &tex.mId);
-//
-//        // specify texture used by the following functions
-//        glBindTexture(GL_TEXTURE_2D, tex.mId);
-//
-//        // send pixel data to texture buffer
-//        glTexImage2D(GL_TEXTURE_2D, 0, format, tex.mWidth, tex.mHeight, 0, format, GL_UNSIGNED_BYTE, data);
-//
-//        // generate mipmap image from uploaded pixel data
-//        glGenerateMipmap(GL_TEXTURE_2D);
-//
-//        // specify technique for magnifying/minifying textures
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-//
-//        // specify what happens to texture coordinates outside range [0, 1]
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//
-//        // set default border color to white; important for rendering shadows
-//        float borderColor[4]{1.0f, 1.0f, 1.0f, 1.0f};
-//        glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-//
-//        // glBindTexture(GL_TEXTURE_2D, 0);
-//
-//        stbi_image_free(data);
-//        IncRef();
-//        std::cout << "Created texture " << fileName << " with id " << tex.mId << "\n";
-//        return tex;
-//    }
-
     Texture::Texture() = default;
 
     Texture::Texture(const std::string &fileName) {
@@ -116,45 +64,7 @@ namespace Mn {
         std::cout << "Created texture " << fileName << " with id " << mId << "\n";
     }
 
-    Texture::~Texture() {
-        int refCnt = DecRef();
-        if (refCnt == 0) {
-            glDeleteTextures(1, &mId);
-            std::cout << "Deleted texture with id " << mId << "\n";
-        }
-    }
-
-    // copy constructor
-    Texture::Texture(const Texture &other) {
-        mId = other.mId;
-        mWidth = other.mWidth;
-        mHeight = other.mHeight;
-        IncRef();
-    }
-
-    // copy assignment operator (by convention, always return *this)
-    Texture &Texture::operator=(const Texture &other) {
-        // protect against invalid self-assignment
-        if (this == &other) {
-            std::cout << "Texture self assignment detected.\n";
-            return *this;
-        }
-        // already reference counted id
-        if (mId == other.mId) {
-            std::cout << "Texture assignment with same id detected.\n";
-            return *this;
-        }
-        if (mId != 0) {
-            std::ignore = DecRef();
-        }
-        mId = other.mId;
-        mWidth = other.mWidth;
-        mHeight = other.mHeight;
-        IncRef();
-        return *this;
-    }
-
-// generate an empty texture - used by RenderTarget class
+    // generate an empty texture - used by RenderTarget class
 //    Texture::Texture(int width, int height, int magFilter, int minFilter, int wrap) {
 //        mWidth = width;
 //        mHeight = height;
@@ -221,6 +131,44 @@ namespace Mn {
 //        std::cout << "Created empty texture of size " << mWidth << " x " << mHeight << "\n";
 //    }
 
+    Texture::~Texture() {
+        int refCnt = DecRef();
+        if (refCnt == 0) {
+            glDeleteTextures(1, &mId);
+            std::cout << "Deleted texture with id " << mId << "\n";
+        }
+    }
+
+    // copy constructor
+    Texture::Texture(const Texture &other) {
+        mId = other.mId;
+        mWidth = other.mWidth;
+        mHeight = other.mHeight;
+        IncRef();
+    }
+
+    // copy assignment operator (by convention, always return *this)
+    Texture &Texture::operator=(const Texture &other) {
+        // protect against invalid self-assignment
+        if (this == &other) {
+            std::cout << "Texture self assignment detected.\n";
+            return *this;
+        }
+        // already reference counted id
+        if (mId == other.mId) {
+            std::cout << "Texture assignment with same id detected.\n";
+            return *this;
+        }
+        if (mId != 0) {
+            std::ignore = DecRef();
+        }
+        mId = other.mId;
+        mWidth = other.mWidth;
+        mHeight = other.mHeight;
+        IncRef();
+        return *this;
+    }
+
     [[nodiscard]] GLuint Texture::Id() const {
         return mId;
     }
@@ -243,7 +191,7 @@ namespace Mn {
 //        }
 
     void Texture::SetParameters(int magFilter, int minFilter, int wrap) const {
-        // glBindTexture(GL_TEXTURE_2D, mId);
+        glBindTexture(GL_TEXTURE_2D, mId);
 
         // specify technique for magnifying/minifying textures
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
@@ -293,7 +241,6 @@ namespace Mn {
             std::cout << "Id " << refCnt.first << " (cnt=" << refCnt.second << ")\n";
         }
     }
-
 
 //        [[nodiscard]] std::vector<unsigned char> get_color_array() const {
 //            std::vector<unsigned char> pixels(_width *_height*4);
