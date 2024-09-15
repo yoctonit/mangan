@@ -11,7 +11,7 @@ namespace Mn {
     Buffer::Buffer(const std::vector<float> &data, int elementCount, GLenum type) {
         mVbo = Vbo(data, type);
         mElementCount = elementCount;
-        std::cout << "Buffer: created VBO with id " << mVbo.Id() << "\n";
+        // std::cout << "Buffer: created VBO with id " << mVbo.Id() << "\n";
     }
 
     Buffer::Buffer(const Geometry &geom, Geometry::Type type) {
