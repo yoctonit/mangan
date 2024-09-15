@@ -4,6 +4,10 @@ file(COPY
         shader/depth_testing.fs
         shader/depth_testing_view.vs
         shader/depth_testing_view.fs
+        shader/stencil_testing.vs
+        shader/stencil_testing.fs
+        shader/stencil_single_color.vs
+        shader/stencil_single_color.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -16,3 +20,6 @@ target_link_libraries(joey-ex-1-1-depth-testing PRIVATE Mn::Engine PRIVATE Mn::J
 
 add_executable(joey-ex-1-2-depth-testing-view ex-1-2-depth-testing-view.cpp)
 target_link_libraries(joey-ex-1-2-depth-testing-view PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-2-1-stencil-testing ex-2-1-stencil-testing.cpp)
+target_link_libraries(joey-ex-2-1-stencil-testing PRIVATE Mn::Engine PRIVATE Mn::Joey)
