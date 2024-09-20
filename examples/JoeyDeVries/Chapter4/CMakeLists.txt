@@ -11,9 +11,14 @@ file(COPY
         shader/blending.vs
         shader/blending_discard.fs
         shader/blending.fs
+        shader/framebuffers.vs
+        shader/framebuffers.fs
+        shader/framebuffers_screen.vs
+        shader/framebuffers_screen.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
+        ../images/container.jpg
         ../images/grass.png
         ../images/marble.jpg
         ../images/metal.png
@@ -34,3 +39,9 @@ target_link_libraries(joey-ex-3-1-blending-discard PRIVATE Mn::Engine PRIVATE Mn
 
 add_executable(joey-ex-3-2-blending ex-3-2-blending.cpp)
 target_link_libraries(joey-ex-3-2-blending PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-5-1-framebuffers ex-5-1-framebuffers.cpp)
+target_link_libraries(joey-ex-5-1-framebuffers PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-5-2-framebuffers-exercise-1 ex-5-2-framebuffers-exercise-1.cpp)
+target_link_libraries(joey-ex-5-2-framebuffers-exercise-1 PRIVATE Mn::Engine PRIVATE Mn::Joey)
