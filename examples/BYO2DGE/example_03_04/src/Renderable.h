@@ -13,7 +13,7 @@ public:
 
     Renderable(const Mn::Vao &vao, const Mn::ShaderInfo &shader);
 
-    void draw();
+    void draw(glm::mat4 cameraMatrix);
 
     void setColor(glm::vec4 color);
 

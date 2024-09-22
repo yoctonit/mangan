@@ -8,10 +8,11 @@ Renderable::Renderable(const Mn::Vao &vao, const Mn::ShaderInfo &shader) {
     mColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-void Renderable::draw() {
+void Renderable::draw(glm::mat4 cameraMatrix) {
     // Step A: Activate the shader
     mShader["uPixelColor"] = mColor;
     mShader["uModelXformMatrix"] = mXform.getTRSMatrix();
+    mShader["uCameraXformMatrix"] = cameraMatrix;
     mShader.Upload();
 
     // Step B: Draw with the currently activated geometry and the activated shader
