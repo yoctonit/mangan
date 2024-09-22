@@ -1,2 +1,5 @@
 add_subdirectory(example_02_06)
-add_subdirectory(example_03_05)
+add_subdirectory(example_03_01)
+add_subdirectory(example_03_02)
+add_subdirectory(example_03_03)
+#add_subdirectory(example_03_05)
