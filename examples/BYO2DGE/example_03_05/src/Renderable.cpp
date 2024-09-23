@@ -2,33 +2,31 @@
 
 Renderable::Renderable() = default;
 
-Renderable::Renderable(Mn::Vao vao, SimpleShader shader) {
+Renderable::Renderable(const Mn::Vao &vao, const Mn::ShaderInfo &shader) {
     mVao = vao;
-    mSimpleShader = shader;
+    mShader = shader;
     mColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-    mXform = Transform();
 }
 
-void Renderable::Create(Mn::Vao vao, SimpleShader shader) {
-    mVao = vao;
-    mSimpleShader = shader;
-    mColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-    mXform = Transform();
-}
+void Renderable::draw(const Camera &camera) {
+    // Step A: Activate the shader
+    mShader["uPixelColor"] = mColor;
+    mShader["uModelXformMatrix"] = mXform.getTRSMatrix();
+    mShader["uCameraXformMatrix"] = camera.getCameraMatrix();
+    mShader.Upload();
 
-void Renderable::Draw(const Camera &camera) const {
-    mSimpleShader.Activate(mColor, mXform.TRSMatrix(), camera.CameraMatrix());
+    // Step B: Draw with the currently activated geometry and the activated shader
     mVao.Draw(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-void Renderable::Color(glm::vec4 color) {
+void Renderable::setColor(glm::vec4 color) {
     mColor = color;
 }
 
-glm::vec4 Renderable::Color() const {
+glm::vec4 Renderable::getColor() const {
     return mColor;
 }
 
-Transform &Renderable::Xform() {
+Transform &Renderable::getXform() {
     return mXform;
 }

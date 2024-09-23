@@ -1,22 +1,23 @@
 #ifndef BYO2DGE_CAMERA_H
 #define BYO2DGE_CAMERA_H
 
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <glm/vec2.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
 
 /*
  * Encapsulates the user define WC and Viewport functionality
  */
+
+//enum class eViewport {
+//    eOrgX = 0,
+//    eOrgY = 1,
+//    eWidth = 2,
+//    eHeight = 3
+//};
+
 class Camera {
 public:
-    enum class eViewport {
-        eOrgX = 0,
-        eOrgY = 1,
-        eWidth = 2,
-        eHeight = 3
-    };
-
     // wcCenter: is a vec2
     // wcWidth: is the width of the user defined WC
     //      Height of the user defined WC is implicitly defined by the viewport aspect ratio
@@ -32,33 +33,33 @@ public:
 
     Camera(glm::vec2 wcCenter, float wcWidth, glm::ivec4 viewportArray);
 
-    void Create(glm::vec2 wcCenter, float wcWidth, glm::ivec4 viewportArray);
+//    void Create(glm::vec2 wcCenter, float wcWidth, glm::ivec4 viewportArray);
 
-    void WCCenter(float xPos, float yPos);
+    void setWCCenter(float xPos, float yPos);
 
-    [[nodiscard]] glm::vec2 WCCenter() const;
+    [[nodiscard]] glm::vec2 getWCCenter() const;
 
-    void WCWidth(float width);
+    void setWCWidth(float width);
 
-    [[nodiscard]] float WCWidth() const;
+    [[nodiscard]] float getWCWidth() const;
 
-    [[nodiscard]] float WCHeight() const;
+    [[nodiscard]] float getWCHeight() const;
 
-    void Viewport(glm::vec4 viewportArray);
+    void setViewport(glm::ivec4 viewportArray);
 
-    [[nodiscard]] glm::vec4 Viewport() const;
+    [[nodiscard]] glm::ivec4 getViewport() const;
 
-    void BackgroundColor(glm::vec4 newColor);
+    void setBackgroundColor(glm::vec4 newColor);
 
-    [[nodiscard]] glm::vec4 BackgroundColor() const;
+    [[nodiscard]] glm::vec4 getBackgroundColor() const;
 
     // Call before you start drawing with this camera
-    void SetViewAndCameraMatrix();
+    void setViewAndCameraMatrix();
 
     // Getter for the View-Projection transform operator
-    [[nodiscard]] glm::mat4 CameraMatrix() const;
+    [[nodiscard]] glm::mat4 getCameraMatrix() const;
 
-    void Clear() const;
+    void clear() const;
 
 private:
     glm::vec2 mWCCenter{};

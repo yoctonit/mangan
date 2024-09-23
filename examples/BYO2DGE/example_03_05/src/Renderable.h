@@ -1,38 +1,31 @@
 #ifndef BYO2DGE_RENDERABLE_H
 #define BYO2DGE_RENDERABLE_H
 
-/*
- * Encapsulate the Shader and vertexBuffer into the same object
- * (and will include other attributes later)
- * to represent a Renderable object on the game screen.
- */
-#include "core/Vao.h"
-#include "SimpleShader.h"
-#include "Transform.h"
+#include "graphics/Vao.h"
+#include "graphics/ShaderInfo.h"
 #include "Camera.h"
-#include <glm/glm.hpp>
+#include "Transform.h"
+#include <glm/vec4.hpp>
 
 class Renderable {
 public:
     Renderable();
 
-    Renderable(Mn::Vao vao, SimpleShader shader);
+    Renderable(const Mn::Vao &vao, const Mn::ShaderInfo &shader);
 
-    void Create(Mn::Vao vao, SimpleShader shader);
+    void draw(const Camera &camera);
 
-    void Draw(const Camera &camera) const;
+    void setColor(glm::vec4 color);
 
-    void Color(glm::vec4 color);
+    [[nodiscard]] glm::vec4 getColor() const;
 
-    [[nodiscard]] glm::vec4 Color() const;
-
-    Transform &Xform();
+    [[nodiscard]] Transform &getXform();
 
 private:
     Mn::Vao mVao{};
-    SimpleShader mSimpleShader{};
+    Mn::ShaderInfo mShader{};
     glm::vec4 mColor{};
-    Transform mXform;
+    Transform mXform{};
 };
 
 #endif //BYO2DGE_RENDERABLE_H

@@ -1,62 +1,61 @@
 #ifndef BYO2DGE_TRANSFORM_H
 #define BYO2DGE_TRANSFORM_H
 
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-// #include <glm/gtc/matrix_transform.hpp>
+#include <glm/vec2.hpp>
+#include <glm/mat4x4.hpp>
 
 class Transform {
 public:
     Transform();
 
-    void Position(float xPos, float yPos);
+    [[nodiscard]] glm::vec2 getPosition() const;
 
-    [[nodiscard]] glm::vec2 Position() const;
+    void setPosition(float xPos, float yPos);
 
-    [[nodiscard]] float XPos() const;
+    [[nodiscard]] float getXPos() const;
 
-    void XPos(float xPos);
+    void setXPos(float xPos);
 
     void IncXPosBy(float delta);
 
-    [[nodiscard]] float YPos() const;
+    [[nodiscard]] float getYPos() const;
 
-    void YPos(float yPos);
+    void setYPos(float yPos);
 
     void IncYPosBy(float delta);
 
-    void Size(float width, float height);
+    [[nodiscard]] glm::vec2 getSize() const;
 
-    [[nodiscard]] glm::vec2 Size() const;
+    void setSize(float width, float height);
 
     void IncSizeBy(float delta);
 
-    [[nodiscard]] float Width() const;
+    [[nodiscard]] float getWidth() const;
 
-    void Width(float width);
+    void setWidth(float width);
 
     void IncWidthBy(float delta);
 
-    [[nodiscard]] float Height() const;
+    [[nodiscard]] float getHeight() const;
 
-    void Height(float height);
+    void setHeight(float height);
 
     void IncHeightBy(float delta);
 
-    [[nodiscard]] float RotationInRad() const;
+    [[nodiscard]] float getRotationInRad() const;
 
-    void RotationInRad(float rotationInRadians);
+    void setRotationInRad(float rotationInRadians);
 
     void IncRotationByRad(float deltaRad);
 
-    [[nodiscard]] float RotationInDegree() const;
+    [[nodiscard]] float getRotationInDegree() const;
 
-    void RotationInDegree(float rotationInDegree);
+    void setRotationInDegree(float rotationInDegree);
 
     void IncRotationByDegree(float deltaDegree);
 
     // returns the matrix the concatenates the transformations defined
-    [[nodiscard]] glm::mat4 TRSMatrix() const;
+    [[nodiscard]] glm::mat4 getTRSMatrix() const;
 
 private:
     glm::vec2 mPosition{};  // translation

@@ -1,4 +1,5 @@
 #include "Transform.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 Transform::Transform() {
     mPosition = glm::vec2(0.0f, 0.0f);
@@ -6,20 +7,20 @@ Transform::Transform() {
     mRotationInRad = 0.0f;
 }
 
-void Transform::Position(float xPos, float yPos) {
-    XPos(xPos);
-    YPos(yPos);
-}
-
-[[nodiscard]] glm::vec2 Transform::Position() const {
+[[nodiscard]] glm::vec2 Transform::getPosition() const {
     return mPosition;
 }
 
-[[nodiscard]] float Transform::XPos() const {
+void Transform::setPosition(float xPos, float yPos) {
+    setXPos(xPos);
+    setYPos(yPos);
+}
+
+[[nodiscard]] float Transform::getXPos() const {
     return mPosition.x;
 }
 
-void Transform::XPos(float xPos) {
+void Transform::setXPos(float xPos) {
     mPosition.x = xPos;
 }
 
@@ -27,11 +28,11 @@ void Transform::IncXPosBy(float delta) {
     mPosition.x += delta;
 }
 
-[[nodiscard]] float Transform::YPos() const {
+[[nodiscard]] float Transform::getYPos() const {
     return mPosition.y;
 }
 
-void Transform::YPos(float yPos) {
+void Transform::setYPos(float yPos) {
     mPosition.y = yPos;
 }
 
@@ -39,13 +40,13 @@ void Transform::IncYPosBy(float delta) {
     mPosition.y += delta;
 }
 
-void Transform::Size(float width, float height) {
-    Width(width);
-    Height(height);
+[[nodiscard]] glm::vec2 Transform::getSize() const {
+    return mScale;
 }
 
-[[nodiscard]] glm::vec2 Transform::Size() const {
-    return mScale;
+void Transform::setSize(float width, float height) {
+    setWidth(width);
+    setHeight(height);
 }
 
 void Transform::IncSizeBy(float delta) {
@@ -53,11 +54,11 @@ void Transform::IncSizeBy(float delta) {
     IncHeightBy(delta);
 }
 
-[[nodiscard]] float Transform::Width() const {
+[[nodiscard]] float Transform::getWidth() const {
     return mScale.x;
 }
 
-void Transform::Width(float width) {
+void Transform::setWidth(float width) {
     mScale.x = width;
 }
 
@@ -65,11 +66,11 @@ void Transform::IncWidthBy(float delta) {
     mScale.x += delta;
 }
 
-[[nodiscard]] float Transform::Height() const {
+[[nodiscard]] float Transform::getHeight() const {
     return mScale.y;
 }
 
-void Transform::Height(float height) {
+void Transform::setHeight(float height) {
     mScale.y = height;
 }
 
@@ -77,11 +78,11 @@ void Transform::IncHeightBy(float delta) {
     mScale.y += delta;
 }
 
-[[nodiscard]] float Transform::RotationInRad() const {
+[[nodiscard]] float Transform::getRotationInRad() const {
     return mRotationInRad;
 }
 
-void Transform::RotationInRad(float rotationInRadians) {
+void Transform::setRotationInRad(float rotationInRadians) {
     mRotationInRad = rotationInRadians;
     while (mRotationInRad > (2.0f * M_PI)) {
         mRotationInRad -= (2.0f * M_2_PI);
@@ -89,15 +90,15 @@ void Transform::RotationInRad(float rotationInRadians) {
 }
 
 void Transform::IncRotationByRad(float deltaRad) {
-    RotationInRad(mRotationInRad + deltaRad);
+    setRotationInRad(mRotationInRad + deltaRad);
 }
 
-[[nodiscard]] float Transform::RotationInDegree() const {
+[[nodiscard]] float Transform::getRotationInDegree() const {
     return mRotationInRad * 180.0f / (float) M_PI;
 }
 
-void Transform::RotationInDegree(float rotationInDegree) {
-    RotationInRad(rotationInDegree * (float) M_PI / 180.0f);
+void Transform::setRotationInDegree(float rotationInDegree) {
+    setRotationInRad(rotationInDegree * (float) M_PI / 180.0f);
 }
 
 void Transform::IncRotationByDegree(float deltaDegree) {
@@ -105,24 +106,18 @@ void Transform::IncRotationByDegree(float deltaDegree) {
 }
 
 // returns the matrix the concatenates the transformations defined
-[[nodiscard]] glm::mat4 Transform::TRSMatrix() const {
+[[nodiscard]] glm::mat4 Transform::getTRSMatrix() const {
     // Creates a blank identity matrix
     glm::mat4 matrix{1.0f};
 
-    // The matrices that WebGL uses are transposed, thus the typical matrix
-    // operations must be in reverse.
-
     // Step A: compute translation, for now z is always at 0.0
-    matrix = glm::translate(matrix, glm::vec3(XPos(), YPos(), 0.0f));
-    // mat4.translate(matrix, matrix, vec3.fromValues(this.getXPos(), this.getYPos(), 0.0));
+    matrix = glm::translate(matrix, glm::vec3(getXPos(), getYPos(), 0.0f));
 
     // Step B: concatenate with rotation.
-    matrix = glm::rotate(matrix, RotationInRad(), glm::vec3(0.0f, 0.0f, 1.0f));
-    // mat4.rotateZ(matrix, matrix, this.getRotationInRad());
+    matrix = glm::rotate(matrix, getRotationInRad(), glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Step C: concatenate with scaling
-    matrix = glm::scale(matrix, glm::vec3(Width(), Height(), 1.0f));
-    // mat4.scale(matrix, matrix, vec3.fromValues(this.getWidth(), this.getHeight(), 1.0));
+    matrix = glm::scale(matrix, glm::vec3(getWidth(), getHeight(), 1.0f));
 
     return matrix;
 }
