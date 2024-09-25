@@ -15,6 +15,10 @@ file(COPY
         shader/framebuffers.fs
         shader/framebuffers_screen.vs
         shader/framebuffers_screen.fs
+        shader/cubemaps.vs
+        shader/cubemaps.fs
+        shader/skybox.vs
+        shader/skybox.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -23,6 +27,12 @@ file(COPY
         ../images/marble.jpg
         ../images/metal.png
         ../images/window.png
+        ../images/skybox/back.jpg
+        ../images/skybox/bottom.jpg
+        ../images/skybox/front.jpg
+        ../images/skybox/left.jpg
+        ../images/skybox/right.jpg
+        ../images/skybox/top.jpg
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
 
 add_executable(joey-ex-1-1-depth-testing ex-1-1-depth-testing.cpp)
@@ -45,3 +55,6 @@ target_link_libraries(joey-ex-5-1-framebuffers PRIVATE Mn::Engine PRIVATE Mn::Jo
 
 add_executable(joey-ex-5-2-framebuffers-exercise-1 ex-5-2-framebuffers-exercise-1.cpp)
 target_link_libraries(joey-ex-5-2-framebuffers-exercise-1 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-6-1-cubemaps-skybox ex-6-1-cubemaps-skybox.cpp)
+target_link_libraries(joey-ex-6-1-cubemaps-skybox PRIVATE Mn::Engine PRIVATE Mn::Joey)

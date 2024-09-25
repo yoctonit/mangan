@@ -23,7 +23,7 @@ namespace Mn {
     }
 
     Uniform &Uniform::operator=(int data) {
-        if ((mType != GL_INT) && (mType != GL_SAMPLER_2D)) {
+        if ((mType != GL_INT) && (mType != GL_SAMPLER_2D) && (mType != GL_SAMPLER_CUBE)) {
             std::cerr << "Uniform assignment invalid type: expected " << TypeName() << ", got int\n";
             return *this;
         }
@@ -94,6 +94,7 @@ namespace Mn {
                 break;
             case GL_INT:
             case GL_SAMPLER_2D:
+            case GL_SAMPLER_CUBE:
                 glUniform1i(mLocation, mData.mDataInt);
                 break;
             case GL_FLOAT:
@@ -130,6 +131,7 @@ namespace Mn {
                 break;
             case GL_INT:
             case GL_SAMPLER_2D:
+            case GL_SAMPLER_CUBE:
                 std::cout << mData.mDataInt << "\n";
                 break;
             case GL_FLOAT:
@@ -192,6 +194,9 @@ namespace Mn {
                 break;
             case GL_SAMPLER_2D:
                 typeName = "sampler2D";
+                break;
+            case GL_SAMPLER_CUBE:
+                typeName = "samplerCubeMap";
                 break;
             case GL_FLOAT:
                 typeName = "float";

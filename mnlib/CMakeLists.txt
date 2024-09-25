@@ -1,7 +1,7 @@
 add_library(engine
         engine/Input.cpp engine/Window.cpp engine/Run.h
         graphics/Shader.cpp graphics/Vbo.cpp graphics/Ebo.cpp
-        graphics/Vao.cpp graphics/Texture.cpp
+        graphics/Vao.cpp graphics/Texture.cpp graphics/TextureCubeMap.cpp
         graphics/Attribute.cpp graphics/Uniform.cpp
         graphics/RenderSettings.cpp
         geometry/Geometry.cpp geometry/Box.cpp geometry/Icosahedron.cpp

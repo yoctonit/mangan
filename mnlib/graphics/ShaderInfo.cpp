@@ -93,10 +93,10 @@ namespace Mn {
 
     void ShaderInfo::Debug() const {
         std::cout << "Number of found uniforms: " << mUniforms.size() << '\n';
-//        std::cout << "Uniform Name\t\tInfo\n";
-//        for (const auto &uniform: mUniforms) {
-//            uniform.second.Debug(uniform.first);
-//        }
+        std::cout << "Uniform\tInfo\n--------------------\n";
+        for (const auto &uniform: mUniforms) {
+            uniform.second.Debug(uniform.first);
+        }
         std::cout << "Attribute\tInfo\n--------------------\n";
         for (const auto &attribute: mAttributes) {
             attribute.second.Debug(attribute.first);
