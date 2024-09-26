@@ -19,6 +19,8 @@ file(COPY
         shader/cubemaps.fs
         shader/skybox.vs
         shader/skybox.fs
+        shader/cubemaps_environment.vs
+        shader/cubemaps_environment.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -58,3 +60,6 @@ target_link_libraries(joey-ex-5-2-framebuffers-exercise-1 PRIVATE Mn::Engine PRI
 
 add_executable(joey-ex-6-1-cubemaps-skybox ex-6-1-cubemaps-skybox.cpp)
 target_link_libraries(joey-ex-6-1-cubemaps-skybox PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-6-2-cubemaps-environment-mapping ex-6-2-cubemaps-environment-mapping.cpp)
+target_link_libraries(joey-ex-6-2-cubemaps-environment-mapping PRIVATE Mn::Engine PRIVATE Mn::Joey)
