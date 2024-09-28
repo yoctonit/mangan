@@ -62,7 +62,7 @@ public:
     void setRotationInRad(float rotationInRadians) {
         mRotationInRad = rotationInRadians;
         while (mRotationInRad > (2.0f * M_PI)) {
-            mRotationInRad -= (2.0f * M_2_PI);
+            mRotationInRad -= (2.0f * M_PI);
         }
     }
 
