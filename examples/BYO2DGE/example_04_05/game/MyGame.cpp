@@ -1,8 +1,8 @@
 #include "MyGame.h"
 #include "BlueLevel.h"
 
-MyGame::MyGame(const Core &engine, Loop &loop)
-        : mEngine{engine}, mLoop{loop} {
+MyGame::MyGame(const Core &engine, LevelManager &levelManager)
+        : Level{levelManager}, mEngine{engine} {
     std::cout << "Create MyGame object\n";
 }
 
@@ -47,8 +47,11 @@ void MyGame::draw() {
 }
 
 void MyGame::update(const Mn::Input &input) {
-    // For this very simple game, let's move the white square and pulse the red
+    if (input.IsClickedKey(MN_KEY_ESCAPE)) {
+        mLevelRunning = false;
+    }
 
+    // For this very simple game, let's move the white square and pulse the red
     Transform &xform = mHero.getXform();
     auto deltaX = 0.05f;
 
@@ -64,24 +67,27 @@ void MyGame::update(const Mn::Input &input) {
         xform.incXPosBy(-deltaX);
         if (xform.getXPos() < 11.0f) { // this is the left-bound of the window
             next();
+//            std::cout << "MyGame: after next\n";
+//            std::cout << xform.getXPos() << "\n";
+            return;
         }
     }
 
     if (input.IsPressedKey(MN_KEY_Q)) {
-        stop();
+        mLevelRunning = false;
     }
 }
 
-void MyGame::next() {
-    mLoop.stop();
-    auto nextLevel = std::make_shared<BlueLevel>(mEngine, mLoop);
-    nextLevel->start();
-}
-
 void MyGame::start() {
-    mLoop.start(this);
+    mLevelRunning = true;
 }
 
 void MyGame::stop() {
-    mLoop.stop();
+    mLevelRunning = false;
 }
+
+void MyGame::next() {
+    auto nextLevel = std::make_shared<BlueLevel>(mEngine, mLevelManager);
+    mLevelManager.setLevel(nextLevel);
+}
+

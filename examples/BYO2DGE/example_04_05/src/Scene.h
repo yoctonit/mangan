@@ -13,11 +13,12 @@ public:
 
     virtual void update(const Mn::Input &input) = 0;
 
-    virtual void start() = 0;
+    [[nodiscard]] virtual bool isRunning() const {
+        return mSceneRunning;
+    }
 
-    virtual void stop() = 0;
-
-    virtual void next() = 0;
+protected:
+    bool mSceneRunning{true};
 };
 
 #endif //BYO2DGE_SCENE_H

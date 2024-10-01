@@ -1,18 +1,14 @@
-#include "engine/Window.h"
 #include "src/Core.h"
-#include "src/Loop.h"
 #include "game/MyGame.h"
 
 
 int main() {
-    Mn::Window wnd(640, 480, "Example 2.6");
-    Loop loop(wnd);
+    Core engine(640, 480, "Example 4.5");
 
-    Core engine;
-    engine.init();
+    LevelManager game;
+    game.setLevel(std::make_shared<MyGame>(engine, game));
 
-    auto myGame = std::make_shared<MyGame>(engine, loop);
-    myGame->start();
+    engine.start(game);
 
     return 0;
 }

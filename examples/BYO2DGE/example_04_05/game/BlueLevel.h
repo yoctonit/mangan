@@ -1,16 +1,15 @@
 #ifndef BYO2DGE_BLUE_LEVEL_H
 #define BYO2DGE_BLUE_LEVEL_H
 
-#include "engine/Window.h"
 #include "../src/Core.h"
 #include "../src/Renderable.h"
-#include "../src/Loop.h"
 
-class BlueLevel : public Scene {
+
+class BlueLevel : public Level {
 public:
-    explicit BlueLevel(const Core &engine, Loop &loop);
+    explicit BlueLevel(const Core &engine, LevelManager &levelManager);
 
-    ~BlueLevel();
+    ~BlueLevel() override;
 
     void init() override;
 
@@ -22,15 +21,14 @@ public:
     // Make sure to NOT draw anything from this function!
     void update(const Mn::Input &input) override;
 
-    void next() override;
-
     void start() override;
 
     void stop() override;
 
+    void next() override;
+
 private:
     const Core &mEngine;
-    Loop &mLoop;
 
     Camera mCamera{};
     std::vector<Renderable> mSquares{};

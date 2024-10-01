@@ -1,9 +1,9 @@
 #include "BlueLevel.h"
-#include "MyGame.h"
 #include "SceneFileParser.h"
+#include "MyGame.h"
 
-BlueLevel::BlueLevel(const Core &engine, Loop &loop)
-        : mEngine{engine}, mLoop(loop) {
+BlueLevel::BlueLevel(const Core &engine, LevelManager &levelManager)
+        : Level(levelManager), mEngine{engine} {
     std::cout << "Create BlueLevel object\n";
 };
 
@@ -36,6 +36,10 @@ void BlueLevel::draw() {
 }
 
 void BlueLevel::update(const Mn::Input &input) {
+    if (input.IsClickedKey(MN_KEY_ESCAPE)) {
+        mLevelRunning = false;
+    }
+
     // For this very simple game, let's move the first square
     Transform &xform = mSquares[1].getXform();
     auto deltaX = 0.05f;
@@ -52,24 +56,25 @@ void BlueLevel::update(const Mn::Input &input) {
         xform.incXPosBy(-deltaX);
         if (xform.getXPos() < 11.0f) {// this is the left-bound of the window
             next();
+            // std::cout << "BlueLevel: after next\n";
+            return;
         }
     }
 
     if (input.IsPressedKey(MN_KEY_Q)) {
-        stop();
+        mLevelRunning = false;
     }
 }
 
-void BlueLevel::next() {
-    mLoop.stop();
-    auto nextLevel = std::make_shared<MyGame>(mEngine, mLoop);
-    nextLevel->start();
-}
-
 void BlueLevel::start() {
-    mLoop.start(this);
+    mLevelRunning = true;
 }
 
 void BlueLevel::stop() {
-    mLoop.stop();
+    mLevelRunning = false;
+}
+
+void BlueLevel::next() {
+    auto nextLevel = std::make_shared<MyGame>(mEngine, mLevelManager);
+    mLevelManager.setLevel(nextLevel);
 }
