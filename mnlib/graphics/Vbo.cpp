@@ -63,6 +63,17 @@ namespace Mn {
         glBindBuffer(GL_ARRAY_BUFFER, mId);
     }
 
+    void Vbo::Load(const std::vector<float> &data) const {
+        glBindBuffer(GL_ARRAY_BUFFER, mId);
+        glBufferSubData(
+                GL_ARRAY_BUFFER,
+                0,
+                static_cast<GLsizeiptr>(data.size() * sizeof(float)),
+                data.data()
+        );
+        // glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
     void Vbo::Debug(const std::string &msg) const {
         std::cout << msg << " has id " << mId << "\n";
     }

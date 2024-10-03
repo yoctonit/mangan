@@ -65,14 +65,13 @@ void BlueLevel::update(const Mn::Input &input) {
     }
 
     // continuously change texture tinting
-    // jpg image no effect?
-//    auto c = mSquares[1].getColor();
-//    auto ca = c[3] + deltaX;
-//    if (ca > 1.0f) {
-//        ca = 0.0f;
-//    }
-//    c[3] = ca;
-//    mSquares[1].setColor(c);
+    auto c = mTexturedSquares[0].getColor();
+    auto ca = c[3] + deltaX;
+    if (ca > 1.0f) {
+        ca = 0.0f;
+    }
+    c[3] = ca;
+    mTexturedSquares[0].setColor(c);
 }
 
 void BlueLevel::start() {

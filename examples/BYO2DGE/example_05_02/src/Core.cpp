@@ -18,6 +18,10 @@ void Core::init() {
             "shader/texture_vs.glsl",
             "shader/texture_fs.glsl"
     );
+    mSpriteShader = Mn::ShaderInfo(
+            "shader/texture_vs.glsl",
+            "shader/texture_fs.glsl"
+    );
 
     mVertexBuffer = Mn::Vbo(
             {
@@ -35,6 +39,14 @@ void Core::init() {
                     0.0f, 0.0f
             }
     );
+    mSpriteTextureBuffer = Mn::Vbo(
+            {
+                    1.0f, 1.0f,
+                    0.0f, 1.0f,
+                    1.0f, 0.0f,
+                    0.0f, 0.0f
+            }, GL_DYNAMIC_DRAW
+    );
 
     mPositionsVao.Create();
     mPositionsVao.Connect(mVertexBuffer, mConstColorShader.Location("aPosition"), 3, 3, 0);
@@ -42,6 +54,10 @@ void Core::init() {
     mTextureVao.Create();
     mTextureVao.Connect(mVertexBuffer, mTextureShader.Location("aPosition"), 3, 3, 0);
     mTextureVao.Connect(mTextureBuffer, mTextureShader.Location("aTexCoord"), 2, 2, 0);
+
+    mSpriteVao.Create();
+    mSpriteVao.Connect(mVertexBuffer, mTextureShader.Location("aPosition"), 3, 3, 0);
+    mSpriteVao.Connect(mSpriteTextureBuffer, mTextureShader.Location("aTexCoord"), 2, 2, 0);
 
     // Allows transparency with textures.
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -60,6 +76,14 @@ Renderable Core::createRenderable() const {
 TextureRenderable Core::createTextureRenderable(const Mn::Texture &texture) const {
     return {mTextureVao, mTextureShader, texture};
 }
+
+SpriteRenderable Core::createSpriteRenderable(const Mn::Texture &texture) const {
+    return {mSpriteVao, mSpriteShader, texture, mSpriteTextureBuffer};
+}
+
+//void Core::setTextureCoordinate(const std::vector<float> &texCoords) {
+//    mSpriteTextureBuffer.Load(texCoords);
+//}
 
 void Core::start(Scene &scene) {
     scene.init();

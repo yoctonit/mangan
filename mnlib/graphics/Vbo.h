@@ -24,6 +24,8 @@ namespace Mn {
 
         void Activate() const;
 
+        void Load(const std::vector<float> &data) const;
+
         void Debug(const std::string &msg) const;
 
         static void DebugRefCnt();
@@ -44,9 +46,3 @@ namespace Mn {
 }
 
 #endif //INCLUDED_MN_GRAPHICS_VBO_H
-
-//        void load(const std::vector<float> &data) const {
-//            glBindBuffer(GL_ARRAY_BUFFER, m_id);
-//            glBufferSubData(GL_ARRAY_BUFFER, 0, static_cast<GLsizeiptr>(data.size() * sizeof(float)), data.data());
-//            glBindBuffer(GL_ARRAY_BUFFER, 0);
-//        }
