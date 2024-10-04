@@ -3,7 +3,7 @@
 
 
 int main() {
-    Core engine(640, 480, "Example 5.2");
+    Core engine(640, 480, "Example 5.3");
 
     MyGame game(engine);
     engine.start(game);
