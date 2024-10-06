@@ -21,6 +21,11 @@ file(COPY
         shader/skybox.fs
         shader/cubemaps_environment.vs
         shader/cubemaps_environment.fs
+        shader/advanced_glsl.vs
+        shader/red.fs
+        shader/green.fs
+        shader/blue.fs
+        shader/yellow.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -63,3 +68,6 @@ target_link_libraries(joey-ex-6-1-cubemaps-skybox PRIVATE Mn::Engine PRIVATE Mn:
 
 add_executable(joey-ex-6-2-cubemaps-environment-mapping ex-6-2-cubemaps-environment-mapping.cpp)
 target_link_libraries(joey-ex-6-2-cubemaps-environment-mapping PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-8-1-glsl-ubo ex-8-1-glsl-ubo.cpp)
+target_link_libraries(joey-ex-8-1-glsl-ubo PRIVATE Mn::Engine PRIVATE Mn::Joey)
