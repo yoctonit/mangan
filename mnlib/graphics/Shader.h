@@ -16,6 +16,12 @@ namespace Mn {
                 const std::string &fragmentShaderFile
         );
 
+        Shader(
+                const std::string &vertexShaderFile,
+                const std::string &fragmentShaderFile,
+                const std::string &geometryShaderFile
+        );
+
         ~Shader();
 
         Shader(const Shader &other);
@@ -40,6 +46,12 @@ namespace Mn {
         static unsigned int Compile(const std::string &shaderSource, GLenum shaderType);
 
         static unsigned int Link(unsigned int vertexShaderId, unsigned int fragmentShaderId);
+
+        static unsigned int Link(
+                unsigned int vertexShaderId,
+                unsigned int fragmentShaderId,
+                unsigned int geometryShaderId
+        );
 
         //////////////////////
         // Reference count map

@@ -27,6 +27,25 @@ namespace Mn {
         std::cout << "Created Shader with id " << mId << "\n";
     }
 
+    Shader::Shader(
+            const std::string &vertexShaderFile,
+            const std::string &fragmentShaderFile,
+            const std::string &geometryShaderFile
+    ) {
+        std::string vertexShaderSource = LoadFile(vertexShaderFile);
+        unsigned int vertexShaderId = Compile(vertexShaderSource, GL_VERTEX_SHADER);
+
+        std::string fragmentShaderSource = LoadFile(fragmentShaderFile);
+        unsigned int fragmentShaderId = Compile(fragmentShaderSource, GL_FRAGMENT_SHADER);
+
+        std::string geometryShaderSource = LoadFile(geometryShaderFile);
+        unsigned int geometryShaderId = Compile(geometryShaderSource, GL_GEOMETRY_SHADER);
+
+        mId = Link(vertexShaderId, fragmentShaderId, geometryShaderId);
+        IncRef();
+        std::cout << "Created Shader with id " << mId << "\n";
+    }
+
     Shader::~Shader() {
         int refCnt = DecRef();
         if (refCnt == 0) {
@@ -171,6 +190,68 @@ namespace Mn {
         glDetachShader(programId, fragmentShaderId);
         glDeleteShader(vertexShaderId);
         glDeleteShader(fragmentShaderId);
+
+        // linking was successful; return program reference value
+        return programId;
+    }
+
+    unsigned int Shader::Link(
+            unsigned int vertexShaderId,
+            unsigned int fragmentShaderId,
+            unsigned int geometryShaderId
+    ) {
+        // Vertex, fragment, and geometry shaders are successfully compiled.
+        // Now time to link them together into a program.
+        // Create empty program object and store reference to it.
+        unsigned int programId = glCreateProgram();
+
+        // Attach previously compiled shader programs
+        glAttachShader(programId, vertexShaderId);
+        glAttachShader(programId, fragmentShaderId);
+        glAttachShader(programId, geometryShaderId);
+
+        // Link vertex shader to fragment shader
+        glLinkProgram(programId);
+
+        // Queries whether program link was successful
+        GLint linkSuccess;
+        glGetProgramiv(programId, GL_LINK_STATUS, &linkSuccess);
+
+        if (linkSuccess == GL_FALSE) {
+            GLint infoLogLength = 0;
+            glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+            // The infoLogLength includes the NULL character
+            std::vector<GLchar> infoLog(infoLogLength);
+            glGetProgramInfoLog(programId, infoLogLength, &infoLogLength, &infoLog[0]);
+
+            // We don't need the program anymore.
+            glDeleteProgram(programId);
+            programId = 0;
+            // Don't leak shaders either.
+            glDeleteShader(vertexShaderId);
+            glDeleteShader(fragmentShaderId);
+            glDeleteShader(geometryShaderId);
+
+            // Convert the infoLog to string
+            std::ostringstream errorMessage;
+            for (GLchar c: infoLog) {
+                errorMessage << c;
+            }
+
+            std::cerr << "Link shader error: " << errorMessage.str() << "\n";
+            return programId;
+            // Failed linking, raise exception
+            // throw std::runtime_error("Shader link error: " + errorMessage.str());
+        }
+
+        // Always detach shaders after a successful link.
+        glDetachShader(programId, vertexShaderId);
+        glDetachShader(programId, fragmentShaderId);
+        glDetachShader(programId, geometryShaderId);
+        glDeleteShader(vertexShaderId);
+        glDeleteShader(fragmentShaderId);
+        glDeleteShader(geometryShaderId);
 
         // linking was successful; return program reference value
         return programId;

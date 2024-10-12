@@ -26,6 +26,17 @@ file(COPY
         shader/green.fs
         shader/blue.fs
         shader/yellow.fs
+        shader/geometry_shader.vs
+        shader/geometry_shader.gs
+        shader/geometry_shader.fs
+        shader/geometry_shader_2.vs
+        shader/geometry_shader_2.gs
+        shader/geometry_shader_2.fs
+        shader/gs_default.vs
+        shader/gs_default.fs
+        shader/normal_visualization.vs
+        shader/normal_visualization.gs
+        shader/normal_visualization.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -40,6 +51,7 @@ file(COPY
         ../images/skybox/left.jpg
         ../images/skybox/right.jpg
         ../images/skybox/top.jpg
+        ../images/container2.png
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
 
 add_executable(joey-ex-1-1-depth-testing ex-1-1-depth-testing.cpp)
@@ -71,3 +83,12 @@ target_link_libraries(joey-ex-6-2-cubemaps-environment-mapping PRIVATE Mn::Engin
 
 add_executable(joey-ex-8-1-glsl-ubo ex-8-1-glsl-ubo.cpp)
 target_link_libraries(joey-ex-8-1-glsl-ubo PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-9-1-geometry-shader-houses ex-9-1-geometry-shader-houses.cpp)
+target_link_libraries(joey-ex-9-1-geometry-shader-houses PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-9-2-geometry-shader-exploding ex-9-2-geometry-shader-exploding.cpp)
+target_link_libraries(joey-ex-9-2-geometry-shader-exploding PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-9-3-normal-visualization ex-9-3-normal-visualization.cpp)
+target_link_libraries(joey-ex-9-3-normal-visualization PRIVATE Mn::Engine PRIVATE Mn::Joey)
