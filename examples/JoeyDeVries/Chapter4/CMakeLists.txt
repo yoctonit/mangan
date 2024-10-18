@@ -37,6 +37,8 @@ file(COPY
         shader/normal_visualization.vs
         shader/normal_visualization.gs
         shader/normal_visualization.fs
+        shader/instancing.vs
+        shader/instancing.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -92,3 +94,6 @@ target_link_libraries(joey-ex-9-2-geometry-shader-exploding PRIVATE Mn::Engine P
 
 add_executable(joey-ex-9-3-normal-visualization ex-9-3-normal-visualization.cpp)
 target_link_libraries(joey-ex-9-3-normal-visualization PRIVATE Mn::Engine PRIVATE Mn::Joey)
+
+add_executable(joey-ex-10-1-instancing ex-10-1-instancing.cpp)
+target_link_libraries(joey-ex-10-1-instancing PRIVATE Mn::Engine PRIVATE Mn::Joey)
