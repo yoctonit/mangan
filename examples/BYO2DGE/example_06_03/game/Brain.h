@@ -139,6 +139,11 @@ public:
         mRenderComponent.getXform().incRotationByRad(rad);
     }
 
+    BoundingBox getBBox() {
+        const Transform &xform = mRenderComponent.getXform();
+        return {xform.getPosition(), xform.getWidth(), xform.getHeight()};
+    }
+
 private:
     SpriteRenderable mRenderComponent;
     glm::vec2 mCurrentFrontDir{};

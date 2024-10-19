@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Camera.h"
+#include "BoundingBox.h"
 
 Camera::Camera() = default;
 
@@ -104,4 +105,12 @@ void Camera::clear() const {
     glEnable(GL_SCISSOR_TEST);
     glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_SCISSOR_TEST);
+}
+
+unsigned int Camera::collideWCBound(const Transform &aXform, float zone) const {
+    BoundingBox bbox(aXform.getPosition(), aXform.getWidth(), aXform.getHeight());
+    float w = zone * getWCWidth();
+    float h = zone * getWCHeight();
+    BoundingBox cameraBound(getWCCenter(), w, h);
+    return cameraBound.boundCollideStatus(bbox);
 }

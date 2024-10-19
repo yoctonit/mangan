@@ -4,6 +4,7 @@
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
+#include "Transform.h"
 
 /*
  * Encapsulates the user define WC and Viewport functionality
@@ -60,6 +61,8 @@ public:
     [[nodiscard]] glm::mat4 getCameraMatrix() const;
 
     void clear() const;
+
+    [[nodiscard]] unsigned int collideWCBound(const Transform &aXform, float zone) const;
 
 private:
     glm::vec2 mWCCenter{};

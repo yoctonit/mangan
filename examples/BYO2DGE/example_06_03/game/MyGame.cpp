@@ -54,6 +54,9 @@ void MyGame::update(const Mn::Input &input) {
 
     mHero.update(input);
 
+    // get the bounding box for collision
+    auto hBbox = mHero.getBBox();
+    auto bBbox = mBrain.getBBox();
     switch (mMode) {
         case 'H':
             mBrain.update(input);   // player steers with arrow keys
@@ -62,11 +65,16 @@ void MyGame::update(const Mn::Input &input) {
             rate = 0.02f;   // gradual rate
             // After "K" is typed (in gradual mode), the following should also be executed.
         case 'J':
-            mBrain.rotateObjPointTo(mHero.getXform().getPosition(), rate);
-            // engine.GameObject.prototype.update.call(this.mBrain);  // the default GameObject: only move forward
-            mBrain.update();
+            if (!hBbox.intersectsBound(bBbox)) {  // stop the brain when it touches hero bound
+                mBrain.rotateObjPointTo(mHero.getXform().getPosition(), rate);
+                // engine.GameObject.prototype.update.call(this.mBrain);  // the default GameObject: only move forward
+                mBrain.update();
+            }
             break;
     }
+
+    // Check for hero going outside 80% of the WC Window bound
+    auto status = mCamera.collideWCBound(mHero.getXform(), 0.8);
 
     if (input.IsClickedKey(MN_KEY_H)) {
         mMode = 'H';
@@ -77,5 +85,8 @@ void MyGame::update(const Mn::Input &input) {
     if (input.IsClickedKey(MN_KEY_K)) {
         mMode = 'K';
     }
-    mTextSysFont.setText(msg + mMode);
+
+    std::stringstream ss;
+    ss << status;
+    mTextSysFont.setText(msg + mMode + " [Hero bound=" + ss.str() + "]");
 }
