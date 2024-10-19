@@ -41,6 +41,7 @@ file(COPY
         shader/instancing.fs
         shader/instancing_mvp.vs
         shader/instancing_mvp.fs
+        shader/instancing_mvp_asteroids.vs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -104,3 +105,6 @@ target_link_libraries(joey-ex-10-1-instancing PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-10-2-asteroids ex-10-2-asteroids.cpp)
 target_link_libraries(joey-ex-10-2-asteroids PRIVATE Mn::GL PRIVATE Mn::Joey)
+
+add_executable(joey-ex-10-3-asteroids-instancing ex-10-3-asteroids-instancing.cpp)
+target_link_libraries(joey-ex-10-3-asteroids-instancing PRIVATE Mn::GL PRIVATE Mn::Joey)

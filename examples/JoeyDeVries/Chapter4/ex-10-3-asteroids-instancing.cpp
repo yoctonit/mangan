@@ -15,7 +15,7 @@ int main() {
     Mn::Window wnd(SCR_WIDTH, SCR_HEIGHT, "Geometry Shader Example");
     wnd.CaptureCursor();
 
-    Camera camera{glm::vec3(0.0f, 0.0f, 55.0f)};
+    Camera camera{glm::vec3(0.0f, 0.0f, 155.0f)};
 
     // timing
     float time{};
@@ -24,8 +24,12 @@ int main() {
 
     glEnable(GL_DEPTH_TEST);
 
-    Mn::Shader shader(
+    Mn::Shader planetShader(
             "shader/instancing_mvp.vs",
+            "shader/instancing_mvp.fs"
+    );
+    Mn::Shader asteroidShader(
+            "shader/instancing_mvp_asteroids.vs",
             "shader/instancing_mvp.fs"
     );
 
@@ -37,36 +41,21 @@ int main() {
     vaoPlanet.Connect(bufferPlanet, 2, 2, 5, 3);
     Mn::Texture planetTexture("images/sandy_planet.png");
 
-    Mn::Uniform uPlanetTex{shader.Locate("texture_diffuse1"), GL_SAMPLER_2D};
-    Mn::Uniform uPlanetModel{shader.Locate("model"), GL_FLOAT_MAT4};
-    Mn::Uniform uPlanetProjection{shader.Locate("projection"), GL_FLOAT_MAT4};
-    Mn::Uniform uPlanetView{shader.Locate("view"), GL_FLOAT_MAT4};
+    Mn::Uniform uPlanetTex{planetShader.Locate("texture_diffuse1"), GL_SAMPLER_2D};
+    Mn::Uniform uPlanetModel{planetShader.Locate("model"), GL_FLOAT_MAT4};
+    Mn::Uniform uPlanetProjection{planetShader.Locate("projection"), GL_FLOAT_MAT4};
+    Mn::Uniform uPlanetView{planetShader.Locate("view"), GL_FLOAT_MAT4};
     uPlanetTex = 0;
-
-    Mn::Vbo bufferRock{sphere.Data(Mn::Geometry::Type::PositionsAndTexCoords)};
-    Mn::Vao vaoRock{true};
-    vaoRock.Connect(bufferRock, 0, 3, 5, 0);
-    vaoRock.Connect(bufferRock, 2, 2, 5, 3);
-    Mn::Texture rockTexture("images/rock.png");
-
-    Mn::Uniform uRockTex{shader.Locate("texture_diffuse1"), GL_SAMPLER_2D};
-    Mn::Uniform uRockModel{shader.Locate("model"), GL_FLOAT_MAT4};
-    Mn::Uniform uRockProjection{shader.Locate("projection"), GL_FLOAT_MAT4};
-    Mn::Uniform uRockView{shader.Locate("view"), GL_FLOAT_MAT4};
-    uRockTex = 0;
-
-    //uPlanetModel = glm::mat4(1.0f);
     uPlanetModel = glm::scale(glm::mat4(1.0f), glm::vec3{10.0f, 10.0f, 10.0f});
-    uRockModel = glm::mat4(1.0f);
 
     // generate a large list of semi-random model transformation matrices
     // ------------------------------------------------------------------
-    unsigned int amount = 1000;
+    int amount = 10000;
     glm::mat4 *modelMatrices;
     modelMatrices = new glm::mat4[amount];
     srand(13); // initialize random seed
-    float radius = 50.0f;
-    float offset = 2.5f;
+    float radius = 150.0f;
+    float offset = 25.0f;
     for (unsigned int i = 0; i < amount; i++) {
         auto model = glm::mat4(1.0f);
         // 1. translation: displace along circle with 'radius' in range [-offset, offset]
@@ -90,6 +79,48 @@ int main() {
         // 4. now add to list of matrices
         modelMatrices[i] = model;
     }
+
+    Mn::Vbo bufferRock{sphere.Data(Mn::Geometry::Type::PositionsAndTexCoords)};
+
+    // configure instanced array
+    // -------------------------
+    unsigned int buffer;
+    glGenBuffers(1, &buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    glBufferData(GL_ARRAY_BUFFER, amount * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
+
+    // set transformation matrices as an instance vertex attribute (with divisor 1)
+    // note: we're cheating a little by taking the now publicly declared, VAO of the model's mesh(es) and adding new vertexAttribPointers
+    // normally you'd want to do this in a more organized fashion, but for learning purposes this will do.
+    // -----------------------------------------------------------------------------------------------------------------------------------
+    Mn::Vao vaoRock{true};
+    vaoRock.Connect(bufferRock, 0, 3, 5, 0);
+    vaoRock.Connect(bufferRock, 2, 2, 5, 3);
+    // glBindVertexArray(vaoRock.Id());
+    // set attribute pointers for matrix (4 times vec4)
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void *) 0);
+    glEnableVertexAttribArray(4);
+    glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void *) (sizeof(glm::vec4)));
+    glEnableVertexAttribArray(5);
+    glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void *) (2 * sizeof(glm::vec4)));
+    glEnableVertexAttribArray(6);
+    glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void *) (3 * sizeof(glm::vec4)));
+
+    glVertexAttribDivisor(3, 1);
+    glVertexAttribDivisor(4, 1);
+    glVertexAttribDivisor(5, 1);
+    glVertexAttribDivisor(6, 1);
+
+//    glBindVertexArray(0);
+
+    Mn::Texture rockTexture("images/rock.png");
+
+    Mn::Uniform uRockTex{asteroidShader.Locate("texture_diffuse1"), GL_SAMPLER_2D};
+    Mn::Uniform uRockProjection{asteroidShader.Locate("projection"), GL_FLOAT_MAT4};
+    Mn::Uniform uRockView{asteroidShader.Locate("view"), GL_FLOAT_MAT4};
+    uRockTex = 0;
 
     auto &input = Mn::Window::GetInput();
 
@@ -136,7 +167,7 @@ int main() {
         uRockView = view;
 
         // draw planet
-        shader.Use();
+        planetShader.Use();
         planetTexture.Activate();
         uPlanetModel.Upload();
         uPlanetProjection.Upload();
@@ -146,14 +177,13 @@ int main() {
 
         // draw meteorites
         rockTexture.Activate();
-        for (unsigned int i = 0; i < amount; i++) {
-            uRockModel = modelMatrices[i];
-            uRockModel.Upload();
-            uRockProjection.Upload();
-            uRockView.Upload();
-            uRockTex.Upload();
-            vaoRock.Draw(GL_TRIANGLES, 0, sphere.VertexCount());
-        }
+        asteroidShader.Use();
+        uRockProjection.Upload();
+        uRockView.Upload();
+        uRockTex.Upload();
+        vaoRock.Activate();
+        glDrawArraysInstanced(GL_TRIANGLES, 0, sphere.VertexCount(), amount);
+
         wnd.Display();
     }
 
