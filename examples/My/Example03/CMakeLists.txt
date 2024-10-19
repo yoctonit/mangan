@@ -1,11 +1,7 @@
-add_executable(example03 main.cpp)
-target_link_libraries(example03 PRIVATE wnd core)
+file(COPY
+        basic.vs.glsl
+        basic.fs.glsl
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/basic.vs
-        ${CMAKE_CURRENT_BINARY_DIR}/basic.vs
-        COPYONLY
-)
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/basic.fs
-        ${CMAKE_CURRENT_BINARY_DIR}/basic.fs
-        COPYONLY
-)
+add_executable(example03 main.cpp)
+target_link_libraries(example03 PRIVATE Mn::GL)

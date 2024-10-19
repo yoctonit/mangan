@@ -1,6 +1,7 @@
 #ifndef INCLUDED_MN_ENGINE_WINDOW_H
 #define INCLUDED_MN_ENGINE_WINDOW_H
 
+#include <glad/glad.h>
 #include <string>
 
 #include "Input.h"

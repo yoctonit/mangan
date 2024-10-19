@@ -1,3 +1,4 @@
+#include <glad/glad.h>
 #include "Camera.h"
 
 Camera::Camera() = default;

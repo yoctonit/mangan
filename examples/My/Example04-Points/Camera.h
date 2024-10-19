@@ -1,7 +1,6 @@
-#ifndef BYO2DGE_CAMERA_H
-#define BYO2DGE_CAMERA_H
+#ifndef EXAMPLE4_CAMERA_H
+#define EXAMPLE4_CAMERA_H
 
-#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -73,4 +72,4 @@ private:
 };
 
 
-#endif //BYO2DGE_CAMERA_H
+#endif //EXAMPLE4_CAMERA_H

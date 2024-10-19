@@ -2,11 +2,11 @@
 
 ### Example01 ###
 add_executable(example01 Example01/main.cpp)
-target_link_libraries(example01 PRIVATE Mn::Engine)
+target_link_libraries(example01 PRIVATE Mn::GL)
 
-#add_subdirectory(Example02)
-#add_subdirectory(Example03)
-#add_subdirectory(Example04-Points)
+add_subdirectory(Example02)
+add_subdirectory(Example03)
+add_subdirectory(Example04-Points)
 
 #add_subdirectory(triangle)
 #add_subdirectory(mandelbrot)

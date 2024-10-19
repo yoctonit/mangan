@@ -1,59 +1,49 @@
+#include <iostream>
 #include "window/Window.h"
 #include "core/Shader.h"
-#include "core/Buffer.h"
-#include <iostream>
+#include "core/Vbo.h"
 
-class Example02 {
-public:
-    Example02() = default;
-
-    ~Example02() {
-        shader1_.Release();
-        shader2_.Release();
-        buffer_.Release();
-    }
-
-    void Initialize() {
-        std::cout << "shader1.Id() before creation: " << shader1_.Id() << '\n';
-        shader1_ = Mn::ShaderProgram::CreateFromFiles("basic.vs", "basic.fs");
-        std::cout << "shader1.Id(): " << shader1_.Id() << '\n';
-        shader2_ = Mn::ShaderProgram::CreateFromFiles("basic.vs", "basic.fs");
-        std::cout << "shader2.Id(): " << shader2_.Id() << '\n';
-
-        const std::vector<float> vertices{
-                -0.5f,-0.22867f, 0.0f, 1.0f, 0.0f, 0.0f,
-                0.5f, -0.22867f, 0.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, 0.57735f,  0.0f, 0.0f, 0.0f, 1.0f
-        };
-        std::cout << "buffer_.Id() before initialization: " << buffer_.Id() << '\n';
-        // buffer_ = Mn::Buffer(vertices);
-        buffer_ = CreateBuffer();
-        std::cout << "buffer_.Id(): " << buffer_.Id() << '\n';
-        Mn::Buffer buffer2 = buffer_;
-        std::cout << "buffer2.Id(): " << buffer2.Id() << '\n';
-    }
-
-    Mn::Buffer CreateBuffer() {
-        const std::vector<float> vertices{
-                -0.5f,-0.22867f, 0.0f, 1.0f, 0.0f, 0.0f,
-                0.5f, -0.22867f, 0.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, 0.57735f,  0.0f, 0.0f, 0.0f, 1.0f
-        };
-        Mn::Buffer buffer(vertices);
-        return buffer;
-    }
-
-    void Draw() const {}
-
-    void Release() {}
-
-private:
-    Mn::ShaderProgram shader1_;
-    Mn::ShaderProgram shader2_;
-    Mn::Buffer buffer_;
-};
 
 int main() {
-    Mn::Window wnd("Example02", 800, 600);
-    return wnd.ShowStaticScene<Example02>();
+    Mn::Window wnd(800, 600, "Example");
+
+    Mn::Shader shader1;
+    Mn::Shader shader2;
+
+    std::cout << "shader1.Id() before creation: " << shader1.Id() << '\n';
+    shader1 = Mn::Shader{"shader/basic.vs.glsl", "shader/basic.fs.glsl"};
+    std::cout << "shader1.Id() after creation: " << shader1.Id() << '\n';
+
+    std::cout << "shader2.Id() before creation: " << shader2.Id() << '\n';
+    shader2 = Mn::Shader{"shader/basic.vs.glsl", "shader/basic.fs.glsl"};
+    std::cout << "shader2.Id() after creation: " << shader2.Id() << '\n';
+
+    const std::vector<float> vertices{
+            -0.5f, -0.22867f, 0.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, -0.22867f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.57735f, 0.0f, 0.0f, 0.0f, 1.0f
+    };
+
+    Mn::Vbo buffer;
+    std::cout << "buffer_.Id() before initialization: " << buffer.Id() << '\n';
+    buffer = Mn::Vbo(vertices);
+    std::cout << "buffer_.Id() after creation: " << buffer.Id() << '\n';
+
+    Mn::Vbo buffer2 = buffer;
+    std::cout << "buffer2.Id(): " << buffer2.Id() << '\n';
+
+    auto &input = Mn::Window::GetInput();
+    while (wnd.IsOpen()) {
+        Mn::Window::PollEvents();
+        input.Update();
+        if (input.IsClickedKey(MN_KEY_ESCAPE)) {
+            wnd.Close();
+        }
+
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        wnd.Display();
+    }
+
+    return 0;
 }
