@@ -1,7 +1,7 @@
-#include "engine/Run.h"
-#include "graphics/Shader.h"
-#include "graphics/Vao.h"
-#include "graphics/Vbo.h"
+#include "window/Run.h"
+#include "core/Shader.h"
+#include "core/Vao.h"
+#include "core/Vbo.h"
 #include "Camera.h"
 
 const int SCR_WIDTH = 800;

@@ -5,7 +5,7 @@
 #include "ShaderInfo.h"
 #include "Connection.h"
 #include "RenderSettings.h"
-#include "Texture.h"
+#include "../core/Texture.h"
 
 namespace Mn {
 

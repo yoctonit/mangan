@@ -37,4 +37,4 @@ add_executable(byo2dge_ex_05_04 main.cpp
         src/SpriteRenderable.cpp src/SpriteAnimateRenderable.cpp
         src/Font.cpp src/FontRenderable.cpp
         src/Transform.cpp src/Camera.cpp game/MyGame.cpp)
-target_link_libraries(byo2dge_ex_05_04 PRIVATE Mn::Engine)
+target_link_libraries(byo2dge_ex_05_04 PRIVATE Mn::GL)

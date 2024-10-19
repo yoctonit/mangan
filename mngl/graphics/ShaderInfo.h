@@ -3,7 +3,7 @@
 
 #include <unordered_map>
 #include <string>
-#include "Shader.h"
+#include "../core/Shader.h"
 #include "Attribute.h"
 #include "Uniform.h"
 

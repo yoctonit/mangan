@@ -11,4 +11,4 @@ file(COPY
 add_executable(byo2dge_ex_04_04 main.cpp
         src/Core.cpp src/Renderable.cpp src/Transform.cpp src/Camera.cpp
         game/SceneFileParser.cpp game/MyGame.cpp)
-target_link_libraries(byo2dge_ex_04_04 PRIVATE Mn::Engine)
+target_link_libraries(byo2dge_ex_04_04 PRIVATE Mn::GL)

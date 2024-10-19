@@ -48,7 +48,7 @@ add_subdirectory(dependencies/stb)
 ######################
 # mangan gl library
 ######################
-add_subdirectory(mnlib)
+add_subdirectory(mngl)
 #add_subdirectory(core)
 
 # add examples

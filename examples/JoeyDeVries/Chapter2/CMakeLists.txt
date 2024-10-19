@@ -40,64 +40,64 @@ file(COPY
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
 
 add_executable(joey-ex-1-1-colors ex-1-1-colors.cpp)
-target_link_libraries(joey-ex-1-1-colors PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-1-1-colors PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-2-1-diffuse ex-2-1-diffuse.cpp)
-target_link_libraries(joey-ex-2-1-diffuse PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-2-1-diffuse PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-2-2-specular ex-2-2-specular.cpp)
-target_link_libraries(joey-ex-2-2-specular PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-2-2-specular PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-2-3-lighting-exercise-1 ex-2-3-lighting-exercise-1.cpp)
-target_link_libraries(joey-ex-2-3-lighting-exercise-1 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-2-3-lighting-exercise-1 PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-2-4-lighting-exercise-2 ex-2-4-lighting-exercise-2.cpp)
-target_link_libraries(joey-ex-2-4-lighting-exercise-2 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-2-4-lighting-exercise-2 PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-2-5-lighting-exercise-3 ex-2-5-lighting-exercise-3.cpp)
-target_link_libraries(joey-ex-2-5-lighting-exercise-3 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-2-5-lighting-exercise-3 PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-2-6-lighting-exercise-4 ex-2-6-lighting-exercise-4.cpp)
-target_link_libraries(joey-ex-2-6-lighting-exercise-4 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-2-6-lighting-exercise-4 PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-3-1-materials ex-3-1-materials.cpp)
-target_link_libraries(joey-ex-3-1-materials PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-3-1-materials PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-3-2-materials-exercise-1 ex-3-2-materials-exercise-1.cpp)
-target_link_libraries(joey-ex-3-2-materials-exercise-1 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-3-2-materials-exercise-1 PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-3-3-materials-exercise-2 ex-3-3-materials-exercise-2.cpp)
-target_link_libraries(joey-ex-3-3-materials-exercise-2 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-3-3-materials-exercise-2 PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-4-1-lighting-maps ex-4-1-lighting-maps.cpp)
-target_link_libraries(joey-ex-4-1-lighting-maps PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-4-1-lighting-maps PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-4-2-lighting-maps-specular ex-4-2-lighting-maps-specular.cpp)
-target_link_libraries(joey-ex-4-2-lighting-maps-specular PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-4-2-lighting-maps-specular PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-4-3-exercise-2 ex-4-3-exercise-2.cpp)
-target_link_libraries(joey-ex-4-3-exercise-2 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-4-3-exercise-2 PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-4-4-exercise-4 ex-4-4-exercise-4.cpp)
-target_link_libraries(joey-ex-4-4-exercise-4 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-4-4-exercise-4 PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-5-1-directional-light ex-5-1-directional-light.cpp)
-target_link_libraries(joey-ex-5-1-directional-light PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-5-1-directional-light PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-5-2-point-light ex-5-2-point-light.cpp)
-target_link_libraries(joey-ex-5-2-point-light PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-5-2-point-light PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-5-3-flashlight ex-5-3-flashlight.cpp)
-target_link_libraries(joey-ex-5-3-flashlight PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-5-3-flashlight PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-5-4-flashlight-soft ex-5-4-flashlight-soft.cpp)
-target_link_libraries(joey-ex-5-4-flashlight-soft PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-5-4-flashlight-soft PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-6-1-multiple-lights ex-6-1-multiple-lights.cpp)
-target_link_libraries(joey-ex-6-1-multiple-lights PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-6-1-multiple-lights PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-6-2-multiple-lights-exercise-1 ex-6-2-multiple-lights-exercise-1.cpp)
-target_link_libraries(joey-ex-6-2-multiple-lights-exercise-1 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-6-2-multiple-lights-exercise-1 PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-test ex-test.cpp)
-target_link_libraries(joey-ex-test PRIVATE Mn::Engine)
+target_link_libraries(joey-ex-test PRIVATE Mn::GL)

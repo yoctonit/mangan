@@ -57,43 +57,43 @@ file(COPY
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
 
 add_executable(joey-ex-1-1-depth-testing ex-1-1-depth-testing.cpp)
-target_link_libraries(joey-ex-1-1-depth-testing PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-1-1-depth-testing PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-1-2-depth-testing-view ex-1-2-depth-testing-view.cpp)
-target_link_libraries(joey-ex-1-2-depth-testing-view PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-1-2-depth-testing-view PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-2-1-stencil-testing ex-2-1-stencil-testing.cpp)
-target_link_libraries(joey-ex-2-1-stencil-testing PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-2-1-stencil-testing PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-3-1-blending-discard ex-3-1-blending-discard.cpp)
-target_link_libraries(joey-ex-3-1-blending-discard PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-3-1-blending-discard PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-3-2-blending ex-3-2-blending.cpp)
-target_link_libraries(joey-ex-3-2-blending PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-3-2-blending PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-5-1-framebuffers ex-5-1-framebuffers.cpp)
-target_link_libraries(joey-ex-5-1-framebuffers PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-5-1-framebuffers PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-5-2-framebuffers-exercise-1 ex-5-2-framebuffers-exercise-1.cpp)
-target_link_libraries(joey-ex-5-2-framebuffers-exercise-1 PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-5-2-framebuffers-exercise-1 PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-6-1-cubemaps-skybox ex-6-1-cubemaps-skybox.cpp)
-target_link_libraries(joey-ex-6-1-cubemaps-skybox PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-6-1-cubemaps-skybox PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-6-2-cubemaps-environment-mapping ex-6-2-cubemaps-environment-mapping.cpp)
-target_link_libraries(joey-ex-6-2-cubemaps-environment-mapping PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-6-2-cubemaps-environment-mapping PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-8-1-glsl-ubo ex-8-1-glsl-ubo.cpp)
-target_link_libraries(joey-ex-8-1-glsl-ubo PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-8-1-glsl-ubo PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-9-1-geometry-shader-houses ex-9-1-geometry-shader-houses.cpp)
-target_link_libraries(joey-ex-9-1-geometry-shader-houses PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-9-1-geometry-shader-houses PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-9-2-geometry-shader-exploding ex-9-2-geometry-shader-exploding.cpp)
-target_link_libraries(joey-ex-9-2-geometry-shader-exploding PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-9-2-geometry-shader-exploding PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-9-3-normal-visualization ex-9-3-normal-visualization.cpp)
-target_link_libraries(joey-ex-9-3-normal-visualization PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-9-3-normal-visualization PRIVATE Mn::GL PRIVATE Mn::Joey)
 
 add_executable(joey-ex-10-1-instancing ex-10-1-instancing.cpp)
-target_link_libraries(joey-ex-10-1-instancing PRIVATE Mn::Engine PRIVATE Mn::Joey)
+target_link_libraries(joey-ex-10-1-instancing PRIVATE Mn::GL PRIVATE Mn::Joey)

@@ -1,6 +1,6 @@
 # Example 01
 add_executable(dgf_02_01_empty e01_empty.cpp)
-target_link_libraries(dgf_02_01_empty PRIVATE Mn::Engine)
+target_link_libraries(dgf_02_01_empty PRIVATE Mn::GL)
 
 add_executable(dgf_test_2_01 test_2_01.cpp)
 target_link_libraries(dgf_test_2_01 PRIVATE Mn::DGF)
@@ -19,7 +19,7 @@ file(COPY
 
 # Example 02
 add_executable(dgf_02_02_point e02_point.cpp)
-target_link_libraries(dgf_02_02_point PRIVATE Mn::Engine)
+target_link_libraries(dgf_02_02_point PRIVATE Mn::GL)
 
 add_executable(dgf_test_2_02 test_2_02.cpp)
 target_link_libraries(dgf_test_2_02 PRIVATE Mn::DGF)

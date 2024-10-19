@@ -5,4 +5,4 @@ file(COPY
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 add_executable(byo2dge_ex_03_02 main.cpp src/Core.cpp src/Renderable.cpp)
-target_link_libraries(byo2dge_ex_03_02 PRIVATE Mn::Engine)
+target_link_libraries(byo2dge_ex_03_02 PRIVATE Mn::GL)

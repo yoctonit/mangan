@@ -6,4 +6,4 @@ file(COPY
 
 add_executable(byo2dge_ex_03_05 main.cpp
         src/Core.cpp src/Renderable.cpp src/Transform.cpp src/Camera.cpp)
-target_link_libraries(byo2dge_ex_03_05 PRIVATE Mn::Engine)
+target_link_libraries(byo2dge_ex_03_05 PRIVATE Mn::GL)

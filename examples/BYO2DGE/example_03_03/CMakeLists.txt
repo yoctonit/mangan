@@ -6,4 +6,4 @@ file(COPY
 
 add_executable(byo2dge_ex_03_03 main.cpp
         src/Core.cpp src/Renderable.cpp src/Transform.cpp)
-target_link_libraries(byo2dge_ex_03_03 PRIVATE Mn::Engine)
+target_link_libraries(byo2dge_ex_03_03 PRIVATE Mn::GL)

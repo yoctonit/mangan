@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include "ShaderInfo.h"
-#include "Vao.h"
+#include "../core/Vao.h"
 #include "Buffer.h"
 #include "../geometry/Geometry.h"
 

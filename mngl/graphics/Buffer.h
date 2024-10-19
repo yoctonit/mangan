@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include <string>
 #include <vector>
-#include "Vbo.h"
+#include "../core/Vbo.h"
 #include "../geometry/Geometry.h"
 
 namespace Mn {
