@@ -1,7 +1,7 @@
 #ifndef BYO2DGE_RENDERABLE_H
 #define BYO2DGE_RENDERABLE_H
 
-#include "graphics/Vao.h"
+#include "core/Vao.h"
 #include "graphics/ShaderInfo.h"
 #include "Transform.h"
 #include <glm/vec4.hpp>

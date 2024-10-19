@@ -1,10 +1,10 @@
 #ifndef BYO2DGE_SPRITE_ANIMATE_RENDERABLE_H
 #define BYO2DGE_SPRITE_ANIMATE_RENDERABLE_H
 
-#include "graphics/Vao.h"
-#include "graphics/Vbo.h"
+#include "core/Vao.h"
+#include "core/Vbo.h"
 #include "graphics/ShaderInfo.h"
-#include "graphics/Texture.h"
+#include "core/Texture.h"
 #include "Camera.h"
 #include "Transform.h"
 #include <glm/vec4.hpp>

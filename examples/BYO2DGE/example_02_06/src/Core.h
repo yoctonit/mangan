@@ -2,8 +2,8 @@
 #define BYO2DGE_EXAMPLES_02_06_H
 
 #include "graphics/ShaderInfo.h"
-#include "graphics/Vbo.h"
-#include "graphics/Vao.h"
+#include "core/Vbo.h"
+#include "core/Vao.h"
 
 
 class Core {

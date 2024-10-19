@@ -2,11 +2,11 @@
 #define BYO2DGE_CORE_H
 
 #include <chrono>
-#include "engine/Window.h"
+#include "window/Window.h"
 #include "graphics/ShaderInfo.h"
-#include "graphics/Vbo.h"
-#include "graphics/Vao.h"
-#include "graphics/Texture.h"
+#include "core/Vbo.h"
+#include "core/Vao.h"
+#include "core/Texture.h"
 #include "Renderable.h"
 #include "TextureRenderable.h"
 #include "SpriteRenderable.h"

@@ -1,7 +1,7 @@
 #ifndef BYO2DGE_MY_GAME_H
 #define BYO2DGE_MY_GAME_H
 
-#include "engine/Window.h"
+#include "window/Window.h"
 #include "../src/Core.h"
 #include "../src/Renderable.h"
 #include "../src/Loop.h"

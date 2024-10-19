@@ -3,11 +3,11 @@
 
 #include <chrono>
 #include <unordered_map>
-#include "engine/Window.h"
+#include "window/Window.h"
 #include "graphics/ShaderInfo.h"
-#include "graphics/Vbo.h"
-#include "graphics/Vao.h"
-#include "graphics/Texture.h"
+#include "core/Vbo.h"
+#include "core/Vao.h"
+#include "core/Texture.h"
 #include "Renderable.h"
 #include "TextureRenderable.h"
 #include "SpriteRenderable.h"

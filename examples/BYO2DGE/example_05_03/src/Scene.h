@@ -1,7 +1,7 @@
 #ifndef BYO2DGE_SCENE_H
 #define BYO2DGE_SCENE_H
 
-#include "engine/Input.h"
+#include "window/Input.h"
 
 class Scene {
 public:

@@ -1,8 +1,8 @@
 #ifndef BYO2DGE_LOOP_H
 #define BYO2DGE_LOOP_H
 
-#include "engine/Input.h"
-#include "engine/Window.h"
+#include "window/Input.h"
+#include "window/Window.h"
 #include "Scene.h"
 #include <chrono>
 #include <memory>

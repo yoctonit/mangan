@@ -3,7 +3,7 @@
 
 #include <unordered_map>
 #include <string>
-#include "graphics/Texture.h"
+#include "core/Texture.h"
 
 struct CharacterInfo {
     // in texture coordinate (0 to 1) maps to the entire image

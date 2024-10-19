@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../nlohmann/json.h"
+#include "../../common/nlohmann/json.h"
 #include "../src/Core.h"
 #include "../src/Camera.h"
 #include "../src/Renderable.h"

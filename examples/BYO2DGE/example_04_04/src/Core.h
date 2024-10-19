@@ -2,8 +2,8 @@
 #define BYO2DGE_CORE_H
 
 #include "graphics/ShaderInfo.h"
-#include "graphics/Vbo.h"
-#include "graphics/Vao.h"
+#include "core/Vbo.h"
+#include "core/Vao.h"
 #include "Renderable.h"
 
 

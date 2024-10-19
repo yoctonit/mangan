@@ -1,9 +1,9 @@
 #ifndef BYO2DGE_TEXTURE_RENDERABLE_H
 #define BYO2DGE_TEXTURE_RENDERABLE_H
 
-#include "graphics/Vao.h"
+#include "core/Vao.h"
 #include "graphics/ShaderInfo.h"
-#include "graphics/Texture.h"
+#include "core/Texture.h"
 #include "Camera.h"
 #include "Transform.h"
 #include <glm/vec4.hpp>
