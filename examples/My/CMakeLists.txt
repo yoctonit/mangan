@@ -7,6 +7,7 @@ target_link_libraries(example01 PRIVATE Mn::GL)
 add_subdirectory(Example02)
 add_subdirectory(Example03)
 add_subdirectory(Example04-Points)
+add_subdirectory(freetype_test)
 
 #add_subdirectory(triangle)
 #add_subdirectory(mandelbrot)

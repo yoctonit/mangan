@@ -43,7 +43,7 @@ FetchContent_MakeAvailable(glm)
 add_subdirectory(dependencies/stb)
 
 ### freetype ###
-#add_subdirectory(freetype-2.10.1 EXCLUDE_FROM_ALL)
+add_subdirectory(dependencies/freetype-2.13.3 EXCLUDE_FROM_ALL)
 
 ######################
 # mangan gl library
