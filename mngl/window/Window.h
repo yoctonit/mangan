@@ -12,17 +12,9 @@ namespace Mn {
 
     class Window {
     public:
-        Window();
-
         Window(int width, int height, std::string title);
 
         ~Window();
-
-        void SetTitle(const std::string &title);
-
-        void SetDimensions(int width, int height);
-
-        void Create();
 
         void Close();
 
@@ -45,15 +37,13 @@ namespace Mn {
 
         static void InitializeGlfw();
 
-        static void TerminateGlfw();
-
         static void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode);
 
         static void MouseCallback(GLFWwindow *window, int button, int action, int mods);
 
         static void MousePositionCallback(GLFWwindow *window, double x_pos, double y_pos);
 
-        static void MouseScrollCallback(GLFWwindow* window, double x_offset, double y_offset);
+        static void MouseScrollCallback(GLFWwindow *window, double x_offset, double y_offset);
 
         void CreateGlfwWindow();
 

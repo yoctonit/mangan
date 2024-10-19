@@ -14,39 +14,10 @@ namespace Mn {
 
     Input Window::input_{};
 
-    Window::Window() : width_{800}, height_{600}, title_{"Example"} {
-        std::cout << "Window::Window()\n";
-        Create();
-    }
-
     Window::Window(int width, int height, std::string title)
             : width_{width}, height_{height}, title_{std::move(title)} {
-        std::cout << "Window::Window(" << width_ << ", " << height_ << ", " << title_ << ")\n";
-        Create();
-    }
-
-    Window::~Window() {
-        std::cout << "Window::~Window()\n";
-
-        glfwDestroyWindow(window_);
-        TerminateGlfw();
-    }
-
-    void Window::SetTitle(const std::string &title) {
-        title_ = title;
-    }
-
-    void Window::SetDimensions(int width, int height) {
-        width_ = width;
-        height_ = height;
-    }
-
-    Input &Window::GetInput() {
-        return input_;
-    }
-
-    void Window::Create() {
-        std::cout << "Window::Create(" << title_ << ", " << width_ << ", " << height_ << ")\n";
+        std::cout << "Window::Window(" << width_ << ", " << height_ << ", "
+                  << title_ << "): Initialize GLFW library\n";
 
         InitializeGlfw();
         CreateGlfwWindow();
@@ -54,6 +25,12 @@ namespace Mn {
         LoadOpenGlExtensions();
 
         input_.SetWindowSize_(width_, height_);
+    }
+
+    Window::~Window() {
+        std::cout << "Window::~Window(): Terminate GLFW library\n";
+        glfwDestroyWindow(window_);
+        glfwTerminate();
     }
 
     void Window::Close() {
@@ -65,7 +42,6 @@ namespace Mn {
     }
 
     void Window::CaptureCursor() const {
-        // tell GLFW to capture our mouse
         glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
 
@@ -82,23 +58,24 @@ namespace Mn {
         return height_;
     }
 
+    Input &Window::GetInput() {
+        return input_;
+    }
+
+    void Window::PollEvents() {
+        glfwPollEvents();
+    }
+
     void Window::OnGlfwError(int error_code, const char *error_message) {
         std::cerr << "Error (" << error_code << "): " << error_message << std::endl;
     }
 
     void Window::InitializeGlfw() {
-        std::cout << "GLFW: Initialize library.\n";
-
         glfwSetErrorCallback(Window::OnGlfwError);
 
         if (glfwInit() != GLFW_TRUE) {
             throw std::runtime_error("GLFW: Initialization failed.");
         }
-    }
-
-    void Window::TerminateGlfw() {
-        std::cout << "GLFW: Terminate library.\n";
-        glfwTerminate();
     }
 
     void Window::CreateGlfwWindow() {
@@ -112,7 +89,7 @@ namespace Mn {
 
         window_ = glfwCreateWindow(width_, height_, title_.c_str(), nullptr, nullptr);
         if (window_ == nullptr) {
-            TerminateGlfw();
+            glfwTerminate();
             throw std::runtime_error("GLFW: Create window failed.");
         }
     }
@@ -128,7 +105,8 @@ namespace Mn {
         glfwMakeContextCurrent(window_);
 
         if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-            TerminateGlfw();
+            glfwDestroyWindow(window_);
+            glfwTerminate();
             throw std::runtime_error("Glad: Loading failed.");
         }
 
@@ -142,8 +120,6 @@ namespace Mn {
         } else if (action == GLFW_RELEASE) {
             input_.OnKeyUp_(key);
         }
-        // if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        //    glfwSetWindowShouldClose(window, GL_TRUE);
     }
 
     void Window::MouseCallback(GLFWwindow *window, int button, int action, int mods) {
@@ -157,12 +133,8 @@ namespace Mn {
         input_.OnMouseMove_((float) x_pos, (float) y_pos);
     }
 
-    void Window::MouseScrollCallback(GLFWwindow* window, double x_offset, double y_offset) {
+    void Window::MouseScrollCallback(GLFWwindow *window, double x_offset, double y_offset) {
         input_.OnMouseScroll_((float) x_offset, (float) y_offset);
-    }
-
-    void Window::PollEvents() {
-        glfwPollEvents();
     }
 
 }

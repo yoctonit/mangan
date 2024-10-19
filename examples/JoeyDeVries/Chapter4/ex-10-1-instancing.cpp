@@ -10,8 +10,6 @@ const int SCR_HEIGHT = 600;
 int main() {
     Mn::Window wnd(SCR_WIDTH, SCR_HEIGHT, "Instancing Example");
 
-    bool runScene = true;
-
     Mn::Shader shader(
             "shader/instancing.vs",
             "shader/instancing.fs"
@@ -55,13 +53,14 @@ int main() {
 
     auto &input = Mn::Window::GetInput();
 
-    while (wnd.IsOpen() && runScene) {
+    while (wnd.IsOpen()) {
         Mn::Window::PollEvents();
 
         input.Update();
 
         if (input.IsClickedKey(MN_KEY_ESCAPE)) {
-            runScene = false;
+            wnd.Close();
+            continue;
         }
 
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);

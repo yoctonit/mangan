@@ -39,6 +39,8 @@ file(COPY
         shader/normal_visualization.fs
         shader/instancing.vs
         shader/instancing.fs
+        shader/instancing_mvp.vs
+        shader/instancing_mvp.fs
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/shader)
 
 file(COPY
@@ -54,6 +56,8 @@ file(COPY
         ../images/skybox/right.jpg
         ../images/skybox/top.jpg
         ../images/container2.png
+        ../images/sandy_planet.png
+        ../images/rock.png
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images)
 
 add_executable(joey-ex-1-1-depth-testing ex-1-1-depth-testing.cpp)
@@ -97,3 +101,6 @@ target_link_libraries(joey-ex-9-3-normal-visualization PRIVATE Mn::GL PRIVATE Mn
 
 add_executable(joey-ex-10-1-instancing ex-10-1-instancing.cpp)
 target_link_libraries(joey-ex-10-1-instancing PRIVATE Mn::GL PRIVATE Mn::Joey)
+
+add_executable(joey-ex-10-2-asteroids ex-10-2-asteroids.cpp)
+target_link_libraries(joey-ex-10-2-asteroids PRIVATE Mn::GL PRIVATE Mn::Joey)
