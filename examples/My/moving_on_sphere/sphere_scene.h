@@ -8,42 +8,39 @@
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
-#include "core/window/scene.h"
-#include "camera/perspective_camera.h"
-#include "light/point_light.h"
-#include "model/icosahedron.h"
+#include "Camera.h"
+#include "point_light.h"
 #include "simple_spaceship.h"
+#include "Planet.h"
+#include "Axes.h"
 
-class sphere_scene : public mn::scene {
+#include "window/Input.h"
+
+class sphere_scene {
 public:
     sphere_scene(int width, int height)
-    :
-    scene(width, height), ship(), planet(),
-    camera(glm::vec3(0.0f, 0.0f, 3.0f),
-           glm::vec3(0.0f, 0.0f, 0.0f),
-           1.0f,
-           glm::vec4(0.0f, 0.0f, width, height)),
-    alpha(0.0f), beta(90.0f), distance(3.0f) {
-        // ship_angle = 0.0f;
-    }
+            :
+            mWidth{width}, mHeight{height},
+            mAxes(), mShip(), mPlanet(1.0f),
+            mCamera(3.0f, static_cast<float>(width), static_cast<float>(height)) {}
 
-    void initialize() override;
-    void update(double seconds, const mn::input& input) override;
-    void draw() override;
+    void initialize();
+
+    void update(const Mn::Input &input, float seconds);
+
+    void draw();
 
 private:
-    mn::perspective_camera camera;
-    float alpha; // camera orbiting from z
-    float beta; // camera orbiting from y
-    float distance; // camera distance
+    int mWidth;
+    int mHeight;
 
-    mn::point_light light;
+    Camera mCamera;
+    point_light mLight;
 
     // objects in scene
-    simple_spaceship ship;
-    // float ship_angle;
-
-    mn::icosahedron planet;
+    Axes mAxes;
+    simple_spaceship mShip;
+    Planet mPlanet;
 };
 
 #endif //INCLUDED_SPHERE_SCENE_H

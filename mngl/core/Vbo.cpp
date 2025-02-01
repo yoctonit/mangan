@@ -21,6 +21,19 @@ namespace Mn {
         std::cout << "Created VBO with id " << mId << "\n";
     }
 
+    Vbo::Vbo(const float* data, int size, GLenum type) {
+        glGenBuffers(1, &mId);
+        glBindBuffer(GL_ARRAY_BUFFER, mId);
+        glBufferData(
+                GL_ARRAY_BUFFER,
+                static_cast<GLsizeiptr>(size * sizeof(float)),
+                data,
+                type
+        );
+        IncRef();
+        std::cout << "Created VBO with id " << mId << "\n";
+    }
+
     Vbo::~Vbo() {
         int refCnt = DecRef();
         if (refCnt == 0) {

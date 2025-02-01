@@ -1,5 +1,5 @@
-#ifndef INCLUDED_MN_GRAPHICS_VAO_H
-#define INCLUDED_MN_GRAPHICS_VAO_H
+#ifndef INCLUDED_MN_CORE_VAO_H
+#define INCLUDED_MN_CORE_VAO_H
 
 #include <glad/glad.h>
 #include <iostream>
@@ -9,11 +9,14 @@
 
 namespace Mn {
 
+    struct do_not_allocate {
+    };
+
     class Vao {
     public:
-        explicit Vao(bool allocate = false);
+        Vao();
 
-        void Create();
+        explicit Vao(do_not_allocate);
 
         ~Vao();
 
@@ -50,4 +53,4 @@ namespace Mn {
 
 }
 
-#endif //INCLUDED_MN_GRAPHICS_VAO_H
+#endif //INCLUDED_MN_CORE_VAO_H

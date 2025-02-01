@@ -1,5 +1,5 @@
 //
-// Created by ivan on 16.5.2020..
+// Created by ivan on 16.5.2020.
 //
 
 #ifndef INCLUDED_SIMPLE_SPACESHIP_H
@@ -8,46 +8,50 @@
 #include <glm/vec3.hpp>
 #include "glad/glad.h"
 
-#include "core/buffer/gpu_buffer.h"
-#include "camera/perspective_camera.h"
+#include "core/Vbo.h"
+#include "core/Vao.h"
+#include "graphics/ShaderLoader.h"
+#include "Camera.h"
+#include <cmath>
+#include <algorithm>
+
+
+bool epsilon_equal(float x, float y, float epsilon = 0.0001f);
+
+std::ostream &operator<<(std::ostream &os, glm::vec3 v);
+
+glm::vec3 sphericalCoordinates(glm::vec3 pos);
+glm::vec3 coordinates(glm::vec3 spherical);
 
 class simple_spaceship {
 public:
-    simple_spaceship() = default;
+    simple_spaceship();
 
-    void initialize();
-    void draw(const mn::perspective_camera& camera) const;
+    void Draw(const Camera &camera) const;
 
-    [[nodiscard]] glm::vec3 position() const;
-    void position(glm::vec3 new_position);
-
-    [[nodiscard]] glm::vec3 direction() const;
+//    [[nodiscard]] glm::vec3 position() const;
+//
+//    void position(glm::vec3 new_position);
+//
+//    [[nodiscard]] glm::vec3 direction() const;
     // void direction(glm::vec3 new_direction);
 
-    [[nodiscard]] float angle() const;
-    void angle(float new_angle);
+    void Update(const Mn::Input &input, float deltaTime);
 
-    [[nodiscard]] float speed() const;
-    void speed(float new_speed);
-
-    void move_forward(double seconds);
-    void move_backward(double seconds);
+//    void move_forward(double seconds);
+//
+//    void move_backward(double seconds);
 
 private:
-    glm::vec3 _position;
-    glm::vec3 _direction;
-    float _angle; // in degrees
-    float _speed; // units per second
-
     // for rendering
-    GLuint shader_program_id;
-    GLuint vertex_array_id;
-    GLuint vertex_pos_location;
-    GLuint vertex_col_location;
-    GLint u_MVP;
+    Mn::ShaderLoader mShaderLoader;
+    Mn::Vao mVao;
+    Mn::Vbo mBuffer;
 
-    mn::gpu_buffer buffer;
+    glm::vec3 mPosition{};
+    glm::vec3 mForward{};
+    glm::vec3 mNormal{};
+    glm::vec3 mRotAxis{};
 };
-
 
 #endif //INCLUDED_SIMPLE_SPACESHIP_H

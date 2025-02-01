@@ -1,5 +1,5 @@
-#ifndef INCLUDED_MN_GRAPHICS_TEXTURE_H
-#define INCLUDED_MN_GRAPHICS_TEXTURE_H
+#ifndef INCLUDED_MN_CORE_TEXTURE_H
+#define INCLUDED_MN_CORE_TEXTURE_H
 
 #include <glad/glad.h>
 #include <string>
@@ -56,4 +56,4 @@ namespace Mn {
     };
 
 }
-#endif //INCLUDED_MN_GRAPHICS_TEXTURE_H
+#endif //INCLUDED_MN_CORE_TEXTURE_H

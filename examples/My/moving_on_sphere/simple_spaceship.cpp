@@ -1,135 +1,189 @@
-//
-// Created by ivan on 16.5.2020..
-//
-#include <cmath>
 #include <vector>
 #include <iostream>
 
-#include <glm/gtx/transform.hpp> // after <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "simple_spaceship.h"
-#include "core/shader/program_library.h"
 
-void simple_spaceship::initialize() {
+
+bool epsilon_equal(float x, float y, float epsilon) {
+    if (std::abs(x - y) <= epsilon * std::max({1.0f, std::abs(x), std::abs(y)})) {
+        return true;
+    }
+    return false;
+}
+
+std::ostream &operator<<(std::ostream &os, const glm::vec3 v) {
+    os << "("
+       << (epsilon_equal(v.x, 0.0f) ? 0.0f : v.x) << ", "
+       << (epsilon_equal(v.y, 0.0f) ? 0.0f : v.y) << ", "
+       << (epsilon_equal(v.z, 0.0f) ? 0.0f : v.z) << ")\n";
+    return os;
+}
+
+glm::vec3 sphericalCoordinates(glm::vec3 pos) {
+    std::cout << "sphericalCoordinates called\n";
+    float dist1 = glm::length(pos);
+    float dist2 = std::sqrt(pos.x * pos.x + pos.y * pos.y + pos.z * pos.z);
+    std::cout << "dist1: " << dist1 << "\n";
+    std::cout << "dist2: " << dist2 << "\n";
+
+    float d = std::sqrt(pos.x * pos.x + pos.z * pos.z);
+    float alpha1 = std::acos(pos.z / d);
+    float alpha2 = std::asin(pos.x / d);
+    float alpha3 = std::atan2(pos.x, pos.z);
+    std::cout << "alpha1: " << alpha1 << "\n";
+    std::cout << "alpha2: " << alpha2 << "\n";
+    std::cout << "alpha3: " << alpha3 << "\n";
+
+    float beta1 = std::acos(d / dist1);
+    float beta2 = std::asin(pos.y / dist1);
+    float beta3 = std::atan2(pos.y, d);
+    std::cout << "beta1: " << beta1 << "\n";
+    std::cout << "beta2: " << beta2 << "\n";
+    std::cout << "beta3: " << beta3 << "\n";
+    std::cout << "sphericalCoordinates ended\n";
+
+    return {dist1, alpha3, beta3};
+}
+
+glm::vec3 coordinates(glm::vec3 spherical) {
+    float ca = std::cos(spherical.y);
+    float sa = std::sin(spherical.y);
+    float cb = std::cos(spherical.z);
+    float sb = std::sin(spherical.z);
+    float r = spherical.x;
+    return {r * sa * cb, r * sb, r * ca * cb};
+}
+
+simple_spaceship::simple_spaceship()
+        : mShaderLoader{"shader/basic.vs.glsl", "shader/basic.fs.glsl"},
+          mVao{}, mBuffer{} {
     // first 3 element specify coordinates, and next 3 color of one vertex
+//    const std::vector<float> vertices{
+//            -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
+//            0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+//            0.0f, 0.0f, -0.2f, 0.0f, 0.5f, 0.5f,
+//
+//            0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
+//            0.0f, 0.0f, -0.2f, 0.0f, 0.5f, 0.5f,
+//            0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+//
+//            -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
+//            0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+//            0.0f, 0.3f, -0.35f, 0.0f, 0.0f, 0.5f,
+//
+//            0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
+//            0.0f, 0.3f, -0.35f, 0.0f, 0.0f, 0.5f,
+//            0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+//
+//            -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
+//            0.0f, 0.0f, -0.2f, 0.0f, 0.5f, 0.5f,
+//            0.0f, 0.3f, -0.35f, 0.0f, 0.0f, 0.5f,
+//
+//            0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
+//            0.0f, 0.3f, -0.35f, 0.0f, 0.0f, 0.5f,
+//            0.0f, 0.0f, -0.2f, 0.0f, 0.5f, 0.5f,
+//    };
     const std::vector<float> vertices{
-        -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
-         0.0f, 0.0f,  1.0f, 1.0f, 0.0f, 0.0f,
-         0.0f, 0.0f, -0.2f, 0.0f, 0.5f, 0.5f,
-
-         0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
-         0.0f, 0.0f, -0.2f, 0.0f, 0.5f, 0.5f,
-         0.0f, 0.0f,  1.0f, 1.0f, 0.0f, 0.0f,
-
-        -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
-         0.0f, 0.0f,  1.0f, 1.0f, 0.0f, 0.0f,
-         0.0f, 0.3f, -0.35f,0.0f, 0.0f, 0.5f,
-
-         0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
-         0.0f, 0.3f, -0.35f,0.0f, 0.0f, 0.5f,
-         0.0f, 0.0f,  1.0f, 1.0f, 0.0f, 0.0f,
-
-        -0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
-         0.0f, 0.0f, -0.2f, 0.0f, 0.5f, 0.5f,
-         0.0f, 0.3f, -0.35f,0.0f, 0.0f, 0.5f,
-
-         0.5f, 0.0f, -0.5f, 0.0f, 1.0f, 0.0f,
-         0.0f, 0.3f, -0.35f,0.0f, 0.0f, 0.5f,
-         0.0f, 0.0f, -0.2f, 0.0f, 0.5f, 0.5f,
+            0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.1f, 1.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.1f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.1f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f
     };
+    mBuffer = Mn::Vbo(vertices);
+    mVao.Connect(mBuffer, 0, 3, 6, 0);
+    mVao.Connect(mBuffer, 1, 3, 6, 3);
 
-    mn::program_library& lib = mn::program_library::instance();
-    mn::shader_program& program = lib.get_program(
-            "basic.vert", "basic.frag");
-
-    shader_program_id = program.handle();
-    std::cout << "=========== SPACESHIP =================\n";
-    std::cout << "shader_program_id: " << shader_program_id << "\n";
-    vertex_pos_location = program.location("a_position");
-    vertex_col_location = program.location("a_color");
-    u_MVP = program.location("u_MVP");
-
-    // Vertex array initialization
-    glGenVertexArrays(1, &vertex_array_id);
-    glBindVertexArray(vertex_array_id);
-    std::cout << "vertex_array_id: " << vertex_array_id << "\n";
-    program.print();
-
-    buffer.create(vertices, GL_ARRAY_BUFFER);
-    buffer.activate();
-
-    glEnableVertexAttribArray(vertex_pos_location);
-    glVertexAttribPointer(vertex_pos_location, 3, GL_FLOAT, GL_FALSE,
-                          6 * sizeof(GLfloat), nullptr);
-
-    glEnableVertexAttribArray(vertex_col_location);
-    glVertexAttribPointer(vertex_col_location, 3, GL_FLOAT, GL_FALSE,
-                          6 * sizeof(GLfloat), (void*) (sizeof(float) * 3));
+    mForward = glm::vec3{0.0f, 0.0f, 1.0f};
+    mNormal = glm::vec3{0.0f, 1.0f, 0.0f};
+    mRotAxis = glm::cross(mNormal, mForward);
+    mPosition = mNormal;
 }
 
 
-void simple_spaceship::draw(const mn::perspective_camera& camera) const {
-    glm::mat4 vp = camera.vp_matrix();
-    glm::mat4 m =
-            glm::translate(_position) *
-            glm::rotate(_angle * 3.14159f / 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+void simple_spaceship::Draw(const Camera &camera) const {
 
-    glm::mat4 mvp = vp * m;
+    glm::mat4 vp = camera.ViewProjectionMatrix();
+    // https://math.stackexchange.com/questions/878785/how-to-find-an-angle-in-range0-360-between-2-vectors
 
-    glUseProgram(shader_program_id);
+    glm::mat4 M = glm::mat4{1.0f};
 
-    glUniformMatrix4fv(u_MVP, 1, GL_FALSE, glm::value_ptr(mvp));
+//    M[0][0] = mRotAxis.x;
+//    M[0][1] = mRotAxis.y;
+//    M[0][2] = mRotAxis.z;
+    M[0] = glm::vec4(mRotAxis, 0.0f);
 
-    glBindVertexArray(vertex_array_id);
-    glDrawArrays(GL_TRIANGLES, 0, 18);
+//    M[1][0] = mNormal.x;
+//    M[1][1] = mNormal.y;
+//    M[1][2] = mNormal.z;
+    M[1] = glm::vec4(mNormal, 0.0f);
+
+//    M[2][0] = mForward.x;
+//    M[2][1] = mForward.y;
+//    M[2][2] = mForward.z;
+    M[2] = glm::vec4(mForward, 0.0f);
+//std::cout << mPosition.x << ", " << mPosition.y << ", " << mPosition.z << "\n";
+
+    M[3] = glm::vec4(mPosition, 1.0f);
+//    M[3][0] = mPosition.x;
+//    M[3][1] = mPosition.y;
+//    M[3][2] = mPosition.z;
+
+    glm::mat4 mvp = vp * M;
+
+    mShaderLoader.Use();
+    mShaderLoader.Set("u_MVP", mvp);
+    mVao.Draw(GL_LINES, 0, 6);
+//    mVao.Draw(GL_LINES, 0, 18);
 }
 
+void simple_spaceship::Update(const Mn::Input &input, float deltaTime) {
+    const float angleSpeed = 30.0f;
+    const float forwardSpeed = 30.0f;
 
-glm::vec3 simple_spaceship::position() const {
-    return _position;
-}
+    float deltaAngle = angleSpeed * deltaTime;
+    float deltaForward = forwardSpeed * deltaTime;
 
-void simple_spaceship::position(glm::vec3 new_position) {
-    _position = new_position;
-}
+    if (input.IsPressedKey(MN_KEY_UP)) {
+        glm::mat4 M = glm::rotate(glm::mat4{1.0f}, glm::radians(deltaForward), mRotAxis);
+        glm::vec3 Nn = glm::vec3(M * glm::vec4(mNormal, 0.0f));
+        glm::vec3 Fn = glm::vec3(M * glm::vec4(mForward, 0.0f));
+        // glm::vec3 An = glm::cross(mNormal, Fn); // stays the same
 
-glm::vec3 simple_spaceship::direction() const {
-    return _direction;
-}
+        mForward = Fn;
+        mNormal = Nn;
+        mPosition = mNormal;
+    }
+    if (input.IsPressedKey(MN_KEY_DOWN)) {
+        glm::mat4 M = glm::rotate(glm::mat4{1.0f}, glm::radians(-deltaForward), mRotAxis);
+        glm::vec3 Nn = glm::vec3(M * glm::vec4(mNormal, 0.0f));
+        glm::vec3 Fn = glm::vec3(M * glm::vec4(mForward, 0.0f));
+        // glm::vec3 An = glm::cross(mNormal, Fn); // stays the same
 
-//void simple_spaceship::direction(glm::vec3 new_direction) {
-//    _direction = new_direction;
-//}
+        mForward = Fn;
+        mNormal = Nn;
+        mPosition = mNormal;
+    }
 
-float simple_spaceship::angle() const {
-    return _angle;
-}
+    if (input.IsPressedKey(MN_KEY_RIGHT)) {
+        glm::mat4 M = glm::rotate(glm::mat4{1.0f}, glm::radians(-deltaAngle), mNormal);
+        glm::vec3 Fn = glm::vec3(M * glm::vec4(mForward, 0.0f));
+        glm::vec3 An = glm::cross(mNormal, Fn);
 
-void simple_spaceship::angle(float new_angle) {
-    _angle = new_angle;
+        mForward = Fn;
+        mRotAxis = An;
+        mPosition = mNormal;
+    }
+    if (input.IsPressedKey(MN_KEY_LEFT)) {
+        glm::mat4 M = glm::rotate(glm::mat4{1.0f}, glm::radians(deltaAngle), mNormal);
+        glm::vec3 Fn = glm::vec3(M * glm::vec4(mForward, 0.0f));
+        glm::vec3 An = glm::cross(mNormal, Fn);
 
-    // recalculate direction
-    float angle_rad = _angle * 3.14159f / 180.0f;
-    float z = std::cos(angle_rad);
-    float x = std::sin(angle_rad);
-    _direction = glm::vec3(x, 0.0f, z);
-}
-
-float simple_spaceship::speed() const {
-    return _speed;
-}
-
-void simple_spaceship::speed(float new_speed) {
-    _speed = new_speed;
-}
-
-void simple_spaceship::move_forward(double seconds) {
-    auto move_units = static_cast<float>(_speed * seconds);
-    _position += move_units * _direction;
-}
-
-void simple_spaceship::move_backward(double seconds) {
-    auto move_units = static_cast<float>(_speed * seconds);
-    _position -= move_units * _direction;
+        mForward = Fn;
+        mRotAxis = An;
+        mPosition = mNormal;
+    }
 }

@@ -9,13 +9,13 @@ namespace Mn {
     Connection::Connection(const Vao &vao) : mVao(vao) {}
 
     Connection::Connection(const Geometry &geom, Geometry::Type type, const ShaderInfo &shaderInfo)
-            : mVao(true) {
+            : mVao() {
         ConnectBuffer(geom, type, shaderInfo);
     }
 
     void Connection::ConnectBuffer(const Geometry &geom, Geometry::Type type, const ShaderInfo &shaderInfo) {
         if (mVao.Id() == 0) {
-            mVao = Mn::Vao(true);
+            mVao = Mn::Vao();
         }
         Vbo vbo;
         vbo = Mn::Vbo(geom.Data(type));
@@ -80,7 +80,7 @@ namespace Mn {
     void
     Connection::ConnectBuffer(const Vbo &vbo, int vertexCount, unsigned int index, int size, int stride, int start) {
         if (mVao.Id() == 0) {
-            mVao = Mn::Vao(true);
+            mVao = Mn::Vao();
         }
         AddVbo(vbo);
         SetVertexCount(vertexCount);
@@ -89,7 +89,7 @@ namespace Mn {
 
     void Connection::ConnectBuffer(const Buffer &buffer, Geometry::Type type, const ShaderInfo &shaderInfo) {
         if (mVao.Id() == 0) {
-            mVao = Mn::Vao(true);
+            mVao = Mn::Vao();
         }
 
         AddVbo(buffer.GetVbo());
@@ -151,7 +151,7 @@ namespace Mn {
 
     void Connection::ConnectBuffer(const Buffer &buffer, unsigned int index, int size, int stride, int start) {
         if (mVao.Id() == 0) {
-            mVao = Mn::Vao(true);
+            mVao = Mn::Vao();
         }
         AddVbo(buffer.GetVbo());
         SetVertexCount(buffer.ElementCount());

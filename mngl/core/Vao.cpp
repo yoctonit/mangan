@@ -4,22 +4,14 @@ namespace Mn {
 
     std::unordered_map<unsigned int, int> Vao::mRefCnt{};
 
-    Vao::Vao(bool allocate) {
-        if (allocate) {
-            Create();
-        }
-    }
-
-    void Vao::Create() {
-        if (mId != 0) {
-            std::cerr << "Vao object already allocated (has id " << mId << ")\n";
-            return;
-        }
+    Vao::Vao() {
         glGenVertexArrays(1, &mId);
         glBindVertexArray(mId);
         IncRef();
         std::cout << "Created VAO with id " << mId << "\n";
     }
+
+    Vao::Vao(do_not_allocate) : mId{} {}
 
     Vao::~Vao() {
         int refCnt = DecRef();

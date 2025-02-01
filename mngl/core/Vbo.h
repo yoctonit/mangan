@@ -1,5 +1,5 @@
-#ifndef INCLUDED_MN_GRAPHICS_VBO_H
-#define INCLUDED_MN_GRAPHICS_VBO_H
+#ifndef INCLUDED_MN_CORE_VBO_H
+#define INCLUDED_MN_CORE_VBO_H
 
 #include <glad/glad.h>
 #include <string>
@@ -13,6 +13,8 @@ namespace Mn {
         Vbo();
 
         explicit Vbo(const std::vector<float> &data, GLenum type = GL_STATIC_DRAW);
+
+        Vbo(const float* data, int size, GLenum type = GL_STATIC_DRAW);
 
         ~Vbo();
 
@@ -45,4 +47,4 @@ namespace Mn {
 
 }
 
-#endif //INCLUDED_MN_GRAPHICS_VBO_H
+#endif //INCLUDED_MN_CORE_VBO_H
